@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meta Harness · Local Control Plane</title><link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar"><div class="brand"><span class="brand-mark">MH</span><div><strong>Meta Harness</strong><small>LOCAL CONTROL PLANE</small></div></div>
+    <nav id="nav"><button data-page="console" class="active"><span>◉</span> Operator Console</button><button data-page="servers"><span>⌘</span> MCP Registry</button><button data-page="workflows"><span>⇄</span> Workflow Builder</button><button data-page="knowledge"><span>▤</span> Knowledge / RAG</button><button data-page="profiles"><span>✳</span> Analyzer & Validator</button><button data-page="history"><span>◷</span> Run History</button></nav>
+    <div class="sidebar-footer"><i></i> Local services connected <small id="connection">Checking core…</small></div>
+  </aside>
+  <main><header><div><span class="eyebrow">META-HARNESS / LOCAL</span><h1 id="page-title">Operator Console</h1></div><div class="header-right"><span class="local-pill">● LOCAL ONLY</span><button class="icon-button" title="Refresh" onclick="refresh()">↻</button></div></header><section id="app" aria-live="polite"></section></main>
+  <div id="toast" role="status"></div><script>window.CORE_API='/api';</script><script src="/app.js"></script>
+</body></html>

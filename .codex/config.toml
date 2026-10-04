@@ -1,0 +1,20 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+model_reasoning_effort = "high"
+model_verbosity = "low"
+
+web_search = "cached"
+
+[agents]
+enabled = true
+default_subagent_reasoning_effort = "medium"
+
+[agents.reviewer]
+description = """
+Independent reviewer for architecture, evidence grounding,
+deterministic verification, tests, and safety boundaries.
+"""
+config_file = "agents/reviewer.toml"

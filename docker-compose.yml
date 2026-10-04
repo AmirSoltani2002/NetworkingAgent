@@ -1,0 +1,30 @@
+services:
+  core:
+    build:
+      context: .
+      dockerfile: core/Dockerfile
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      META_HARNESS_DATA: /data
+      MCP_TIMEOUT_SECONDS: ${MCP_TIMEOUT_SECONDS:-20}
+      ANALYZER_BASE_URL: ${ANALYZER_BASE_URL:-https://api.openai.com/v1}
+      ANALYZER_API_KEY: ${ANALYZER_API_KEY:-}
+    volumes:
+      - meta-harness-data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+  ui:
+    build:
+      context: ./ui
+    depends_on:
+      - core
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+volumes:
+  meta-harness-data:
