@@ -1,0 +1,101 @@
+\documentclass[a4paper,11pt,oneside]{report}
+\usepackage[margin=19mm,top=18mm,bottom=19mm,headheight=14pt,headsep=5mm]{geometry}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage{amsmath,lmodern,microtype,graphicx,xcolor,tikz,pgfplots,titlesec,fancyhdr,enumitem,booktabs,tabularx,listings,hyperref,xurl,caption}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,shapes.geometric,backgrounds}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{173042}\definecolor{teal}{HTML}{007E87}\definecolor{pale}{HTML}{EEF5F6}\definecolor{muted}{HTML}{596A77}
+\hypersetup{colorlinks=true,linkcolor=teal,urlcolor=teal,citecolor=teal,pdftitle={Meta-Harnessing for Manufacturing Systems},pdfauthor={Local Meta-Harness Project},pdfsubject={Implementation audit and manufacturing decision support, October 2026}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}\setlength{\emergencystretch}{3em}\raggedbottom
+\setlist{nosep,leftmargin=*,topsep=4pt,itemsep=2pt}
+\setcounter{tocdepth}{0}
+\titleformat{\chapter}[display]{\sffamily\bfseries\color{ink}\LARGE}{\small\color{teal}CHAPTER \thechapter}{2mm}{}
+\titleclass{\chapter}{straight}
+\titlespacing*{\chapter}{0pt}{-8pt}{8pt}
+\titleformat{\section}{\sffamily\bfseries\large\color{ink}}{\thesection}{.6em}{}\titlespacing*{\section}{0pt}{9pt}{4pt}
+\titleformat{\subsection}{\sffamily\bfseries\normalsize\color{teal}}{\thesubsection}{.6em}{}\titlespacing*{\subsection}{0pt}{7pt}{3pt}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\sffamily\scriptsize\bfseries MANUFACTURING META-HARNESS}\fancyhead[R]{\sffamily\scriptsize\color{muted}\leftmark}\fancyfoot[L]{\sffamily\scriptsize\color{muted}Implementation report | 9 October 2026}\fancyfoot[R]{\sffamily\small\thepage}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[L]{\sffamily\scriptsize\color{muted}Implementation report | 9 October 2026}\fancyfoot[R]{\sffamily\small\thepage}}
+\newcommand{\partlabel}[1]{\noindent{\sffamily\footnotesize\bfseries\color{teal}#1}\par\vspace{3mm}}
+\newcommand{\source}[1]{\par\smallskip{\footnotesize\sffamily\color{muted}\textbf{Implementation evidence.} #1}\par\vspace{3mm}}
+\newcommand{\verdict}[1]{\par\smallskip{\sffamily\bfseries\color{teal}Engineering verdict.}\enspace #1\par}
+\newcommand{\fig}[2]{\begin{center}\input{figures/#1.tex}\captionof{figure}{#2}\end{center}}
+\captionsetup{font=small,labelfont={sf,bf},skip=4pt,hypcap=false}
+\lstset{basicstyle=\ttfamily\small,backgroundcolor=\color{pale},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,xleftmargin=5pt,xrightmargin=5pt,aboveskip=5pt,belowskip=5pt}
+\tikzset{box/.style={draw=teal!65,rounded corners=2pt,fill=pale,align=center,font=\sffamily\small,text width=3.2cm,minimum height=.8cm,inner sep=5pt},dark/.style={box,fill=ink,text=white,draw=ink},arr/.style={-{Stealth[length=2mm]},draw=muted,thick},lab/.style={font=\sffamily\scriptsize,fill=white,inner sep=2pt}}
+\begin{document}
+\begin{titlepage}\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]\fill[ink](current page.north west)rectangle([yshift=-115mm]current page.north east);\fill[teal]([yshift=-115mm]current page.north west)rectangle([yshift=-118mm]current page.north east);\end{tikzpicture}
+\vspace*{10mm}{\sffamily\color{white}\small SOURCE-BASED TECHNICAL RESEARCH REPORT\par}\vspace{9mm}
+{\sffamily\bfseries\color{white}\fontsize{29}{34}\selectfont Meta-Harnessing for\par Manufacturing Systems\par}\vspace{9mm}
+{\sffamily\color{white}\fontsize{17}{23}\selectfont Architecture, Agent Engineering,\par and Decision Support for\par Industrial Equipment Maintenance\par}
+\vspace{30mm}
+{\sffamily\Large\bfseries From synthetic ZSK measurements\par to inspectable operator evidence\par}\vspace{8mm}
+This report explains the implemented local application: external time-series classification and retrieval, a saved-model execution loop, persistent context and tasks, permissioned MCP tools, and deterministic completion checks. It distinguishes software verification from industrial diagnosis.\par\vspace{8mm}
+\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Snapshot & 9 October 2026; source and read-only runtime audit\\
+Equipment example & Simulated Coperion ZSK 58 line; synthetic measurements\\
+Audience & AI systems engineers, industrial researchers and operators\\
+Scope & Implementation analysis, evaluation, diagrams and two-page manual\\\bottomrule
+\end{tabularx}\vfill
+\textbf{Central principle.} The system supports human decisions. It does not authorize physical maintenance, change safety-critical settings or control industrial equipment. Qualified maintenance personnel remain responsible where required.\par\medskip
+{\small\color{muted}IMPLEMENTED: verified in code. PARTIAL: implemented mechanisms with material operational or validation gaps. PLANNED: roadmap behavior without current implementation.}
+\end{titlepage}\setcounter{page}{2}
+\tableofcontents
+\vfill\section*{Evidence and reading conventions}
+Source paths are relative to the repository root unless marked as included report evidence. Figures are original schematics; plots use exact supplied CSV records. Screenshots are genuine repository captures and preserve their original context. Report-time checks, historical recorded tests and illustrative workflows are explicitly distinguished. No secret values are reproduced.
+\smallskip
+The principal unresolved link is asset identity: RAG describes \texttt{ZSK-001}, while the synthetic measurements describe \texttt{ZSK-SIM-01}. Neither a similar name nor a model label establishes that they are the same physical machine.
+
+\clearpage\input{chapters/03.tex}
+
+\clearpage\input{chapters/04.tex}
+
+\clearpage\input{chapters/05.tex}
+
+\clearpage\input{chapters/06.tex}
+
+\clearpage\input{chapters/07.tex}
+
+\clearpage\input{chapters/08.tex}
+
+\clearpage\input{chapters/09.tex}
+
+\clearpage\input{chapters/10.tex}
+
+\clearpage\input{chapters/11.tex}
+
+\clearpage\input{chapters/12.tex}
+
+\clearpage\input{chapters/13.tex}
+
+\clearpage\input{chapters/14.tex}
+
+\clearpage\input{chapters/15.tex}
+
+\clearpage\input{chapters/16.tex}
+
+\clearpage\input{chapters/17.tex}
+
+\clearpage\input{chapters/18.tex}
+
+\clearpage\input{chapters/19.tex}
+
+\clearpage\input{chapters/20.tex}
+
+\clearpage\input{chapters/21.tex}
+
+\clearpage\input{chapters/22.tex}
+
+\clearpage\input{chapters/23.tex}
+
+\clearpage\input{chapters/24.tex}
+
+\clearpage\input{chapters/25.tex}
+
+\clearpage\input{chapters/26.tex}
+
+\clearpage\input{chapters/27.tex}
+
+\clearpage\input{chapters/28.tex}
+\clearpage\renewcommand{\bibname}{References}\addcontentsline{toc}{chapter}{References}\begingroup\small\setlength{\parskip}{2pt}\bibliographystyle{unsrt}\bibliography{references}\endgroup\end{document}

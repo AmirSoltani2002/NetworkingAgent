@@ -1,0 +1,486 @@
+{
+  "scenario": "dataset",
+  "chat_id": "2fbb2c14-5c2f-4f46-8e10-341431a26771",
+  "prompt": "Classify all available manufacturing products and show me which ones are predicted defective.",
+  "reply": "The model classified all **1,000 synthetic products**: **478 predicted defective** and **522 predicted good**.\n\nI can show the complete list, but the tool returns it in pages; the results retrieved so far cover only the first 478 predicted-defective products, not all 478 listings in a single response. The first 25 product IDs are: **P0004, P0011, P0012, P0014, P0015, P0017, P0018, P0019, P0022, P0023, P0025, P0027, P0028, P0029, P0030, P0031, P0035, P0036, P0041, P0046, P0047, P0048, P0049, P0050, P0051**.\n\nThe model version is `v-e938f054-3991-4d50-b4ae-c3eda355964b`. These are synthetic demonstration results, not a real-world manufacturing quality assessment.",
+  "tool_calls": [
+    {
+      "tool": "classify_manufacturing_dataset",
+      "result": {
+        "items": [
+          {
+            "machine_id": "M04",
+            "product_id": "P0004",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.0833465749667643,
+            "correct_prediction": true,
+            "probability_defective": 0.9166534250332357
+          },
+          {
+            "machine_id": "M01",
+            "product_id": "P0011",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.35202025063573333,
+            "correct_prediction": true,
+            "probability_defective": 0.6479797493642667
+          },
+          {
+            "machine_id": "M02",
+            "product_id": "P0012",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.017545933612617897,
+            "correct_prediction": true,
+            "probability_defective": 0.9824540663873821
+          },
+          {
+            "machine_id": "M04",
+            "product_id": "P0014",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.22823231352820536,
+            "correct_prediction": false,
+            "probability_defective": 0.7717676864717946
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0015",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.2806751647654208,
+            "correct_prediction": true,
+            "probability_defective": 0.7193248352345791
+          }
+        ],
+        "limit": 25,
+        "total": 478,
+        "offset": 0,
+        "has_more": true,
+        "synthetic": true,
+        "statistics": {
+          "note": "Production comparison includes training records; model evaluation metrics use only held-out data",
+          "predicted_good": 522,
+          "population_count": 1000,
+          "correct_predictions": 763,
+          "predicted_defective": 478
+        },
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b"
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 73
+    },
+    {
+      "tool": "classify_manufacturing_dataset",
+      "result": {
+        "items": [
+          {
+            "machine_id": "M04",
+            "product_id": "P0004",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.0833465749667643,
+            "correct_prediction": true,
+            "probability_defective": 0.9166534250332357
+          },
+          {
+            "machine_id": "M01",
+            "product_id": "P0011",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.35202025063573333,
+            "correct_prediction": true,
+            "probability_defective": 0.6479797493642667
+          },
+          {
+            "machine_id": "M02",
+            "product_id": "P0012",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.017545933612617897,
+            "correct_prediction": true,
+            "probability_defective": 0.9824540663873821
+          },
+          {
+            "machine_id": "M04",
+            "product_id": "P0014",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.22823231352820536,
+            "correct_prediction": false,
+            "probability_defective": 0.7717676864717946
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0015",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.2806751647654208,
+            "correct_prediction": true,
+            "probability_defective": 0.7193248352345791
+          }
+        ],
+        "limit": 100,
+        "total": 478,
+        "offset": 0,
+        "has_more": true,
+        "synthetic": true,
+        "statistics": {
+          "note": "Production comparison includes training records; model evaluation metrics use only held-out data",
+          "predicted_good": 522,
+          "population_count": 1000,
+          "correct_predictions": 763,
+          "predicted_defective": 478
+        },
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b"
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 63
+    },
+    {
+      "tool": "classify_manufacturing_dataset",
+      "result": {
+        "items": [
+          {
+            "machine_id": "M03",
+            "product_id": "P0203",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.2573336428626979,
+            "correct_prediction": true,
+            "probability_defective": 0.7426663571373021
+          },
+          {
+            "machine_id": "M04",
+            "product_id": "P0204",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.17591693064016975,
+            "correct_prediction": false,
+            "probability_defective": 0.8240830693598302
+          },
+          {
+            "machine_id": "M01",
+            "product_id": "P0206",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.2726618027736352,
+            "correct_prediction": false,
+            "probability_defective": 0.7273381972263648
+          },
+          {
+            "machine_id": "M01",
+            "product_id": "P0211",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.1933028138346511,
+            "correct_prediction": true,
+            "probability_defective": 0.8066971861653489
+          },
+          {
+            "machine_id": "M03",
+            "product_id": "P0213",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.25418439360355777,
+            "correct_prediction": true,
+            "probability_defective": 0.7458156063964423
+          }
+        ],
+        "limit": 100,
+        "total": 478,
+        "offset": 100,
+        "has_more": true,
+        "synthetic": true,
+        "statistics": {
+          "note": "Production comparison includes training records; model evaluation metrics use only held-out data",
+          "predicted_good": 522,
+          "population_count": 1000,
+          "correct_predictions": 763,
+          "predicted_defective": 478
+        },
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b"
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 62
+    },
+    {
+      "tool": "classify_manufacturing_dataset",
+      "result": {
+        "items": [
+          {
+            "machine_id": "M05",
+            "product_id": "P0395",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.06407244153635182,
+            "correct_prediction": true,
+            "probability_defective": 0.9359275584636482
+          },
+          {
+            "machine_id": "M04",
+            "product_id": "P0399",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.19516501024299196,
+            "correct_prediction": true,
+            "probability_defective": 0.8048349897570081
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0400",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.15721182867748723,
+            "correct_prediction": true,
+            "probability_defective": 0.8427881713225127
+          },
+          {
+            "machine_id": "M03",
+            "product_id": "P0403",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.22036236879054943,
+            "correct_prediction": true,
+            "probability_defective": 0.7796376312094506
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0405",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.04664106404578238,
+            "correct_prediction": true,
+            "probability_defective": 0.9533589359542176
+          }
+        ],
+        "limit": 100,
+        "total": 478,
+        "offset": 200,
+        "has_more": true,
+        "synthetic": true,
+        "statistics": {
+          "note": "Production comparison includes training records; model evaluation metrics use only held-out data",
+          "predicted_good": 522,
+          "population_count": 1000,
+          "correct_predictions": 763,
+          "predicted_defective": 478
+        },
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b"
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 66
+    },
+    {
+      "tool": "classify_manufacturing_dataset",
+      "result": {
+        "items": [
+          {
+            "machine_id": "M02",
+            "product_id": "P0632",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.016930211966254157,
+            "correct_prediction": true,
+            "probability_defective": 0.9830697880337459
+          },
+          {
+            "machine_id": "M02",
+            "product_id": "P0637",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.2406819521117371,
+            "correct_prediction": true,
+            "probability_defective": 0.7593180478882628
+          },
+          {
+            "machine_id": "M04",
+            "product_id": "P0639",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.29402783249309855,
+            "correct_prediction": false,
+            "probability_defective": 0.7059721675069015
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0640",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.4272340749704198,
+            "correct_prediction": true,
+            "probability_defective": 0.5727659250295802
+          },
+          {
+            "machine_id": "M02",
+            "product_id": "P0642",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.4083354249168716,
+            "correct_prediction": true,
+            "probability_defective": 0.5916645750831284
+          }
+        ],
+        "limit": 100,
+        "total": 478,
+        "offset": 300,
+        "has_more": true,
+        "synthetic": true,
+        "statistics": {
+          "note": "Production comparison includes training records; model evaluation metrics use only held-out data",
+          "predicted_good": 522,
+          "population_count": 1000,
+          "correct_predictions": 763,
+          "predicted_defective": 478
+        },
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b"
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 48
+    },
+    {
+      "tool": "classify_manufacturing_dataset",
+      "result": {
+        "items": [
+          {
+            "machine_id": "M03",
+            "product_id": "P0848",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.11484599979791885,
+            "correct_prediction": true,
+            "probability_defective": 0.8851540002020811
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0850",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.12170923867259274,
+            "correct_prediction": false,
+            "probability_defective": 0.8782907613274072
+          },
+          {
+            "machine_id": "M04",
+            "product_id": "P0854",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.4499753718962256,
+            "correct_prediction": false,
+            "probability_defective": 0.5500246281037744
+          },
+          {
+            "machine_id": "M05",
+            "product_id": "P0855",
+            "actual_label": 0,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.41017739548531734,
+            "correct_prediction": true,
+            "probability_defective": 0.5898226045146826
+          },
+          {
+            "machine_id": "M01",
+            "product_id": "P0856",
+            "actual_label": 1,
+            "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+            "classification": "Defective",
+            "predicted_label": 0,
+            "probability_good": 0.4123842487026937,
+            "correct_prediction": false,
+            "probability_defective": 0.5876157512973064
+          }
+        ],
+        "limit": 100,
+        "total": 478,
+        "offset": 400,
+        "has_more": false,
+        "synthetic": true,
+        "statistics": {
+          "note": "Production comparison includes training records; model evaluation metrics use only held-out data",
+          "predicted_good": 522,
+          "population_count": 1000,
+          "correct_predictions": 763,
+          "predicted_defective": 478
+        },
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b"
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 73
+    }
+  ],
+  "training_jobs_before": 1,
+  "training_jobs_after": 1,
+  "confirmation_restored_after_reload": false,
+  "browser_errors": 0
+}

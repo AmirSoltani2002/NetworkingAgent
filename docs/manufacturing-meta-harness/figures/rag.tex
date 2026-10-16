@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.6cm and .7cm]
+\node[box](docs){PDF / TXT / Markdown\\devices + associations};\node[box,right=of docs](chunk){Parse sections/pages\\semantic + protected chunks};\node[box,right=of chunk](emb){Local embeddings\\384-D pinned model};
+\node[box,below=of docs](query){Operator / MCP query\\exact device scope};\node[box,right=of query](search){Vector + full-text +\\explicit evidence streams};\node[box,right=of search](out){RRF ranking\\passages + provenance};
+\draw[arr](docs)--(chunk);\draw[arr](chunk)--(emb);\draw[arr](emb)--(search);\draw[arr](query)--(search);\draw[arr](search)--(out);\end{tikzpicture}

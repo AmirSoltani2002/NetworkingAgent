@@ -1,0 +1,4 @@
+
+> local-meta-harness@0.1.0 lint
+> eslint ui/src core/src ui/vite.config.ts eslint.config.mjs
+

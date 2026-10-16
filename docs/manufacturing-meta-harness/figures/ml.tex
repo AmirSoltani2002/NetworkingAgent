@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.65cm and .8cm]
+\node[box](raw){Chronological rows\\per-machine history};\node[box,right=of raw](feat){20 features\\causal 3-point window};\node[box,right=of feat](split){780 train / 20 embargo\\200 holdout};
+\node[box,below=of split](eval){Evaluation forest\\holdout metrics};\node[box,left=of eval](final){Final forest\\fit all 1,000 labels};\node[box,left=of final](infer){New / stored reading\\preceding two rows};
+\draw[arr](raw)--(feat);\draw[arr](feat)--(split);\draw[arr](split)--(eval);\draw[arr](feat)--(final);\draw[arr](final)--(infer);\end{tikzpicture}

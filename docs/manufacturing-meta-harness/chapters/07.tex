@@ -1,0 +1,12 @@
+\partlabel{PART II --- ML, RAG, AND DECISION SUPPORT}
+\chapter{Time-Series Machine Health Analysis}
+\section{Problem and selected approach}
+A single-measurement classifier considers only one instantaneous signal vector. A time-window classifier supplements it with recent behavior. Time-series anomaly detection can learn deviation from expected dynamics without equivalent supervised fault labels. Predictive-maintenance forecasting estimates future condition or time to failure. This service implements \textbf{supervised binary classification with causal short-window features}; it is neither a sequence model nor a prognostic forecaster.
+
+\texttt{feature\_matrix()} constructs \textbf{20 features}: ten measured signals, two recipe indicators (B and C, with A as reference), and mean/standard-deviation pairs for torque, vibration, oil temperature and melt pressure. A per-machine deque retains at most three readings, including the target. At five-minute cadence a full window spans ten minutes from first to last, not fifteen minutes of elapsed history. Population standard deviation uses NumPy's default \texttt{ddof=0}; first/second rows use shorter warmup windows.
+\fig{ml}{Actual feature and model pipeline. The evaluation candidate and final all-labeled model are distinct artifacts in the training procedure.}
+\section{Design decision and training procedure}
+Random Forest provides nonlinear interactions between load, thermal and vibration features without a large sequence-training stack. This is a reasonable proof-of-concept choice, not evidence of an algorithm comparison. \texttt{\_classifier()} fixes 180 trees, maximum depth 9, minimum leaf size 4, balanced class weights, seed 20261009 and parallel CPU execution. The repository has no hyperparameter search or industrial calibration study. Random Forest probabilities aggregate tree estimates; they are not validated failure-risk probabilities~\cite{rfdocs}.
+
+\texttt{train()} sorts by time/machine, builds causal features, requires at least 100 labeled rows and both classes in train/test partitions, evaluates an earlier-period candidate, then trains the deployed forest on all labeled rows. Random Forest has no \texttt{partial\_fit()} here: new verified labels trigger \textbf{full retraining}, not incremental fine-tuning. The service rejects training when no labels remain.
+\source{\path{zsk-service/zsk/zsk_model.py}: \texttt{MEASURED}, \texttt{ROLLING}, \texttt{FEATURES}, \texttt{feature\_matrix()}, \texttt{\_classifier()}, \texttt{train()}.}

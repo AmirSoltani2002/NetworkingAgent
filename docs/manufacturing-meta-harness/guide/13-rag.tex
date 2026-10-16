@@ -1,0 +1,21 @@
+\page{12 / OPEN THE REFERENCE SHELF}{RAG: consult the manual before explaining}
+The readings suggest a gearbox problem. A careful engineer now asks: what does the relevant documentation say about vibration, lubrication or inspection? RAG gives the agent a searchable reference shelf rather than expecting the language model to remember a particular machine manual.
+
+\subsection*{From a document to useful evidence}
+An operator explicitly uploads documents to the separate RAG service. It prepares searchable passages while retaining document identity and available page references. Merely attaching a file to chat does not add it to this library.
+
+During an investigation, an allowed retrieval tool identifies the relevant device and searches applicable documents using meaning and keywords. The result contains passages and source references. The LLM receives selected passages as context and uses them to explain the sensor evidence. RAG retrieves; it does not run a second answering agent.
+
+\subsection*{How we keep the reference useful}
+\begin{enumerate}
+\item \textbf{Match the equipment.} Retrieval can be scoped to the identified device. Ambiguous identity needs clarification. The game's document-to-machine mapping is a configured demonstration, not proof of physical identity.
+\item \textbf{Keep the source attached.} Results carry document title, version, passage identity and page information where available. The report is instructed to cite the passages it uses.
+\item \textbf{Keep search separate from authority.} Agent RAG tools are read-only. A sentence in a retrieved document cannot authorize a stop or repair.
+\item \textbf{Keep relevance separate from proof.} A high search score means a passage matched well; it is not the probability that the gearbox is damaged. A brochure cannot supply a missing maintenance procedure.
+\end{enumerate}
+
+\subsection*{Back in the game}
+The technician's animation shows an inspection job. A retrieved passage may explain why an engineer would inspect lubrication or alignment, but it cannot establish that either caused this alarm. The report should keep observations, document guidance and the agent's interpretation separate, and name missing evidence.
+
+\takeaway{RAG makes an explanation traceable to documents. It improves grounding; it does not turn a simulated inspection into a verified mechanical diagnosis.}
+\evidence{Standalone RAG retrieval and MCP contracts; factory report requirements. Source references enable review, not a guarantee that every generated sentence is correct.}

@@ -1,0 +1,40 @@
+name: manufacturing-demo
+services:
+  manufacturing-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: manufacturing
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set MANUFACTURING_DB_PASSWORD in the root .env}
+    volumes:
+      - manufacturing-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U manufacturing -d manufacturing"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+  manufacturing-ml:
+    image: manufacturing-ml:local
+    build:
+      context: .
+    environment:
+      MANUFACTURING_DB_HOST: manufacturing-db
+      MANUFACTURING_DB_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set MANUFACTURING_DB_PASSWORD in the root .env}
+      MANUFACTURING_API_KEY: ${MANUFACTURING_API_KEY:?Set MANUFACTURING_API_KEY in the root .env}
+      MANUFACTURING_PORT: 8000
+      MANUFACTURING_SEED: ${MANUFACTURING_SEED:-42}
+      MANUFACTURING_SAMPLE_COUNT: ${MANUFACTURING_SAMPLE_COUNT:-1000}
+      MANUFACTURING_REQUEST_TIMEOUT: ${MANUFACTURING_REQUEST_TIMEOUT:-30}
+      MANUFACTURING_LOG_LEVEL: ${MANUFACTURING_LOG_LEVEL:-INFO}
+    volumes:
+      - manufacturing-models:/data/models
+    depends_on:
+      manufacturing-db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${MANUFACTURING_HOST_PORT:-8100}:8000"
+    restart: unless-stopped
+volumes:
+  manufacturing-data:
+  manufacturing-models:

@@ -1,0 +1,14 @@
+\page{9 / LOOK BACKSTAGE}{Who thinks, who acts, who keeps the record?}
+The gearbox flashes in the game. Behind it, several specialists have different jobs. The factory service owns the simulated machine and technician. The ML service evaluates readings. RAG finds document passages. Core coordinates the investigation and keeps its record.
+\diagram{architecture}{Current ownership and communication. All services inside the dashed local boundary run locally; OpenAI inference is remote. The arrows show requests and returned results, not sensor or material flow. PostgreSQL stores are separate except that factory and ZSK share the dedicated manufacturing database.}
+
+\subsection*{Connecting the agent to the LLM}
+Think of the LLM as an analyst whom the coordinator consults. Core connects to OpenAI using the saved model and settings. It sends the task, relevant context and descriptions of permitted tools. The model returns an explanation or a proposed next step; core handles actual execution.
+
+The connection key stays in backend secret configuration. The browser sees a masked key, and external tools do not need that key. Connection or unsupported-setting failures are shown; the application does not silently substitute another model.
+
+\subsection*{Two different kinds of intelligence}
+The ML models score sensor patterns; the LLM chooses investigation steps and explains evidence. The LLM does not run the machine's clock or control the animation. There is one existing agent/model connection, reused by chat and persistent tasks.
+
+\takeaway{The services and records are local, but LLM inference is remote. Relevant observations and retrieved passages supplied as context can leave the local machine.}
+\evidence{Current service boundaries and saved-model connection: Factory architecture, Local architecture and API specification; source paths are on page 16.}

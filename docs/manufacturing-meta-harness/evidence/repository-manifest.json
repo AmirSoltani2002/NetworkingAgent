@@ -1,0 +1,1550 @@
+[
+  {
+    "path": "docker-compose.tasks-workspace.yml",
+    "bytes": 286,
+    "sha256": "0d762b2715f7d9da3945753e76a095f67081585dcac96083de54d3c64e2c3acd",
+    "lines": 11
+  },
+  {
+    "path": ".env.example",
+    "bytes": 2783,
+    "sha256": "09bec1fe6375f9c2d4c6ff72669ef5ed539a368afc90b4bdbfa89989bf42db21",
+    "lines": 62
+  },
+  {
+    "path": "rag-server/requirements.in",
+    "bytes": 332,
+    "sha256": "4dca589a08ea57e14d2cd69fdf9cba51636b61a0e21bbd93a49acad3a62830d0",
+    "lines": 16
+  },
+  {
+    "path": "rag-server/.env.example",
+    "bytes": 1416,
+    "sha256": "56ca937c6cab4a109d5f6b9e54fc895ee739fb4b9ad8e50793fe3c7bc307fdb6",
+    "lines": 46
+  },
+  {
+    "path": "rag-server/README.md",
+    "bytes": 20259,
+    "sha256": "06bc1e9c0dc8087ae7a994aa8130f372b490b2af091ca72683e9c47d7477c2b1",
+    "lines": 239
+  },
+  {
+    "path": "rag-server/requirements-test.in",
+    "bytes": 68,
+    "sha256": "406b56e3c95bbdba1d0ed96c0793859b7aab0ddd157257b3729763e17c05cce5",
+    "lines": 5
+  },
+  {
+    "path": "rag-server/Dockerfile",
+    "bytes": 1711,
+    "sha256": "dcd02ca1a37d7f9b6a6a2f61ddc4eb86c352f82a6b326ee2f67dbc4efe6c631c",
+    "lines": 42
+  },
+  {
+    "path": "rag-server/alembic.ini",
+    "bytes": 97,
+    "sha256": "61f3e38cc87aeeb1e17d1b83b05dc51e775a173ad06c5df047f838e3d411a175",
+    "lines": 5
+  },
+  {
+    "path": "rag-server/docker-compose.test.yml",
+    "bytes": 1091,
+    "sha256": "af24c8eec17b244a56656e4d3170344c6f01d599302b1440fe4d58dc72089c17",
+    "lines": 36
+  },
+  {
+    "path": "rag-server/tests/test_retrieval.py",
+    "bytes": 10284,
+    "sha256": "c1637ab5ba8e55f8ce601619ea773e191a9c8bcd13f5f419e3fb01f353acaeb5",
+    "lines": 224
+  },
+  {
+    "path": "rag-server/tests/test_migrations.py",
+    "bytes": 1744,
+    "sha256": "4583ecf39fe2d67996176df39c6764e8d1a24368c08115c28f59c07d66130408",
+    "lines": 54
+  },
+  {
+    "path": "rag-server/tests/fakes.py",
+    "bytes": 1022,
+    "sha256": "f3ad23dc8170a2b17510a0ba1d8f46ad021b945327728c64918a7efb5f2d1881",
+    "lines": 33
+  },
+  {
+    "path": "rag-server/tests/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0
+  },
+  {
+    "path": "rag-server/tests/test_crud.py",
+    "bytes": 4228,
+    "sha256": "dad8fd3c46a843997e4c8b94f0ebe8640f2dc27a578a4f98fa6be7cf38ee40c8",
+    "lines": 107
+  },
+  {
+    "path": "rag-server/tests/test_documents.py",
+    "bytes": 8729,
+    "sha256": "b464545d7f9ca95ae5f693b09c6512f030956fda954ba4eebf858feecbe03a12",
+    "lines": 188
+  },
+  {
+    "path": "rag-server/tests/test_mcp_auth.py",
+    "bytes": 4793,
+    "sha256": "488d235acca483dd8f36d82f53f454799490b1329bf06cc6aa27dc2e4dd97590",
+    "lines": 110
+  },
+  {
+    "path": "rag-server/tests/conftest.py",
+    "bytes": 1464,
+    "sha256": "bf5c1b79e80795689e6c40f5e79cf6867643e3eed5aac38b0f1ae8093908a9c1",
+    "lines": 56
+  },
+  {
+    "path": "rag-server/tests/test_embeddings_chunking.py",
+    "bytes": 4053,
+    "sha256": "43fc1a399468c9111d5ca6a0317ff17617fa92b9dd9d42a6192194a5442549a9",
+    "lines": 105
+  },
+  {
+    "path": "rag-server/pyproject.toml",
+    "bytes": 614,
+    "sha256": "b1d83c94cfb5c87ec7b387b4a33a85949a6c518e49d9f62a84dd97e9af948c44",
+    "lines": 28
+  },
+  {
+    "path": "rag-server/rag/models.py",
+    "bytes": 5152,
+    "sha256": "fe7e67785f94475dd6dd4788b48b0d181e9b3d1a9fc6ee9a4ac4f9236404508a",
+    "lines": 126
+  },
+  {
+    "path": "rag-server/rag/api.py",
+    "bytes": 13115,
+    "sha256": "468c006705b4f209eca264337a589385ce9a0eae10b7237cc7d2adbbfba3b91d",
+    "lines": 340
+  },
+  {
+    "path": "rag-server/rag/embeddings.py",
+    "bytes": 4579,
+    "sha256": "f2f2b4746eb20d098e14729a3be3bcf7caa957b2be17f80870c7320db06a2be0",
+    "lines": 113
+  },
+  {
+    "path": "rag-server/rag/db.py",
+    "bytes": 2888,
+    "sha256": "18ecd1420b1a64bc12a0ac3e338c58d2073a1273c8ab072fd4f5794540e1917e",
+    "lines": 71
+  },
+  {
+    "path": "rag-server/rag/worker.py",
+    "bytes": 8290,
+    "sha256": "ccfecb5e75652e327377b866560073a3505ae2097370e4cb3213651a8c2eee24",
+    "lines": 192
+  },
+  {
+    "path": "rag-server/rag/chunking.py",
+    "bytes": 9194,
+    "sha256": "76a9dd86a7416877d479a7afcf3ad13458ad4e5441717007387d204090d84b80",
+    "lines": 232
+  },
+  {
+    "path": "rag-server/rag/schemas.py",
+    "bytes": 2700,
+    "sha256": "bc716e0b714fadf94b5e76769816fd9dfbdf3ee2f8670828dfd31a42505d6f5c",
+    "lines": 81
+  },
+  {
+    "path": "rag-server/rag/config.py",
+    "bytes": 3279,
+    "sha256": "fc90490b8771fa1b82a2b962550e4df592c77ecd2ee07db0e5017b8bd9739693",
+    "lines": 78
+  },
+  {
+    "path": "rag-server/rag/__init__.py",
+    "bytes": 73,
+    "sha256": "8b5c536955ccf9ab4b4aa568385b226a6b53b834738d41c7fda09b6c4ad91e18",
+    "lines": 1
+  },
+  {
+    "path": "rag-server/rag/services.py",
+    "bytes": 10946,
+    "sha256": "d1696302bb41a5bd4c9f7fbf48748e5a315faa74626536f90c49652c9d3a512a",
+    "lines": 253
+  },
+  {
+    "path": "rag-server/rag/observability.py",
+    "bytes": 1430,
+    "sha256": "98e30cd96455afb53f956f426a65e1eee9f2dd0a9de588a6ce069685aa83a2c1",
+    "lines": 49
+  },
+  {
+    "path": "rag-server/rag/retrieval.py",
+    "bytes": 13246,
+    "sha256": "a6c6d431a28e84b99dfd4133c597eeacf85f9a62849bf6dae30d63661ede3ce3",
+    "lines": 277
+  },
+  {
+    "path": "rag-server/rag/cli.py",
+    "bytes": 4396,
+    "sha256": "04b0b8d66c006f1bc9271a96156057253ce19fd99c759bb3f0e827a67322233d",
+    "lines": 133
+  },
+  {
+    "path": "rag-server/rag/mcp_server.py",
+    "bytes": 3629,
+    "sha256": "ac41dd8e6de505882c5c32454b547dee363d7903d42632897545bbe2f95098b3",
+    "lines": 82
+  },
+  {
+    "path": "rag-server/rag/errors.py",
+    "bytes": 375,
+    "sha256": "df0f51e74d8e56fe3880f5d6e2d071bbf54f6fe0790f1d47f18343d7ad13900a",
+    "lines": 11
+  },
+  {
+    "path": "rag-server/rag/middleware.py",
+    "bytes": 2780,
+    "sha256": "a17ea02c0133cf98669fa36b9e2716ff45bd6814923f16b6548119f3ec85ff16",
+    "lines": 81
+  },
+  {
+    "path": "rag-server/rag/documents.py",
+    "bytes": 14248,
+    "sha256": "e9abd54f568e97a519ab1dfe4720df87bfb189c1ce6245c58635727ca1c7c0dc",
+    "lines": 303
+  },
+  {
+    "path": "rag-server/docker-compose.yml",
+    "bytes": 3839,
+    "sha256": "8784009801192ed8ab6c0c4924e5b1cc851d1279d625093c925f7cb82517532e",
+    "lines": 96
+  },
+  {
+    "path": "rag-server/docker-compose.meta-harness.yml",
+    "bytes": 212,
+    "sha256": "053de34ee686106e4d8789d4d16630c6c44fb03befe1417139deddbdf6f26599",
+    "lines": 11
+  },
+  {
+    "path": "rag-server/migrations/script.py.mako",
+    "bytes": 324,
+    "sha256": "98954b447b90be6221f7f98fdbc721df64871658080adec66f8c641cffa9b524",
+    "lines": 12
+  },
+  {
+    "path": "rag-server/migrations/versions/0001_knowledge.py",
+    "bytes": 5087,
+    "sha256": "3bb37a649a1b9a3faf914a9c62ef096194ea71f9b0be77ca5367addad706f3bf",
+    "lines": 97
+  },
+  {
+    "path": "rag-server/migrations/env.py",
+    "bytes": 873,
+    "sha256": "58bfbab3e9305a7a3ab215ed89c3d4fe30142010acde4bf021b03f992173e2da",
+    "lines": 24
+  },
+  {
+    "path": "rag-server/samples/device-a-maintenance.md",
+    "bytes": 501,
+    "sha256": "5c12ad1e26b55e30249946c1ab99042ae23c3c8f9513f4fbe4f246fdef0327a8",
+    "lines": 12
+  },
+  {
+    "path": "rag-server/samples/devices-issues.json",
+    "bytes": 774,
+    "sha256": "a1b96d088f5838d92806fc326d27668432b60c223b3b8c0b840bd327d4d5c78a",
+    "lines": 11
+  },
+  {
+    "path": "rag-server/samples/device-b-troubleshooting.md",
+    "bytes": 280,
+    "sha256": "bb3b80770972b0c7b98b7f806f53841398142440bc09df3a66f4c5e4b4fb1d90",
+    "lines": 7
+  },
+  {
+    "path": "rag-server/samples/shared-relay.md",
+    "bytes": 365,
+    "sha256": "680c9c766b6d6bbc6046372f207e1238172098c1d1983c2a9bc3d807882350c8",
+    "lines": 9
+  },
+  {
+    "path": "zsk-service/docker-compose.restart-test.yml",
+    "bytes": 758,
+    "sha256": "597344e150e23d87c8a9f66bd9a4c24cb85896d669a574137397bc1448daa0a1",
+    "lines": 27
+  },
+  {
+    "path": "zsk-service/zsk/auth.py",
+    "bytes": 276,
+    "sha256": "12ea5182daad9e1576bad045e5f927dd0254b7265b7e9aca9deb4d00c3ac379f",
+    "lines": 5
+  },
+  {
+    "path": "zsk-service/zsk/api.py",
+    "bytes": 6363,
+    "sha256": "a6fe6a44f6646de9692c1faa5c1ff784e492bb174dd399a66dc5d9d9dded08cc",
+    "lines": 99
+  },
+  {
+    "path": "zsk-service/zsk/db.py",
+    "bytes": 2773,
+    "sha256": "57dd3635a1b7c3fc37fae5b53ef12f2c413ad6e15371de5fea50f0529954fee0",
+    "lines": 44
+  },
+  {
+    "path": "zsk-service/zsk/service.py",
+    "bytes": 25386,
+    "sha256": "e5eecd62c3944301972be5f3da32f112519c8921f9df04ba2c8d579f80830dc4",
+    "lines": 311
+  },
+  {
+    "path": "zsk-service/zsk/schemas.py",
+    "bytes": 4654,
+    "sha256": "f4201708a2e77c68566223d2ebde852a8f5c91a5709ce494229a06cd00894455",
+    "lines": 91
+  },
+  {
+    "path": "zsk-service/zsk/config.py",
+    "bytes": 1113,
+    "sha256": "63cdff979eee7dfcaaf17c6883ca16cf1195fea31cfc48255e1dc2aeaa9dc3ef",
+    "lines": 24
+  },
+  {
+    "path": "zsk-service/zsk/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0
+  },
+  {
+    "path": "zsk-service/zsk/cli.py",
+    "bytes": 329,
+    "sha256": "8a9bb206ae62be4f6dfb54145b3c84595e07897048ff4b00b792363eb35d0b1e",
+    "lines": 7
+  },
+  {
+    "path": "zsk-service/zsk/mcp_server.py",
+    "bytes": 7406,
+    "sha256": "0766cf574b50758aff1d25b4e68b4ac7af71fefbff633c8eb883e24d4db602e2",
+    "lines": 71
+  },
+  {
+    "path": "zsk-service/zsk/errors.py",
+    "bytes": 185,
+    "sha256": "4374af783f3e6e9560cedfb52c6ddb69b7e259f09a1f64814bd32658872f145d",
+    "lines": 4
+  },
+  {
+    "path": "zsk-service/zsk/zsk_model.py",
+    "bytes": 10085,
+    "sha256": "0aef13da3d7c6bcb21aeba7d1f29415f8e7fc78252bab5c0b06f0efaec80dce7",
+    "lines": 208
+  },
+  {
+    "path": "zsk-service/.env.example",
+    "bytes": 201,
+    "sha256": "db65e94742c084c227457da23f24d4c3a71c062b786c70738ebbbd2ee5cb44a9",
+    "lines": 5
+  },
+  {
+    "path": "zsk-service/README.md",
+    "bytes": 9306,
+    "sha256": "1eda7432c382ff8811a9b3183255a1807b9dd08857064215a6344a741b292b93",
+    "lines": 69
+  },
+  {
+    "path": "zsk-service/Dockerfile",
+    "bytes": 1265,
+    "sha256": "1dbfba67fdbd4b9743e4fb81cc44abb08e8ede71bbd912b14cc633efc0ef3e53",
+    "lines": 29
+  },
+  {
+    "path": "zsk-service/docker-compose.test.yml",
+    "bytes": 822,
+    "sha256": "d06b750a01b4d84c2d057be2947ddc4dee171a4d10819944f44dbc17f1501f89",
+    "lines": 28
+  },
+  {
+    "path": "zsk-service/tests/test_lifecycle.py",
+    "bytes": 159,
+    "sha256": "d80ee48613daacad7d4010d7d7e74c1b7a9c2d2d5f170ce0e854e4492f938e72",
+    "lines": 5
+  },
+  {
+    "path": "zsk-service/tests/restart_check.py",
+    "bytes": 2087,
+    "sha256": "38bd0676333e4486a1a62e8ad9ee96666cfecb8df73fa64d3a85f75abf2694df",
+    "lines": 30
+  },
+  {
+    "path": "zsk-service/tests/check.py",
+    "bytes": 4693,
+    "sha256": "1d6b90e9548796a8abfc6dd1023432c5edc42ed58603765edc32183dca94f6a6",
+    "lines": 72
+  },
+  {
+    "path": "zsk-service/tests/http_check.py",
+    "bytes": 2971,
+    "sha256": "54df08df22447a783806f83710fc2d353eac793c2522644dad4dc598309fcb77",
+    "lines": 44
+  },
+  {
+    "path": "zsk-service/docker-compose.yml",
+    "bytes": 1129,
+    "sha256": "95b71a781a36f8fedb81ecf4387d42469600f90a43a27eec3da75d80f5189e56",
+    "lines": 36
+  },
+  {
+    "path": "zsk-service/docker-compose.meta-harness.yml",
+    "bytes": 159,
+    "sha256": "31efd4e4532661c4ff02e516b1e15a4812793d4bdf5e7a900f8faea07a8c5012",
+    "lines": 10
+  },
+  {
+    "path": "zsk-service/migrations/002_runtime.sql",
+    "bytes": 1809,
+    "sha256": "c0c791c0071a3d096a120462d8d6a95666fbcef3159719fc1ca72b357a9d4a98",
+    "lines": 18
+  },
+  {
+    "path": "zsk-service/migrations/001_baseline.sql",
+    "bytes": 3401,
+    "sha256": "3bbbf08d616b724781b173a7b73ad2892b280fea2ebe453fc48565a5394cc136",
+    "lines": 56
+  },
+  {
+    "path": "zsk-service/migrations/003_prediction_jobs.sql",
+    "bytes": 1073,
+    "sha256": "3b547ec85a55f1ccfa384e7f94386b78f841d13f9a4783b9efba3560edaf40da",
+    "lines": 17
+  },
+  {
+    "path": "zsk-service/requirements-model.txt",
+    "bytes": 51,
+    "sha256": "bd5e14ab5e43cfa0b002b407914fbef16dbf2e1c985744572d2da55d7fb69ede",
+    "lines": 3
+  },
+  {
+    "path": "README.md",
+    "bytes": 5821,
+    "sha256": "6c6aafd928c1bb1f2a175a39080490ee7a9543f3b71cf0ae2c689df82b0afac9",
+    "lines": 56
+  },
+  {
+    "path": "AGENTS.md",
+    "bytes": 11363,
+    "sha256": "264613ebac643fab50a541a986b4ea71d7f3ed9e5b37919e278147085a90840b",
+    "lines": 81
+  },
+  {
+    "path": "docker-compose.mcp.yml",
+    "bytes": 205,
+    "sha256": "f78fcaaa62a84e7dfd563bb9312964e0685b057fd51b8d4721ac443acfbb6fe3",
+    "lines": 10
+  },
+  {
+    "path": "docs/ROADMAP.md",
+    "bytes": 4896,
+    "sha256": "f719aa7ce2048bb51afab78279f3acec59aab12dac8c61e2ec424d9f98b9162a",
+    "lines": 66
+  },
+  {
+    "path": "docs/UI_SPEC.md",
+    "bytes": 15943,
+    "sha256": "f930237467da50b394663b4045d806388a48982be0804bbab68d83a56eda469e",
+    "lines": 131
+  },
+  {
+    "path": "docs/ACCEPTANCE_TESTS.md",
+    "bytes": 22263,
+    "sha256": "e4704a4beeb35a982091187d80f0e09f22bae2218bec8f794de7a54164b5abbd",
+    "lines": 138
+  },
+  {
+    "path": "docs/TASK_EXECUTION.md",
+    "bytes": 15879,
+    "sha256": "2ecef0e3b1c0d7b4e133dc9bf99a56f59469591cf39f9c1ab55df40727f00d7a",
+    "lines": 96
+  },
+  {
+    "path": "docs/IMPLEMENTATION_DECISIONS.md",
+    "bytes": 28784,
+    "sha256": "1cf7f92c256c94d2898a389db906ddada9c952ec9fa88c98b7c20103f161b367",
+    "lines": 216
+  },
+  {
+    "path": "docs/API_SPEC.md",
+    "bytes": 20024,
+    "sha256": "41d0dd8fd8c8f882d5440ef8d21035b8eea7fa8a2f1d5409d6d5d2299adcbf19",
+    "lines": 253
+  },
+  {
+    "path": "docs/plans/meta-harness-manual.md",
+    "bytes": 1573,
+    "sha256": "76ad1dbef659ee3af08b886b42e518f0d10ba1b7ce927e24eaaec2e5319efefb",
+    "lines": 23
+  },
+  {
+    "path": "docs/DATA_MODELS.md",
+    "bytes": 12176,
+    "sha256": "3f2b6b8ae397f2ce21a245c43aa4a86aa518caa6cb41ad0a7c0be30dfef35c14",
+    "lines": 134
+  },
+  {
+    "path": "docs/LOCAL_ARCHITECTURE.md",
+    "bytes": 16137,
+    "sha256": "8b9e5cc8084939c208e1c68b3afa00059fc7c835cf4bdf5decc030f41ce55b28",
+    "lines": 139
+  },
+  {
+    "path": "docs/PROJECT_MAP.md",
+    "bytes": 23331,
+    "sha256": "22fc66d5ff1bf4454579cd04048fc3c38f760933db2945471e9c208283573767",
+    "lines": 230
+  },
+  {
+    "path": "docs/verification/zsk-tests.log",
+    "bytes": 1629,
+    "sha256": "78d1bf872a248bd05c1fc921de3a7522de9ec71b0ecee401c962e4f7e8bbd454",
+    "lines": 1
+  },
+  {
+    "path": "docs/verification/zsk-final-state.json",
+    "bytes": 2300,
+    "sha256": "1a14bdef75fc87725a1ee1aa5e8c748a4b571b69ec3117e9047344fedcea99cc",
+    "lines": 1
+  },
+  {
+    "path": "docs/verification/manufacturing-agent-prediction.json",
+    "bytes": 1100,
+    "sha256": "c48135c44a113953694dac4bca90a768cafc632c258e86cd8bc7643963365032",
+    "lines": 26
+  },
+  {
+    "path": "docs/verification/task-context-checkpoints.json",
+    "bytes": 1798,
+    "sha256": "194a54090005f1230a4b3982ee82ff6a23d47e1a20e6ac96902a8737f54291a4",
+    "lines": 35
+  },
+  {
+    "path": "docs/verification/zsk-results.md",
+    "bytes": 4299,
+    "sha256": "5feb7fefc931700765dc6b423719c152948f622afd018bde9f7afc65457552f4",
+    "lines": 23
+  },
+  {
+    "path": "docs/verification/zsk-mcp.json",
+    "bytes": 751,
+    "sha256": "f72a912b2fa00f0b5beccd19d8cc509c212a27b63f675c2ee81d979c8aba24b0",
+    "lines": 1
+  },
+  {
+    "path": "docs/verification/manufacturing-agent-training.json",
+    "bytes": 1835,
+    "sha256": "4581976ed6f71820133d020df8724f79f4b0ad33e3421dcf3ba4c57a5f6dafe2",
+    "lines": 38
+  },
+  {
+    "path": "docs/verification/zsk-restart.log",
+    "bytes": 210,
+    "sha256": "3f4ecd821330ab86105874ca13f9c59fc8ebcef8becc8b03c3e46208acd96f07",
+    "lines": 1
+  },
+  {
+    "path": "docs/verification/manufacturing-agent-metrics.json",
+    "bytes": 1879,
+    "sha256": "dbae1620107fce0a0031518f4043725780024c92354a51ffaca3e94c946d873e",
+    "lines": 49
+  },
+  {
+    "path": "docs/verification/task-http.json",
+    "bytes": 184,
+    "sha256": "240ccd8aada968826f82508716b4e09a7703938800814b053dca923afd4d82c6",
+    "lines": 9
+  },
+  {
+    "path": "docs/verification/task-results.md",
+    "bytes": 1172,
+    "sha256": "8372b2761f60b25ada3cb72cbeb15bb9f3a41a19c26d7a2ce3b9c35e8a970a65",
+    "lines": 13
+  },
+  {
+    "path": "docs/verification/task-restart.json",
+    "bytes": 228,
+    "sha256": "e7e1461f8adb08a553f70e4fa3fe1c2e7f8fb5cc9d1778700c4956c8774a3247",
+    "lines": 9
+  },
+  {
+    "path": "docs/verification/zsk-agent.json",
+    "bytes": 4956,
+    "sha256": "eb0df725afa4d9de3e6d0516be418c3a92eb72b7ab22f7d064f89d48e4e5e3b3",
+    "lines": 122
+  },
+  {
+    "path": "docs/verification/chat-context.md",
+    "bytes": 1961,
+    "sha256": "469d253ae8883ce1e5a9e76f6e3ba6c0c07db59f5b480f6756b2c8394fea06ef",
+    "lines": 15
+  },
+  {
+    "path": "docs/verification/task-backend-tests.log",
+    "bytes": 6315,
+    "sha256": "8b73a2533dc88b5e22f9bda44c2173b037ce041899416abc95bf1f18ba460519",
+    "lines": 56
+  },
+  {
+    "path": "docs/verification/manufacturing-agent-dataset.json",
+    "bytes": 18002,
+    "sha256": "3d9c9bbc7f21e0bee3f86af21529947faa28d2bdb822409bf6ff34ba4e7a7ab6",
+    "lines": 486
+  },
+  {
+    "path": "docs/MCP_CONTRACTS.md",
+    "bytes": 6911,
+    "sha256": "8cd53761ce843fa0b3880c7517d53ce7bb461fdcc3bb87ca41b2dbaf291c8039",
+    "lines": 39
+  },
+  {
+    "path": "docs/meta-harness-manual/references.bib",
+    "bytes": 2139,
+    "sha256": "45fac049bc7b462969e655e6541798bceebd748b3d1c382ed1ae1fb47eb23a37",
+    "lines": 14
+  },
+  {
+    "path": "docs/meta-harness-manual/main.tex",
+    "bytes": 6354,
+    "sha256": "b0d1f8a216deb99981f31a684e13c6249414bdbfbb8b224c10f06d1c7904188f",
+    "lines": 99
+  },
+  {
+    "path": "docs/meta-harness-manual/main.log",
+    "bytes": 36346,
+    "sha256": "51c31056e548d68236527dbf8ac1d842b937f230ee8c50dace04de1dbd795438",
+    "lines": 1048
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/architecture.tex",
+    "bytes": 995,
+    "sha256": "9dba1050954fe730acfb2960799aedd627d6f5e30d7090b558fa3f32f6b6c32c",
+    "lines": 16
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/task-states.tex",
+    "bytes": 1059,
+    "sha256": "c9f477764cf3db24ddd77fa88bbe6d12746c7abcabf52831925e8ac81ffce469",
+    "lines": 18
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/agent-loop.tex",
+    "bytes": 983,
+    "sha256": "667cb0a696cace06cfe15b228ce2ad7e507d296e64893e219fae7e1f1cff2844",
+    "lines": 14
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/mcp-sequence.tex",
+    "bytes": 825,
+    "sha256": "a3348c8fe1c1e8d320e4b8bd03c8098d944c11c8e001b9bb5dd13beffddb142b",
+    "lines": 11
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/security.tex",
+    "bytes": 906,
+    "sha256": "aabe3b2c30ca6f530bd4bf10bf72c39c656399534898601d10177b09b2f67b40",
+    "lines": 11
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/rag.tex",
+    "bytes": 924,
+    "sha256": "9211c093a70a9068a1ad4ea70ad107150b2b214bcea49af87dfef56203ad564b",
+    "lines": 11
+  },
+  {
+    "path": "docs/meta-harness-manual/figures/memory.tex",
+    "bytes": 886,
+    "sha256": "0876790e05c7e8636e113da34bf773386a5164f23c41999fe1e83c93a6c89730",
+    "lines": 12
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/10-manufacturing.tex",
+    "bytes": 3520,
+    "sha256": "f091c2f1bf74e3aeebcd22d945165e2b9f859ff00cfc487e1e1b64aa33e00297",
+    "lines": 16
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/05-recovery.tex",
+    "bytes": 5603,
+    "sha256": "970d940a45a792357516987b3899565cc2ee52aa5c54d39834381f1143dc0301",
+    "lines": 34
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/13-user-tasks.tex",
+    "bytes": 2489,
+    "sha256": "3fa1a2e694cca97814318a6490fc51c439c6080ce98803b81569cec1171f15b0",
+    "lines": 15
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/14-evaluation.tex",
+    "bytes": 3290,
+    "sha256": "670b32405d39dbee53522f4cdefa26a92e057f5bb83408937c8cda9f3edb6fa2",
+    "lines": 21
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/12-services.tex",
+    "bytes": 4271,
+    "sha256": "3422860a0138c5a6465f6a86bde03df5937f44a5b0d79864d070c6e3107eae60",
+    "lines": 39
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/08-verification.tex",
+    "bytes": 6163,
+    "sha256": "08ee94c70a9a8f8cbfc3c1db6233a3fffe35e62acc952c2de5ec97b2fbb8bc78",
+    "lines": 42
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/07-integrations.tex",
+    "bytes": 5617,
+    "sha256": "8faf86a62d09e32d7752f821ca2351a85a050397a278ade65ae24babe529aa7e",
+    "lines": 28
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/04-memory.tex",
+    "bytes": 8882,
+    "sha256": "f7bb1a23de725c131e9bf052c374ea5f60d5b691fb692b88f7b9b32c50d37035",
+    "lines": 57
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/03-agent-loop.tex",
+    "bytes": 5749,
+    "sha256": "64f6ce2bcd5bc208c89c4a9c44a9a10b87171910527deede79b3f6d1f4d9707f",
+    "lines": 46
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/11-installation.tex",
+    "bytes": 2768,
+    "sha256": "f3b13751792a8aadbb25a93cac5b3ad8e5fe9d2f5ecfed627ec8526bf03d79d9",
+    "lines": 30
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/02-architecture.tex",
+    "bytes": 1954,
+    "sha256": "e370429652ff161feaad4917b8f9fb058830fb05c2e9b96c32f34ed3456ecb96",
+    "lines": 17
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/01-introduction.tex",
+    "bytes": 3155,
+    "sha256": "115a19d7af3c4aedac812b26d50980b5ad98baae26a7e239527167b2c01765ce",
+    "lines": 19
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/09-rag.tex",
+    "bytes": 5704,
+    "sha256": "636f1dd3c0948fbf5e60971951d3ae3f37e2cd64f13cdf45d9e9489e88f90f20",
+    "lines": 34
+  },
+  {
+    "path": "docs/meta-harness-manual/chapters/06-security.tex",
+    "bytes": 5708,
+    "sha256": "17d69d0462ba80c040b40c01ae6296a6c95bec7036d6d69bb2f3899a2776f93c",
+    "lines": 29
+  },
+  {
+    "path": "docs/OPERATIONS.md",
+    "bytes": 18990,
+    "sha256": "e6ceab0355c501eaad724472a0796685a2356559f1b8a848df6b228c3359f166",
+    "lines": 187
+  },
+  {
+    "path": "manufacturing-demo/requirements.in",
+    "bytes": 172,
+    "sha256": "574b7411e3ca11d0cfee3c7214096f9ab19bbc2ce630e7422dfa1363262df3aa",
+    "lines": 10
+  },
+  {
+    "path": "manufacturing-demo/.env.example",
+    "bytes": 690,
+    "sha256": "1c2f3c520a843682b5c896ef0f5c40fae3e9551f18289fb1385e38ea6108db26",
+    "lines": 17
+  },
+  {
+    "path": "manufacturing-demo/README.md",
+    "bytes": 4412,
+    "sha256": "4f0d9933c7f542f5ac39a062c4c502feca303878b8a8cd0f01d5192ef4981833",
+    "lines": 43
+  },
+  {
+    "path": "manufacturing-demo/requirements-test.in",
+    "bytes": 53,
+    "sha256": "34b8bcf7efffdd288084ebcd5c6df890b4eb67ca624b92208db6b66a612dd8e0",
+    "lines": 3
+  },
+  {
+    "path": "manufacturing-demo/Dockerfile",
+    "bytes": 1428,
+    "sha256": "394d2e51b9d8efd58c43fb7abaa876192bbed33ff066962f9487698c32713f11",
+    "lines": 34
+  },
+  {
+    "path": "manufacturing-demo/docker-compose.test.yml",
+    "bytes": 864,
+    "sha256": "7ec34759e8f5020e62bd0730219dff15b6ced0a36a6e33daa31d502f684794b3",
+    "lines": 28
+  },
+  {
+    "path": "manufacturing-demo/tests/test_model.py",
+    "bytes": 5194,
+    "sha256": "345ec85b000f365417bbb5af9815cb1967858837c77857c9ea696ff2df627b7e",
+    "lines": 97
+  },
+  {
+    "path": "manufacturing-demo/tests/test_database.py",
+    "bytes": 2938,
+    "sha256": "6611b16881966a5e2dfe0a90934c8082a79d75cb9cd6b89bdec37734bc7ad6fc",
+    "lines": 56
+  },
+  {
+    "path": "manufacturing-demo/tests/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0
+  },
+  {
+    "path": "manufacturing-demo/tests/conftest.py",
+    "bytes": 1655,
+    "sha256": "091b3827152c5c42cb4503a27efa3133dc036061e99f97c68d11d30521b626af",
+    "lines": 48
+  },
+  {
+    "path": "manufacturing-demo/tests/test_api_mcp.py",
+    "bytes": 4914,
+    "sha256": "e0ee5b1432b156f3481a7f331a0bf3c0d1c7e184a2d3e59c395862823e82f9fa",
+    "lines": 79
+  },
+  {
+    "path": "manufacturing-demo/pyproject.toml",
+    "bytes": 85,
+    "sha256": "dede6db2d8013c8459c3f1022c7ad95cad56a9db0f228b1a37b23c4f70aac752",
+    "lines": 4
+  },
+  {
+    "path": "manufacturing-demo/docker-compose.yml",
+    "bytes": 1437,
+    "sha256": "4d637a45aa3363a27bfd7a00228fe75f04d1a41f6746592e888c44be8a465fbf",
+    "lines": 40
+  },
+  {
+    "path": "manufacturing-demo/docker-compose.meta-harness.yml",
+    "bytes": 199,
+    "sha256": "c23f74b1c93d77469dfb5e1c155884ea563d5cb8de81ebbd2d9edb8b818e88f7",
+    "lines": 10
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/api.py",
+    "bytes": 6473,
+    "sha256": "e42d0f2ae0a9e9a7c4ae773dadeb94900f546f2a6989d8b35b101f5a116cf75c",
+    "lines": 160
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/model.py",
+    "bytes": 9706,
+    "sha256": "9ee12e4f051f0293cd01b8de567d64a85b4128e4aefcf9a6bd9f2daa8b09b177",
+    "lines": 183
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/db.py",
+    "bytes": 2777,
+    "sha256": "d3f89fb84e40e6e8f815b99f638e819df7e03debed7c96a82d848fd599071aaa",
+    "lines": 56
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/schemas.py",
+    "bytes": 2474,
+    "sha256": "5b6d1d7f5f8de9da34adbb91472daebe7f4a35d1e7427cf6c996c873ec3de0ee",
+    "lines": 71
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/config.py",
+    "bytes": 1171,
+    "sha256": "8fcde0e20b7e4c968547a31cb6c40d0e62d5697acd03d142e17f34f1881a8b58",
+    "lines": 28
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/__init__.py",
+    "bytes": 72,
+    "sha256": "1d5a192c78f36fe0579a055332f5b6aca6e279beacfd90c7a514c8529febebce",
+    "lines": 1
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/dataset.py",
+    "bytes": 3774,
+    "sha256": "ebf8f56af45aaa77a0156dc8201654cc03f8c8996ed9383b520b99fc8f85ed6f",
+    "lines": 65
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/cli.py",
+    "bytes": 1747,
+    "sha256": "12b156fe7adf4a26fa462f386cff9c56f5fc3dc85c8070c898a779a61edcf6eb",
+    "lines": 44
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/mcp_server.py",
+    "bytes": 6791,
+    "sha256": "0b5574da49504ef0da5713104404e38a98ff9dd438a046cdb9e6e41f4593414d",
+    "lines": 100
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/errors.py",
+    "bytes": 185,
+    "sha256": "4374af783f3e6e9560cedfb52c6ddb69b7e259f09a1f64814bd32658872f145d",
+    "lines": 4
+  },
+  {
+    "path": "manufacturing-demo/manufacturing/seed.py",
+    "bytes": 3268,
+    "sha256": "b9e37ed48d3d83198b3808066685361370e783b26615631120a05d2cfb5eeb65",
+    "lines": 54
+  },
+  {
+    "path": "docker-compose.dev.yml",
+    "bytes": 63,
+    "sha256": "8cf14629e4d451a10f0cc4beb95a4972611ff7fc3f4b7c9b70c403a9fa84f0fa",
+    "lines": 4
+  },
+  {
+    "path": "core/src/config/environment-store.service.ts",
+    "bytes": 4350,
+    "sha256": "0fe423371e2479509a10e67f3f7033228b2b4eb9bbf3cd210b8d5a28d2638a19",
+    "lines": 102
+  },
+  {
+    "path": "core/src/config/environment.ts",
+    "bytes": 827,
+    "sha256": "f90286af247e40e794211cc2a26ef13fb6447f7dd6b7df77953d8659c5a83943",
+    "lines": 26
+  },
+  {
+    "path": "core/src/config/local-origin.ts",
+    "bytes": 464,
+    "sha256": "b9d2f203bef384dc622ff2ef073d332a1f6e4f06075e25e616c8d228cfa31c27",
+    "lines": 12
+  },
+  {
+    "path": "core/src/config/config.module.ts",
+    "bytes": 225,
+    "sha256": "0238fe71c339bd31f48ad865c925f4e1d2a25da0d70c99810077b8a81c608dbe",
+    "lines": 6
+  },
+  {
+    "path": "core/src/mcp/mcp.module.ts",
+    "bytes": 332,
+    "sha256": "eb27f5d8ed7233942fdf4f49246ff4485cdf17a3b4cc62a01ee4c1b3b16e169c",
+    "lines": 6
+  },
+  {
+    "path": "core/src/mcp/mcp.controller.ts",
+    "bytes": 2433,
+    "sha256": "6e652b36f6028de9b3f966f59f7de10e11f7ab78370a44e5d4848a33a001d375",
+    "lines": 21
+  },
+  {
+    "path": "core/src/mcp/network-policy.ts",
+    "bytes": 4971,
+    "sha256": "9b818d0540527829dd7e58e730431737a1f2d750174c3ab38847e696bc82f282",
+    "lines": 73
+  },
+  {
+    "path": "core/src/mcp/mcp.service.ts",
+    "bytes": 19769,
+    "sha256": "5e6c30352b36f763c4c328a077c2471aa4a5522f6dfd75e2855d1cdd918724d6",
+    "lines": 222
+  },
+  {
+    "path": "core/src/http-exception.filter.ts",
+    "bytes": 1100,
+    "sha256": "038f35fe7ec7720bbf821c9b5eed24d18a5bea5ba16b26ab2db9a92c4692a66b",
+    "lines": 17
+  },
+  {
+    "path": "core/src/tasks/tasks.service.ts",
+    "bytes": 12826,
+    "sha256": "21721131528b22b415be8bf03e829ac4eabb17e7a06ab6d77d953975a0f423af",
+    "lines": 83
+  },
+  {
+    "path": "core/src/tasks/task-prompt.ts",
+    "bytes": 6320,
+    "sha256": "551e411b0c9a1312e10321b99186239b221cf5d4701870275818701792a4268d",
+    "lines": 4
+  },
+  {
+    "path": "core/src/tasks/task-context.ts",
+    "bytes": 4073,
+    "sha256": "6635368a70c10af2b5830b3818ab47920b71392ff87eed0e42047a750ce1eb3f",
+    "lines": 57
+  },
+  {
+    "path": "core/src/tasks/task-schedules.service.ts",
+    "bytes": 5237,
+    "sha256": "ee5a947f7e91cd76ec6dcd20a390bea3fd5a36069894e5666c8714841de64b0b",
+    "lines": 37
+  },
+  {
+    "path": "core/src/tasks/task-contract.ts",
+    "bytes": 7390,
+    "sha256": "6348416b2274913d2bc6ff50a514c6bb6dfe0f5273fe84ad192357881eecc7e8",
+    "lines": 49
+  },
+  {
+    "path": "core/src/tasks/tasks.module.ts",
+    "bytes": 594,
+    "sha256": "b90de6ef043613426380e12880ddaa57801f98875b872eeae15149e0dfdba06a",
+    "lines": 10
+  },
+  {
+    "path": "core/src/tasks/task-decision-parser.ts",
+    "bytes": 4160,
+    "sha256": "d4327e5f3201f5514b44f630238bf260df3e582099bba48f1503d1e5fcd27514",
+    "lines": 70
+  },
+  {
+    "path": "core/src/tasks/tasks.controller.ts",
+    "bytes": 4516,
+    "sha256": "7632b89bd0a05857fe16c91bb1d3c782df210562e5ec400671acad452a3fb0bb",
+    "lines": 26
+  },
+  {
+    "path": "core/src/tasks/task-worker.ts",
+    "bytes": 22342,
+    "sha256": "cb90f55670a8e20a1a825e7fec843a8ecb42fb6a22db0b49d6a69614d88b687d",
+    "lines": 131
+  },
+  {
+    "path": "core/src/tasks/execution-policy.ts",
+    "bytes": 10724,
+    "sha256": "8f2c1b1c53f6e4366d6b7aa7ac458adadc642375b7877ce3aba3ca6eee91c958",
+    "lines": 89
+  },
+  {
+    "path": "core/src/rag/rag-client.ts",
+    "bytes": 2266,
+    "sha256": "15350565f8afa85144bb4c573dfb0ee7f85ed88967444b7f88e292161c9fb957",
+    "lines": 29
+  },
+  {
+    "path": "core/src/rag/rag.service.ts",
+    "bytes": 8957,
+    "sha256": "2fc0605e416c03bb33b6c2c4e865b003df7e47d0288ba18dfecd7f2e3bd6208e",
+    "lines": 86
+  },
+  {
+    "path": "core/src/rag/rag.module.ts",
+    "bytes": 292,
+    "sha256": "e66ef8a6560bb7eeda7c83b6de55eea9bb081bc0dc336a4739b2eb7d9d9486ba",
+    "lines": 6
+  },
+  {
+    "path": "core/src/rag/rag.controller.ts",
+    "bytes": 4535,
+    "sha256": "fae5ad4eac370d2f30d794478fb6614629bc5a49cead9d4acd468aa10a4bfb51",
+    "lines": 39
+  },
+  {
+    "path": "core/src/app.module.ts",
+    "bytes": 607,
+    "sha256": "c4be7849972769e06d0e180111c10c78b2f4412388acc5440d9ee4ff878f3bec",
+    "lines": 12
+  },
+  {
+    "path": "core/src/llm/llm.service.ts",
+    "bytes": 25474,
+    "sha256": "fd5523983698581a9bc64ec936061041e413005962c49e92321356877765a42e",
+    "lines": 305
+  },
+  {
+    "path": "core/src/llm/context-window.ts",
+    "bytes": 5564,
+    "sha256": "331440dbe15bbb4b396a4ab1734a642bc95bee49d149d74e68c844da3e766c76",
+    "lines": 79
+  },
+  {
+    "path": "core/src/llm/llm.module.ts",
+    "bytes": 391,
+    "sha256": "145f0e2a95b46fd965297722dd32f4a310722e4acd6642ad60f44d374b7bdddb",
+    "lines": 8
+  },
+  {
+    "path": "core/src/llm/llm.controller.ts",
+    "bytes": 672,
+    "sha256": "d8f8c401aa8925b01e06b90f04233f209f83577ea5dc98f59a4e5dae9b2d386a",
+    "lines": 23
+  },
+  {
+    "path": "core/src/database/database.service.ts",
+    "bytes": 2532,
+    "sha256": "8d3f115f506f8f7b24265e03963e40d61275849a4d6f1629f5bb269601735deb",
+    "lines": 62
+  },
+  {
+    "path": "core/src/database/database.module.ts",
+    "bytes": 215,
+    "sha256": "a48b2ff831b43f87055be08acb9d6805104c5bff1a8f87ba0b7d613bbe92a9c2",
+    "lines": 6
+  },
+  {
+    "path": "core/src/chats/chats.controller.ts",
+    "bytes": 2784,
+    "sha256": "a05e75b24b2e91ba0c01d0136b0c3728cbbd0a8ccb1001c24ef8978b15172cc4",
+    "lines": 59
+  },
+  {
+    "path": "core/src/chats/chats.module.ts",
+    "bytes": 312,
+    "sha256": "09ed96d1bba62688553b81784c5a1283dee3effdb3e92c39fc2956f1e089ea67",
+    "lines": 7
+  },
+  {
+    "path": "core/src/chats/chats.service.ts",
+    "bytes": 12816,
+    "sha256": "178254b5dfc15e66e5a7d110ef97fa6c15dc1b9908f60d174d075c22ed6c705e",
+    "lines": 182
+  },
+  {
+    "path": "core/src/main.ts",
+    "bytes": 1059,
+    "sha256": "e7f50bddd1a9e2701930b6fbc003c1f29aecb77e08203aa9893691adb6724eae",
+    "lines": 27
+  },
+  {
+    "path": "core/src/health/health.module.ts",
+    "bytes": 172,
+    "sha256": "09b379f5dbecf2ac3f92ac60bb8e5c9cee86377125efcbb7dd1c4122e3bb766f",
+    "lines": 5
+  },
+  {
+    "path": "core/src/health/health.controller.ts",
+    "bytes": 361,
+    "sha256": "50a2337cb8e31548261a60f3a5f7a521be8aac322fb61a74de343de82bde5e4b",
+    "lines": 12
+  },
+  {
+    "path": "core/Dockerfile",
+    "bytes": 822,
+    "sha256": "78b1110646348091343d0e83697121c820008cffda36794ecdf57edba7088bd5",
+    "lines": 26
+  },
+  {
+    "path": "core/tests/mcp.test.cjs",
+    "bytes": 4345,
+    "sha256": "ef0b1212f560beeb255d8d08828a53d608b39fa66a4258ebdcf223ebccf2c32f",
+    "lines": 59
+  },
+  {
+    "path": "core/tests/tasks-database.test.cjs",
+    "bytes": 9422,
+    "sha256": "ce4bf4038115b49500e1b3e73c3d8b0b10f4f160fbc929aae0f24861f18210b6",
+    "lines": 26
+  },
+  {
+    "path": "core/tests/context.test.cjs",
+    "bytes": 7971,
+    "sha256": "9093edd6759c028a0d7545e94469acef333d9c9584847dc301a5d1094906b1ea",
+    "lines": 98
+  },
+  {
+    "path": "core/tests/tasks.test.cjs",
+    "bytes": 5394,
+    "sha256": "8d14210cea23a4920b613ed159d47156a4efb28652a7abfdda561f822ded4842",
+    "lines": 18
+  },
+  {
+    "path": "core/tests/tool-confirmation.test.cjs",
+    "bytes": 6602,
+    "sha256": "d1bfb3000b01184b430a92973ae1d35061dc68e592d7b85a477bd70003c11760",
+    "lines": 54
+  },
+  {
+    "path": "core/tests/task-restart-review.py",
+    "bytes": 2030,
+    "sha256": "7f203249c57ce56c2180786261d2eea333dc274600af2d4e077df7e4c1e37d90",
+    "lines": 31
+  },
+  {
+    "path": "core/tests/task-restart-fixture.cjs",
+    "bytes": 4437,
+    "sha256": "fb7ed9999133e32d1ee02b376f758673f04b055a8e1abdb1911a05c8d3f2453d",
+    "lines": 20
+  },
+  {
+    "path": "core/tests/openai-fixture.cjs",
+    "bytes": 293,
+    "sha256": "545236d278be09a6a863175c679ccc2f7716a293731544df135abef4dceef8bd",
+    "lines": 4
+  },
+  {
+    "path": "core/tests/database.test.cjs",
+    "bytes": 9014,
+    "sha256": "b983d9c018b65740a23fba1fa479328c753b75a25b4305c372755b8f3fe296bb",
+    "lines": 57
+  },
+  {
+    "path": "core/tests/environment.test.cjs",
+    "bytes": 2127,
+    "sha256": "8bfd2d8359e25122c6c5d590f089f5f7e37324d3e8567ea3ee8b82e950a913c0",
+    "lines": 15
+  },
+  {
+    "path": "core/tests/rag.test.cjs",
+    "bytes": 8423,
+    "sha256": "386b33c434ffc54c447199f717501152a215582be84a4de576ce3e8abaae2a93",
+    "lines": 76
+  },
+  {
+    "path": "core/tests/tasks-llm.test.cjs",
+    "bytes": 1864,
+    "sha256": "f73bdfdb757736961048c1e72b6e4f2582a2d686c03fec4f544e7064539c707c",
+    "lines": 5
+  },
+  {
+    "path": "core/package.json",
+    "bytes": 705,
+    "sha256": "9d3ebc49c2856342132ec2ade0e905b434cf670417d0b87adec6e313acb44f12",
+    "lines": 28
+  },
+  {
+    "path": "core/nest-cli.json",
+    "bytes": 165,
+    "sha256": "8e047587603cf987cd4b3e5b7b682eb80035efc9d2c802cd64eac0b0f276974d",
+    "lines": 6
+  },
+  {
+    "path": "core/tsconfig.json",
+    "bytes": 424,
+    "sha256": "25dd4c142fa5343282a569f67a0e3cb3e6b30d314cd633269356a14ee5803684",
+    "lines": 18
+  },
+  {
+    "path": "docker-compose.yml",
+    "bytes": 1739,
+    "sha256": "e51c692ebda2b3b49db7ef50949507e1edd7851fe69dd56bcf7b3519dfbe9906",
+    "lines": 65
+  },
+  {
+    "path": "package.json",
+    "bytes": 766,
+    "sha256": "6dc740e591eddeeaa8334e5dc7c8adb341d9394a8cd6681dd4c77d1ac27045cf",
+    "lines": 28
+  },
+  {
+    "path": "database/schema.sql",
+    "bytes": 8939,
+    "sha256": "7d92f6e596486278e9b3ae1c5f546cad8abbb6515c0498ca121531eb4a2bdb5b",
+    "lines": 143
+  },
+  {
+    "path": "database/Dockerfile",
+    "bytes": 161,
+    "sha256": "cd7b40e8c161b70b12cfbf9897c751ad52e1b5f309f4db269697322c8f690d0c",
+    "lines": 4
+  },
+  {
+    "path": "database/migrations/001_durable_tasks.sql",
+    "bytes": 4897,
+    "sha256": "669bb223bc376eda895988bcfe2fd7ac45ea7d050d1b20ee8f3853dfc5bbb5a8",
+    "lines": 63
+  },
+  {
+    "path": "database/migrations/003_task_context_checkpoints.sql",
+    "bytes": 476,
+    "sha256": "b3308cb886c6dd7e6d354fc2afc281746485a56a0adbe97c16ab89d141afd94c",
+    "lines": 5
+  },
+  {
+    "path": "database/migrations/002_task_cost_budget.sql",
+    "bytes": 102,
+    "sha256": "cc9d481f8fbe1602b70d22a1225d95f0cb298fe76b029da557d286fe28dcdd15",
+    "lines": 1
+  },
+  {
+    "path": "ui/vitest.config.ts",
+    "bytes": 341,
+    "sha256": "7da01a341810420b3a56613fa72a94d1b46b95ec7a6f5df2569bef57c303ede2",
+    "lines": 4
+  },
+  {
+    "path": "ui/src/components/mcp/mcp-navigation.tsx",
+    "bytes": 890,
+    "sha256": "07ed72138fd18540848fdda0d6c6ce58588c118c599c34172c2a38c8449ac817",
+    "lines": 8
+  },
+  {
+    "path": "ui/src/components/mcp/mcp-workspace.tsx",
+    "bytes": 11328,
+    "sha256": "92b01c68ebb37440ae588b0711c749380d500ac28ef5a093cc9cd7856d456dfe",
+    "lines": 45
+  },
+  {
+    "path": "ui/src/components/tasks/tasks-workspace.tsx",
+    "bytes": 12917,
+    "sha256": "e4260b02f90ba98779ff19fba83e01a5a85237c03f540109fc40904481432eee",
+    "lines": 35
+  },
+  {
+    "path": "ui/src/components/tasks/tasks-navigation.tsx",
+    "bytes": 914,
+    "sha256": "7ccd105326fd282729478b2994ab8f1f33b7209b68212047bd52496df473c9b9",
+    "lines": 8
+  },
+  {
+    "path": "ui/src/components/rag/rag-workspace.tsx",
+    "bytes": 1966,
+    "sha256": "def9e68ef152bf518294151209c3ea7a5801e5c64fb9237936bd064f570eb136",
+    "lines": 13
+  },
+  {
+    "path": "ui/src/components/rag/common.tsx",
+    "bytes": 4552,
+    "sha256": "9e7c8eb7641df0ae095d3029addcd0e24aef2ee9ae0906b4c8c88ab48e0779e1",
+    "lines": 21
+  },
+  {
+    "path": "ui/src/components/rag/rag-navigation.tsx",
+    "bytes": 973,
+    "sha256": "64478a451a64513eba70e9889d6cf4464a75e857c885578ed1bc45b84787c37b",
+    "lines": 9
+  },
+  {
+    "path": "ui/src/components/rag/management.tsx",
+    "bytes": 25160,
+    "sha256": "0569d691b315f14be7346b6bb9e6a8f192025d9f6a28e5ca72d424e9034e427d",
+    "lines": 95
+  },
+  {
+    "path": "ui/src/components/rag/connection.tsx",
+    "bytes": 6655,
+    "sha256": "ffcbdee7566811705267e8e276858dbf49bd103fd6f74f68d5ace70468b4054d",
+    "lines": 33
+  },
+  {
+    "path": "ui/src/components/chat/attachment-card.tsx",
+    "bytes": 1298,
+    "sha256": "b2a744dd5fc08f3781c441f950e978d1dccffcc536d5f396fdce526e61d7d1a7",
+    "lines": 44
+  },
+  {
+    "path": "ui/src/components/chat/message-list.tsx",
+    "bytes": 3959,
+    "sha256": "7c3fc650f3e4ccd711c16c26907d9ae3c477121fd0e98f713058270b80bc6f41",
+    "lines": 51
+  },
+  {
+    "path": "ui/src/components/chat/sidebar.tsx",
+    "bytes": 2943,
+    "sha256": "423c07cda1be145e755ff1a7bf837070a40ea0e56d05bd174ae553c19881a123",
+    "lines": 71
+  },
+  {
+    "path": "ui/src/components/chat/task-feedback.tsx",
+    "bytes": 3529,
+    "sha256": "3228fbcf5384dd41b0650af661ec0d1f6d13a70c187e8f54a3fef65341f495df",
+    "lines": 49
+  },
+  {
+    "path": "ui/src/components/chat/icon.tsx",
+    "bytes": 506,
+    "sha256": "086e4154df4e6be586943e274b156bb3a1aa9488da98fef0013c326deb253814",
+    "lines": 12
+  },
+  {
+    "path": "ui/src/components/chat/composer.tsx",
+    "bytes": 4583,
+    "sha256": "11af7c26905183306fb22de8beccc0a8c3f0996f7f68e648765688bb1d8b8d06",
+    "lines": 104
+  },
+  {
+    "path": "ui/src/components/llm/llm-settings.tsx",
+    "bytes": 7179,
+    "sha256": "f7902e1b22407f676e14f3a6be70e5080b25f276089ff5fd7a6bb97b15b81f00",
+    "lines": 155
+  },
+  {
+    "path": "ui/src/components/ui/button.tsx",
+    "bytes": 2382,
+    "sha256": "79dd6f75f8136394442202d6b8b922fb269eaad0a5dba579397c9d5b41f893bb",
+    "lines": 63
+  },
+  {
+    "path": "ui/src/components/ui/textarea.tsx",
+    "bytes": 749,
+    "sha256": "5cafcfeeee29534f449387a16b585f5923d2faab1a0cdc50a874416b175f59ce",
+    "lines": 17
+  },
+  {
+    "path": "ui/src/index.css",
+    "bytes": 1290,
+    "sha256": "a3936ac9063fd01f543e27422d1291d02bf99a8c1099a6f9e67e19ae40254320",
+    "lines": 47
+  },
+  {
+    "path": "ui/src/lib/mcp-api.ts",
+    "bytes": 1080,
+    "sha256": "6e6f6f1d9df80ae7a5a4f91a2b8d102bdda7702ea77a77e94b6ecf319ccc0aab",
+    "lines": 13
+  },
+  {
+    "path": "ui/src/lib/utils.ts",
+    "bytes": 169,
+    "sha256": "9304a861c8673bee09e0f12de31773abbde503b02e59dfd74763ddec2e37cf05",
+    "lines": 6
+  },
+  {
+    "path": "ui/src/lib/rag-api.ts",
+    "bytes": 1878,
+    "sha256": "d3f7c0ef9e81b43f2517073e479fc69a15edb549db459bb176cff2f7a0a20fd9",
+    "lines": 23
+  },
+  {
+    "path": "ui/src/lib/tasks-api.ts",
+    "bytes": 1173,
+    "sha256": "705c1ad921c87eb2caa90e70987c3cdf2fb9f8c7d6bc984d6da47cd0c2c02589",
+    "lines": 15
+  },
+  {
+    "path": "ui/src/lib/api.ts",
+    "bytes": 2209,
+    "sha256": "f5a359d76aaf522de9789e2e70b826959292749bece9a254edb0d4f3a5ab1efe",
+    "lines": 39
+  },
+  {
+    "path": "ui/src/main.tsx",
+    "bytes": 248,
+    "sha256": "90bb37302e4800523b232cd21c5a395acdfc6b8f79dbd59ff3863a2684098beb",
+    "lines": 9
+  },
+  {
+    "path": "ui/src/chat.css",
+    "bytes": 17353,
+    "sha256": "7c7fc84166e8fe120145fce7c9b7127dce71cc5f33114ecdb9d0c512c33e325e",
+    "lines": 220
+  },
+  {
+    "path": "ui/src/App.tsx",
+    "bytes": 10132,
+    "sha256": "ab0b161233355a3ee49aa39457367d59260e75f25b5619c45d8fdc240ebee0cb",
+    "lines": 187
+  },
+  {
+    "path": "ui/src/types/rag.ts",
+    "bytes": 1730,
+    "sha256": "c527625cf61c11a817287c0d0260e97b229cbe6eab2575fee7be880f2b8a6f3f",
+    "lines": 11
+  },
+  {
+    "path": "ui/src/types/chat.ts",
+    "bytes": 1107,
+    "sha256": "702ff6bf16e49027058eb0c03aa4d9b75f419eb4225fda0f8a420b9855af18f8",
+    "lines": 36
+  },
+  {
+    "path": "ui/src/types/mcp.ts",
+    "bytes": 689,
+    "sha256": "7660989ef872fa82a311f212509e6414682a7f86c9adc9343b5a0b74eb938c32",
+    "lines": 5
+  },
+  {
+    "path": "ui/src/types/llm.ts",
+    "bytes": 309,
+    "sha256": "0c82fafa3a9d66eb4ab21e6a89dae5d90f32d222b6d88d834466765160bc1e08",
+    "lines": 15
+  },
+  {
+    "path": "ui/src/types/tasks.ts",
+    "bytes": 1167,
+    "sha256": "3ec6139417f24724cfe491f91e2f3903dd57153d8d0a8c16c34548c711c22ae8",
+    "lines": 5
+  },
+  {
+    "path": "ui/Dockerfile",
+    "bytes": 360,
+    "sha256": "b469c1b80e00fc2147f02b0a760603a351485247e78113c686c9e51c7e98121a",
+    "lines": 13
+  },
+  {
+    "path": "ui/tests/setup.ts",
+    "bytes": 254,
+    "sha256": "422229b45532805452ece06142ed6cb5ded95bd5a57de9e7f27dd8d2a3907345",
+    "lines": 4
+  },
+  {
+    "path": "ui/tests/mcp.test.tsx",
+    "bytes": 6685,
+    "sha256": "e77b59dbd20fcbe6baecd46e0990929374fbd66d192849aa6a94fe652ce77158",
+    "lines": 29
+  },
+  {
+    "path": "ui/tests/chat.test.tsx",
+    "bytes": 5349,
+    "sha256": "a2d6875e50b1decf77db44c22b272083c507537540aebd2a77fd81d40c0a216a",
+    "lines": 38
+  },
+  {
+    "path": "ui/tests/navigation.test.tsx",
+    "bytes": 808,
+    "sha256": "154cb0071a9fc0643db0ff004dcbf30f741434bbe4cf4c6314c483909839eb67",
+    "lines": 10
+  },
+  {
+    "path": "ui/tests/rag.test.tsx",
+    "bytes": 9321,
+    "sha256": "be26c689cc77c8dcb9f6ea318e597aec6d2c114f3f3583c852e5babc98d123c8",
+    "lines": 49
+  },
+  {
+    "path": "ui/tests/tasks.test.tsx",
+    "bytes": 3696,
+    "sha256": "bb6acb7b192c298f3efed303e135d3883b050763eb20d59cd9a7abdb0177d721",
+    "lines": 10
+  },
+  {
+    "path": "ui/vite.config.ts",
+    "bytes": 557,
+    "sha256": "ed39f93e55179e2ddbe8052a019ab30525423e275d4a7a8ab9a6ac1283c2ef80",
+    "lines": 13
+  },
+  {
+    "path": "ui/nginx.conf",
+    "bytes": 603,
+    "sha256": "12191137d5bd98dc735f033049624ab2eb21565376e407aa507531c307a816e4",
+    "lines": 26
+  },
+  {
+    "path": "ui/package.json",
+    "bytes": 896,
+    "sha256": "e35b7c46688447f492c88cc2dd7fb7cf3ca77a70b1233c5ea2811dc88f779b9f",
+    "lines": 36
+  },
+  {
+    "path": "ui/components.json",
+    "bytes": 426,
+    "sha256": "aa1b56411ed0e8fc2ac14315f211c7059406e03d68666e1921f640186b8c096f",
+    "lines": 21
+  },
+  {
+    "path": "ui/index.html",
+    "bytes": 352,
+    "sha256": "b960f13d24650c6eac679e371102587961ef0e1a3a781d2b6875c7b84958f3b3",
+    "lines": 13
+  },
+  {
+    "path": "ui/tsconfig.json",
+    "bytes": 553,
+    "sha256": "eee7e54a249dc2bbe3bc54d2d2f926832877d0f0c1e27932b4dc2883830e094e",
+    "lines": 21
+  },
+  {
+    "path": "eslint.config.mjs",
+    "bytes": 432,
+    "sha256": "e5714bcdc485948a63ec5136b4f2b793f5ad26429113a757b78a4de72a0c22cc",
+    "lines": 14
+  }
+]

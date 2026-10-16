@@ -1,0 +1,99 @@
+\documentclass[a4paper,11pt,oneside]{report}
+\usepackage[margin=21mm,top=20mm,bottom=21mm,headheight=15pt,headsep=7mm]{geometry}
+\usepackage{fontspec,microtype,graphicx,xcolor,tikz,titlesec,fancyhdr,enumitem,booktabs,tabularx,listings,hyperref,xurl,caption}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,shapes.geometric}
+\setmainfont{Liberation Serif}
+\setsansfont{Liberation Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=0.79]
+\definecolor{ink}{HTML}{182735}
+\definecolor{teal}{HTML}{087F8C}
+\definecolor{pale}{HTML}{EDF5F6}
+\definecolor{muted}{HTML}{526472}
+\definecolor{amber}{HTML}{9C5C13}
+\hypersetup{colorlinks=true,linkcolor=teal,urlcolor=teal,citecolor=teal,pdftitle={Meta-Harness: Architecture, Engineering, and User Guide},pdfauthor={Meta-Harness Project},pdfsubject={Implementation-based technical manual, October 2026}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\raggedbottom
+\setlist{nosep,leftmargin=*,topsep=4pt,itemsep=3pt}
+\setlist[description]{style=nextline,leftmargin=0pt,labelindent=0pt}
+\setcounter{tocdepth}{0}
+\titleformat{\chapter}[display]{\sffamily\bfseries\color{ink}\LARGE}{\sffamily\small\color{teal}CHAPTER \thechapter}{2mm}{}
+\titlespacing*{\chapter}{0pt}{-5pt}{9pt}
+\titleformat{\section}{\sffamily\bfseries\large\color{ink}}{\thesection}{.6em}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\titleformat{\subsection}{\sffamily\bfseries\normalsize\color{teal}}{\thesubsection}{.6em}{}
+\titlespacing*{\subsection}{0pt}{8pt}{3pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\sffamily\small\bfseries META-HARNESS}
+\fancyhead[R]{\sffamily\scriptsize\color{muted}\leftmark}
+\fancyfoot[L]{\sffamily\scriptsize\color{muted}Engineering manual \;|\; 9 October 2026}
+\fancyfoot[R]{\sffamily\scriptsize\thepage\ /\ \pageref{manualend}}
+\renewcommand{\headrulewidth}{.4pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\sffamily\small\bfseries META-HARNESS}\fancyhead[R]{\sffamily\scriptsize\color{muted}\leftmark}\fancyfoot[L]{\sffamily\scriptsize\color{muted}Engineering manual \;|\; 9 October 2026}\fancyfoot[R]{\sffamily\scriptsize\thepage\ /\ \pageref{manualend}}}
+\newcommand{\partlabel}[1]{{\sffamily\small\color{teal}\textbf{#1}}\par\medskip}
+\newcommand{\status}[1]{{\sffamily\small\textbf{\color{teal}#1}}}
+\newcommand{\source}[1]{\par\medskip\begingroup\setlength{\fboxsep}{7pt}\noindent\colorbox{pale}{\begin{minipage}{\dimexpr\linewidth-14pt}\footnotesize\raggedright\sffamily\textbf{Source map}\quad #1\end{minipage}}\endgroup\par}
+\newcommand{\note}[2]{\par\medskip{\sffamily\bfseries\color{teal}#1}\par #2\par}
+\newcommand{\nextpage}[1]{\clearpage\section*{#1}}
+\newcommand{\screenshot}[3]{\begin{center}\includegraphics[width=#2\linewidth]{figures/#1}\captionof{figure}{#3}\end{center}}
+\captionsetup{font=small,labelfont={sf,bf},textfont=sf,skip=5pt,hypcap=false}
+\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{pale},frame=none,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,xleftmargin=6pt,xrightmargin=6pt,aboveskip=6pt,belowskip=6pt}
+\tikzset{box/.style={draw=teal!65,rounded corners=2pt,fill=pale,align=center,font=\sffamily\small,text width=3.1cm,minimum height=1cm,inner sep=5pt},darkbox/.style={box,fill=ink,text=white,draw=ink},decision/.style={diamond,aspect=2.3,draw=teal,fill=pale,align=center,font=\sffamily\small,inner sep=2pt},arr/.style={-{Stealth[length=2mm]},draw=muted,thick},lab/.style={font=\sffamily\scriptsize,fill=white,inner sep=2pt}}
+\begin{document}
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+\fill[ink] (current page.north west) rectangle ([yshift=-76mm]current page.north east);
+\fill[teal] ([yshift=-76mm]current page.north west) rectangle ([yshift=-79mm]current page.north east);
+\end{tikzpicture}
+\vspace*{11mm}
+{\sffamily\color{white}\small TECHNICAL MANUAL\par}
+\vspace{6mm}
+{\sffamily\color{white}\bfseries\fontsize{36}{40}\selectfont Meta-Harness\par}
+\vspace{4mm}
+{\sffamily\color{white}\fontsize{19}{25}\selectfont Architecture, Engineering,\par and User Guide\par}
+\vspace{34mm}
+{\sffamily\bfseries\Large Engineering an LLM into a\par persistent, permissioned agent\par}
+\vspace{8mm}
+A source-based explanation of the local application's execution loop, memory, durable tasks, MCP tools, evidence verification and external manufacturing services.\par
+\vspace{9mm}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Edition & Implementation snapshot: 9 October 2026\\
+Audience & Engineers, technical operators and researchers\\
+Core stack & React/Vite/shadcn, NestJS, PostgreSQL, Docker\\
+External services & FastAPI RAG and synthetic manufacturing ML/MCP\\
+\bottomrule
+\end{tabularx}
+\vfill
+\note{Reading convention}{\textbf{IMPLEMENTED} means present in the audited code. \textbf{PARTIAL} identifies a material operational or verification limit. \textbf{PLANNED} identifies roadmap work. Historical tests and live checks are distinguished throughout.}
+\small\color{muted}No credentials are reproduced. UI captures are genuine application views; saved-key display text is hidden for publication. This manual does not authorize additional tools, cloud deployment or destructive operations.
+\end{titlepage}
+\setcounter{page}{2}
+\tableofcontents
+\vfill
+\note{How to use this manual}{Read Chapters 3--8 for the engineering mechanisms. Chapters 11--13 provide operating instructions. Source maps name the implementation files and functions; paths are relative to the repository root. The source code takes precedence where older prose has drifted.}
+\input{chapters/01-introduction}
+\input{chapters/02-architecture}
+\input{chapters/03-agent-loop}
+\input{chapters/04-memory}
+\input{chapters/05-recovery}
+\input{chapters/06-security}
+\input{chapters/07-integrations}
+\input{chapters/08-verification}
+\input{chapters/09-rag}
+\input{chapters/10-manufacturing}
+\input{chapters/11-installation}
+\input{chapters/12-services}
+\input{chapters/13-user-tasks}
+\input{chapters/14-evaluation}
+\clearpage
+\renewcommand{\bibname}{References and implementation evidence}
+\addcontentsline{toc}{chapter}{References and implementation evidence}
+\nocite{repository,taskspec,recoveryrecord,contextrecord,mlrecord,ragreadme}
+\bibliographystyle{unsrt}
+\bibliography{references}
+\label{manualend}
+\end{document}

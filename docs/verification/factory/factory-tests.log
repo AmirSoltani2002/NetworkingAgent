@@ -1,0 +1,202 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 651B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 824B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/zsk-ml:local
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 326B done
+#4 DONE 0.0s
+
+#5 [runtime 1/4] FROM docker.io/library/zsk-ml:local
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 116.09kB done
+#6 DONE 0.0s
+
+#7 [runtime 2/4] RUN /opt/venv/bin/pip install --no-cache-dir websockets==15.0.1
+#7 CACHED
+
+#8 [runtime 3/4] COPY --chown=zsk:zsk factory-service/factory /app/factory
+#8 CACHED
+
+#9 [runtime 4/4] COPY --chown=zsk:zsk factory-service/migrations /app/factory-migrations
+#9 CACHED
+
+#10 [test 1/3] COPY zsk-service/requirements-test.lock /app/requirements-test.lock
+#10 DONE 0.0s
+
+#11 [test 2/3] RUN pip install --no-cache-dir -r /app/requirements-test.lock
+#11 0.810 Requirement already satisfied: annotated-doc==0.0.5 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 1)) (0.0.5)
+#11 0.810 Requirement already satisfied: annotated-types==0.8.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 2)) (0.8.0)
+#11 0.810 Requirement already satisfied: anyio==4.15.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 3)) (4.15.1)
+#11 0.811 Requirement already satisfied: attrs==26.1.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 4)) (26.1.0)
+#11 0.811 Requirement already satisfied: certifi==2026.7.22 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 5)) (2026.7.22)
+#11 0.811 Requirement already satisfied: cffi==2.1.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 6)) (2.1.1)
+#11 0.811 Requirement already satisfied: click==8.5.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 7)) (8.5.0)
+#11 0.812 Requirement already satisfied: cloudpickle==3.1.2 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 8)) (3.1.2)
+#11 0.812 Requirement already satisfied: cryptography==50.0.2 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 9)) (50.0.2)
+#11 0.812 Requirement already satisfied: fastapi==0.143.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 10)) (0.143.0)
+#11 0.812 Requirement already satisfied: h11==0.16.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 11)) (0.16.0)
+#11 0.813 Requirement already satisfied: httpcore==1.0.9 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 12)) (1.0.9)
+#11 0.813 Requirement already satisfied: httpx==0.28.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 13)) (0.28.1)
+#11 0.813 Requirement already satisfied: httpx-sse==0.4.3 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 14)) (0.4.3)
+#11 0.813 Requirement already satisfied: idna==3.20 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 15)) (3.20)
+#11 0.904 Collecting iniconfig==2.3.1 (from -r /app/requirements-test.lock (line 16))
+#11 1.012   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+#11 1.023 Requirement already satisfied: joblib==1.6.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 17)) (1.6.0)
+#11 1.025 Requirement already satisfied: jsonschema==4.26.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 18)) (4.26.0)
+#11 1.027 Requirement already satisfied: jsonschema-specifications==2025.9.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 19)) (2025.9.1)
+#11 1.028 Requirement already satisfied: mcp==1.30.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 20)) (1.30.0)
+#11 1.030 Requirement already satisfied: narwhals==2.26.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 21)) (2.26.0)
+#11 1.031 Requirement already satisfied: numpy==2.5.3 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 22)) (2.5.3)
+#11 1.032 Requirement already satisfied: opentelemetry-api==1.45.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 23)) (1.45.1)
+#11 1.074 Collecting packaging==26.3 (from -r /app/requirements-test.lock (line 24))
+#11 1.085   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#11 1.089 Requirement already satisfied: pandas==3.0.6 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 25)) (3.0.6)
+#11 1.110 Collecting pluggy==1.6.0 (from -r /app/requirements-test.lock (line 26))
+#11 1.121   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+#11 1.126 Requirement already satisfied: psycopg==3.3.6 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 27)) (3.3.6)
+#11 1.126 Requirement already satisfied: psycopg-binary==3.3.6 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 28)) (3.3.6)
+#11 1.127 Requirement already satisfied: pycparser==3.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 29)) (3.1)
+#11 1.127 Requirement already satisfied: pydantic==2.14.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 30)) (2.14.0)
+#11 1.128 Requirement already satisfied: pydantic-settings==2.15.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 31)) (2.15.0)
+#11 1.128 Requirement already satisfied: pydantic_core==2.50.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 32)) (2.50.0)
+#11 1.154 Collecting Pygments==2.21.0 (from -r /app/requirements-test.lock (line 33))
+#11 1.163   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+#11 1.166 Requirement already satisfied: PyJWT==2.15.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 34)) (2.15.1)
+#11 1.210 Collecting pytest==9.1.1 (from -r /app/requirements-test.lock (line 35))
+#11 1.224   Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+#11 1.264 Collecting pytest-asyncio==1.4.0 (from -r /app/requirements-test.lock (line 36))
+#11 1.277   Downloading pytest_asyncio-1.4.0-py3-none-any.whl.metadata (4.1 kB)
+#11 1.279 Requirement already satisfied: python-dateutil==2.9.0.post0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 37)) (2.9.0.post0)
+#11 1.279 Requirement already satisfied: python-dotenv==1.2.4 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 38)) (1.2.4)
+#11 1.279 Requirement already satisfied: python-multipart==0.0.32 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 39)) (0.0.32)
+#11 1.280 Requirement already satisfied: referencing==0.37.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 40)) (0.37.0)
+#11 1.280 Requirement already satisfied: rpds-py==2026.9.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 41)) (2026.9.1)
+#11 1.280 Requirement already satisfied: scikit-learn==1.9.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 42)) (1.9.1)
+#11 1.280 Requirement already satisfied: scipy==1.18.1 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 43)) (1.18.1)
+#11 1.281 Requirement already satisfied: six==1.17.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 44)) (1.17.0)
+#11 1.281 Requirement already satisfied: SQLAlchemy==2.1.4 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 45)) (2.1.4)
+#11 1.281 Requirement already satisfied: sse-starlette==3.5.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 46)) (3.5.0)
+#11 1.282 Requirement already satisfied: starlette==1.7.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 47)) (1.7.0)
+#11 1.282 Requirement already satisfied: threadpoolctl==3.7.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 48)) (3.7.0)
+#11 1.282 Requirement already satisfied: typing-inspection==0.4.4 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 49)) (0.4.4)
+#11 1.282 Requirement already satisfied: typing_extensions==4.16.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 50)) (4.16.0)
+#11 1.283 Requirement already satisfied: uvicorn==0.54.0 in /opt/venv/lib/python3.12/site-packages (from -r /app/requirements-test.lock (line 51)) (0.54.0)
+#11 1.394 Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+#11 1.406 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#11 1.441 Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+#11 1.458 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+#11 1.504    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 40.5 MB/s eta 0:00:00
+#11 1.525 Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+#11 1.547 Downloading pytest_asyncio-1.4.0-py3-none-any.whl (16 kB)
+#11 1.592 Installing collected packages: Pygments, pluggy, packaging, iniconfig, pytest, pytest-asyncio
+#11 2.310 Successfully installed Pygments-2.21.0 iniconfig-2.3.1 packaging-26.3 pluggy-1.6.0 pytest-9.1.1 pytest-asyncio-1.4.0
+#11 2.457 
+#11 2.457 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#11 2.457 [notice] To update, run: pip install --upgrade pip
+#11 DONE 2.5s
+
+#12 [test 3/3] COPY --chown=zsk:zsk factory-service/tests /app/factory-tests
+#12 DONE 0.0s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 0.2s done
+#13 writing image sha256:a232da4a42355ec0323bf165bd7d2e702c54946a2e1fa28020e686228b9915af done
+#13 naming to docker.io/library/factory-tests-tests done
+#13 DONE 0.2s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ factory-tests-tests  Built
+ Container factory-tests-tests-1  Recreate
+ Container factory-tests-tests-1  Recreated
+Attaching to database-1, tests-1
+database-1  | The files belonging to this database system will be owned by user "postgres".
+database-1  | This user must also own the server process.
+database-1  | 
+database-1  | The database cluster will be initialized with locale "en_US.utf8".
+database-1  | The default database encoding has accordingly been set to "UTF8".
+database-1  | The default text search configuration will be set to "english".
+database-1  | 
+database-1  | Data page checksums are disabled.
+database-1  | 
+database-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+database-1  | creating subdirectories ... ok
+database-1  | selecting dynamic shared memory implementation ... posix
+database-1  | selecting default "max_connections" ... 100
+database-1  | selecting default "shared_buffers" ... 128MB
+database-1  | selecting default time zone ... UTC
+database-1  | creating configuration files ... ok
+database-1  | running bootstrap script ... ok
+database-1  | sh: locale: not found
+database-1  | 2026-10-09 18:59:18.435 UTC [36] WARNING:  no usable system locales were found
+database-1  | performing post-bootstrap initialization ... ok
+database-1  | syncing data to disk ... ok
+database-1  | 
+database-1  | 
+database-1  | Success. You can now start the database server using:
+database-1  | 
+database-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+database-1  | 
+database-1  | initdb: warning: enabling "trust" authentication for local connections
+database-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+database-1  | waiting for server to start....2026-10-09 18:59:18.691 UTC [42] LOG:  starting PostgreSQL 17.11 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+database-1  | 2026-10-09 18:59:18.695 UTC [42] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+database-1  | 2026-10-09 18:59:18.696 UTC [45] LOG:  database system was shut down at 2026-10-09 18:59:18 UTC
+database-1  | 2026-10-09 18:59:18.700 UTC [42] LOG:  database system is ready to accept connections
+database-1  |  done
+database-1  | server started
+database-1  | CREATE DATABASE
+database-1  | 
+database-1  | 
+database-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+database-1  | 
+database-1  | waiting for server to shut down...2026-10-09 18:59:18.836 UTC [42] LOG:  received fast shutdown request
+database-1  | .2026-10-09 18:59:18.836 UTC [42] LOG:  aborting any active transactions
+database-1  | 2026-10-09 18:59:18.837 UTC [42] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+database-1  | 2026-10-09 18:59:18.838 UTC [43] LOG:  shutting down
+database-1  | 2026-10-09 18:59:18.838 UTC [43] LOG:  checkpoint starting: shutdown immediate
+database-1  | 2026-10-09 18:59:18.846 UTC [43] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.001 s, total=0.008 s; sync files=301, longest=0.001 s, average=0.000 s; distance=4266 kB, estimate=4266 kB; lsn=0/191E820, redo lsn=0/191E820
+database-1  | 2026-10-09 18:59:18.850 UTC [42] LOG:  database system is shut down
+database-1  |  done
+database-1  | server stopped
+database-1  | 
+database-1  | PostgreSQL init process complete; ready for start up.
+database-1  | 
+database-1  | 2026-10-09 18:59:18.966 UTC [1] LOG:  starting PostgreSQL 17.11 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+database-1  | 2026-10-09 18:59:18.966 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+database-1  | 2026-10-09 18:59:18.966 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+database-1  | 2026-10-09 18:59:18.970 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+database-1  | 2026-10-09 18:59:18.971 UTC [58] LOG:  database system was shut down at 2026-10-09 18:59:18 UTC
+database-1  | 2026-10-09 18:59:18.974 UTC [1] LOG:  database system is ready to accept connections
+tests-1     | ............                                                             [100%]
+tests-1     | =============================== warnings summary ===============================
+tests-1     | ../opt/venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+tests-1     |   /opt/venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+tests-1     |     from starlette.testclient import TestClient as TestClient  # noqa
+tests-1     | 
+tests-1     | -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+tests-1     | 12 passed, 1 warning in 5.36s
+[Ktests-1 exited with code 0
+Aborting on container exit...
+ Container factory-tests-tests-1  Stopping
+ Container factory-tests-tests-1  Stopped
+ Container factory-tests-database-1  Stopping
+database-1  | 2026-10-09 18:59:27.881 UTC [1] LOG:  received fast shutdown request
+database-1  | 2026-10-09 18:59:27.881 UTC [1] LOG:  aborting any active transactions
+database-1  | 2026-10-09 18:59:27.885 UTC [1] LOG:  background worker "logical replication launcher" (PID 61) exited with exit code 1
+database-1  | 2026-10-09 18:59:27.885 UTC [56] LOG:  shutting down
+database-1  | 2026-10-09 18:59:27.885 UTC [56] LOG:  checkpoint starting: shutdown immediate
+database-1  | 2026-10-09 18:59:27.889 UTC [56] LOG:  checkpoint complete: wrote 288 buffers (1.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.005 s; sync files=163, longest=0.001 s, average=0.001 s; distance=1869 kB, estimate=1869 kB; lsn=0/1AF1D60, redo lsn=0/1AF1D60
+database-1  | 2026-10-09 18:59:27.896 UTC [1] LOG:  database system is shut down
+ Container factory-tests-database-1  Stopped
+[Kdatabase-1 exited with code 0

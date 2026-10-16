@@ -1,0 +1,42 @@
+\chapter{Validation and Completion Verification}
+\section{A successful tool is only one piece of evidence}
+A training API can successfully return a queued job while no artifact exists. Retrieval can successfully return no passages. A generated final answer can describe a plan without executing it. The harness therefore distinguishes transport success, operation success and completion of the user's objective.
+
+The first durable decision proposes measurable completion criteria, faithful to the request. Core freezes the initial goal, plan and criteria when the first valid plan is committed. Subsequent decisions cannot silently weaken the criteria to make progress appear complete.
+\section{Deterministic predicates over actual results}
+\texttt{checkCriterion()} selects SUCCEEDED operations by kind, optional registered server/tool and exact argument filters. It excludes operator-reconciled placeholder outcomes. A JSON pointer selects an observed value from the stored result. Supported predicates are:
+\begin{itemize}
+\item \texttt{exists}: value is present and not null;
+\item \texttt{equals}: canonical serialized equality to an expected value;
+\item \texttt{nonempty}: nonblank string or nonempty array/object;
+\item \texttt{gte}: numeric value meets an expected numeric threshold;
+\item \texttt{contains}: substring or exact member of an array.
+\end{itemize}
+Filters accept explicit JSON pointers or plain exact property names. Each verification row records the criterion ID, result and observed operation/value evidence. Progress is the fraction of passed predicates, capped below 100 until completion; it is not a simulated processing percentage.
+\section{What complete and respond mean}
+\texttt{TasksService.complete()} runs verification and inserts the final assistant reply only when all criteria pass. The reply links to the original user message; the task becomes COMPLETED with a saved result. A model \texttt{complete} decision without evidence is insufficient and returns to continuation.
+
+A \texttt{respond} decision can deliver a useful informational answer without tools. For a fresh response-only task, core creates an internal response operation and verifies nonempty delivery with \texttt{externalExecutionVerified} set to false. With existing external criteria, a partial answer stays visible but unmet criteria pause the task. A greeting or draft answer does not need fabricated tool execution.
+\note{Validation limits}{Schema validity is not factual validity. A criterion such as ``result exists'' may be weaker than the intended semantic outcome; the model still chooses the initial tests. Core does not implement a universal diagnosis evaluator, PDF compilation runner or external answer validator. Stronger research workflows and validators remain planned.}
+\source{\path{core/src/tasks/task-contract.ts}: \texttt{matches()}, \texttt{pointer()}, \texttt{checkCriterion()}; \path{core/src/tasks/tasks.service.ts}: \texttt{verify()}, \texttt{complete()}; \path{core/src/tasks/task-worker.ts}: \texttt{advance()}.}
+\nextpage{Real example: CNC source verification}
+\section*{The observed failure and correction}
+A live CNC retrieval task initially passed the string ``Milling machine CNC'' into a \texttt{device\_id} filter. The external RAG MCP tool rejected the search as invalid. The rejected observation was retained, not interpreted as successful retrieval.
+
+A corrected continuation resolved the device through \texttt{find\_device}, then successfully ran \texttt{search\_knowledge} and \texttt{get\_device\_issues}. Three checks passed, but the task still lacked its required source-context evidence. Repeated full snapshots exhausted the old aggregate token limit before that final step.
+\section*{Checkpoint recovery produced actual completion}
+After the context change, the authorized task was retried from saved state. The selected model summarized its legacy window once. Incremental snapshots then included only changed observations. The worker invoked the missing \texttt{get\_document\_context} and stored the final response. All four existing predicates passed~\cite{contextrecord}.
+\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Check & Recorded result after resumption\\\midrule
+\texttt{device\_match} & Passed from stored device lookup evidence\\
+\texttt{issues} & Passed from stored known-issue retrieval\\
+\texttt{guidance} & Passed from successful knowledge search\\
+\texttt{sources} & Passed after document-context retrieval\\\bottomrule
+\end{tabularx}
+The previously successful device lookup, search and issue calls each retained one attempt. The historical rejected search also remained at one attempt. Only the missing document-context call was added; this is observable continuity, not a claim based on model prose.
+\section*{What the record proves, and what it does not}
+The recorded task reached COMPLETED and 100\% verified progress. Its lifetime usage was 406,031 tokens, while the resumed prompt consumed 28,665 tokens after a 377,366-token baseline. These are operational accounting values, not a latency benchmark or a claim of general agent accuracy. The working-window capture shows conversation/tool schemas in the first new snapshot and neither in the next; the latter delivered only the new operation result.
+
+The run exercised legacy summarization and incremental delivery. It did not reach another fresh prompt boundary, select internal evidence paging or test a new restart at the 90\% context threshold. Those limits are explicitly recorded. Earlier restart/concurrency fixtures validate a different execution scenario.
+\note{Engineering interpretation}{Durability preserved evidence; context redesign avoided resending it; deterministic verification withheld completion until the missing source operation succeeded. The harness protects execution integrity, while relevance and adequacy still depend on retrieval quality and the initially chosen predicates.}
+\source{\path{docs/verification/task-context-checkpoints.json}; \path{core/src/tasks/task-context.ts}; \path{core/src/tasks/task-worker.ts}: \texttt{continuePrompt()}; \path{core/src/tasks/tasks.service.ts}: \texttt{complete()}.}

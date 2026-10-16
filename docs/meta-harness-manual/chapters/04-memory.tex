@@ -1,0 +1,57 @@
+\chapter{Memory and State Persistence}
+\section{Four forms of continuity}
+A chat transcript and an execution checkpoint solve different problems. The transcript records what participants said. A checkpoint records what the runtime has actually committed, including pending or completed actions. RAG provides separately managed knowledge; it is not a hidden copy of conversation memory.
+\begin{center}\input{figures/memory.tex}\captionof{figure}{Memory ownership. Chat and task state share core PostgreSQL. External knowledge remains in the independent RAG database and file volumes.}\end{center}
+\begin{description}
+\item[Conversation memory] Ordered user/assistant messages, automatically derived chat titles, attachment bytes and compact tool traces. Saved messages remain visible even when model context is summarized.
+\item[Working memory] The private input window supplied to the selected model: relevant messages, decisions, observations and opaque provider compaction/reasoning items. This is separate from UI text.
+\item[Persistent task state] Goal, immutable plan/criteria, current and completed steps, pending action, operation ledger, approvals, retries, verification evidence, context cursors, budget baselines and lease information.
+\item[Long-term domain knowledge] Device/issue data and searchable document passages in RAG. The agent retrieves relevant evidence through permitted MCP calls; it does not learn every uploaded manual permanently.
+\end{description}
+\section{Conversation reconstruction}
+\texttt{ChatsService} inserts messages and attachments transactionally, serializes response generation per chat and links a reply to its originating user message. The unique reply linkage prevents multiple final replies to the same turn. Ordinary model context has a model identifier, complete private input items and a message-position watermark. Only new input is added when that saved window is compatible; model changes rebuild from visible input.
+
+Attachments are stored as PostgreSQL \texttt{bytea} for downloading. Ordinary attachment content is not extracted into LLM context. Uploading a PDF with the chat plus button is therefore different from uploading it into RAG Documents.
+\source{\path{core/src/chats/chats.service.ts}; \path{core/src/llm/context-window.ts}: \texttt{ChatContextWindow}; \path{database/schema.sql}; \path{ui/src/components/chat/attachment-card.tsx}.}
+\nextpage{What PostgreSQL actually saves}
+\section*{The core persistence model}
+Core uses parameterized \texttt{pg} SQL, not an ORM. The schema snapshot and ordered migrations are applied inside a transaction with a database advisory lock. \texttt{schema\_migrations} stores a checksum for each upgrade; changing an applied migration is a startup error rather than an implicit schema rewrite.
+\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Entity & Persisted purpose\\\midrule
+\texttt{chats} & Title, activity timestamps and private conversation context\\
+\texttt{messages} & Role/text, order, reply linkage, tool traces and continuation state\\
+\texttt{attachments} & Filename, MIME metadata, size and original bytes\\
+\texttt{mcp\_servers} & Endpoints, discovered tools, permissions, status and credential-variable reference\\
+\texttt{agent\_tasks} & Request/goal/plan/criteria, progress, next action, private context and budgets\\
+\texttt{task\_steps} & Ordered decisions and execution step status\\
+\texttt{task\_operations} & Stable operation identity, action, policy digest, dispatch/result/error and attempts\\
+\texttt{task\_approvals} & Exact operation/action, policy identity and operator decision\\
+\texttt{task\_verifications} & Criterion ID, pass/fail and actual observed evidence\\
+\texttt{task\_events} & Sequenced progress/model/error/checkpoint events\\
+\texttt{task\_schedules} & Cron/one-time schedule, timezone and task template\\\bottomrule
+\end{tabularx}
+Historical \texttt{task\_triggers} and \texttt{task\_trigger\_events} tables remain in the immutable schema but are inactive. Secrets are absent from these tables: profiles point to names in root \texttt{.env}.
+\section*{State is saved before it becomes external work}
+The worker first commits a model decision as \texttt{next\_action}. It then persists an operation identity and approval requirement. Immediately before sending a permitted external request, it commits \texttt{DISPATCHING}. Actual results, verification and progress are separate transactions. This ordering allows recovery to distinguish an unsent proposal from an action whose outcome is uncertain.
+
+\texttt{fenced()} locks the task row and verifies RUNNING status plus the current lease-owner UUID. A stale worker cannot overwrite a pause/cancel or another owner's checkpoint. A session advisory lock supplies additional exclusion even if lease time expires while a process is still alive.
+\section*{Schema evolution}
+Migration 001 adds durable tasks, 002 adds estimated-cost accounting and 003 adds context-delivery state, prompt-token/turn/active-time baselines and a continuation counter. Task-operation evidence stays in PostgreSQL across all three. Foreign keys and cascade rules prevent orphaned task history when its conversation is deleted.
+\source{\path{core/src/database/database.service.ts}: \texttt{onModuleInit()}, \texttt{transaction()}; \path{database/migrations/001_durable_tasks.sql}; \path{database/migrations/002_task_cost_budget.sql}; \path{database/migrations/003_task_context_checkpoints.sql}; \path{core/src/tasks/task-worker.ts}: \texttt{fenced()}.}
+\nextpage{Incremental context and long-task continuity}
+\section*{Why full snapshots were replaced}
+The old task planner appended recent chat plus every full tool result on each turn. The private window grew with repeated evidence, while cumulative token limits could stop a task before its final source check. The current design separates authoritative storage from what the next model prompt needs.
+
+\texttt{taskContextDelta()} fingerprints each operation's status, result, error and attempt count. A new prompt receives recent conversation and current tool schemas once. Later turns receive only changed operation observations and changed schemas, plus a bounded ledger and deterministic criterion statuses. Fingerprints and the resulting private window are committed together: a crash cannot mark evidence as delivered without saving the context that received it.
+\section*{Bounded results with exact evidence access}
+Each changed result is sent in full up to 12,000 characters; larger results use a marked preview. An update targets at most 64,000 characters of changed evidence, with pending changes delivered later. The ledger includes the latest forty operations; completed-step labels include the latest ten. Full original results remain in storage.
+
+If exact detail is needed, the model chooses an internal \texttt{evidence} action. \texttt{readTaskEvidence()} resolves only operation IDs belonging to that task and applies a JSON pointer plus bounded offset/limit. It returns at most fifty array items or 12,000 text characters, also bounding large array pages. A nested oversized item can be inspected through a more specific pointer. This is neither an external replay nor a new proof of external execution.
+\section*{Two distinct summarization boundaries}
+\begin{enumerate}
+\item Before inference, core counts the current model input. At 90\% of configured context capacity, the selected model's Responses compaction endpoint produces a canonical replacement window. If compaction remains too large or unavailable, original evidence is retained and an error is surfaced.
+\item At a task prompt's turn/token/active-time budget, \texttt{summarizeTaskContext()} asks the same selected model for a factual working memo, with a 2,048-token output bound. \texttt{continuePrompt()} commits that memo, refreshes budget baselines and automatically requeues the task.
+\end{enumerate}
+The memo preserves identifiers, goals, sources, constraints, uncertain/declined writes and next steps. Immutable criteria and operation identities remain in database fields rather than depending solely on summary prose. Legacy windows receive one checkpoint when resumed. A failed summary does not replace the old window.
+\note{What remains limited}{Summaries can omit facts or lose nuance. Exact stored-evidence reads mitigate loss but do not guarantee perfect model recall. Tokens/cost are cumulative; cost and continuation caps pause execution. Interrupted provider requests may be billed even when usage is unavailable. No semantic search over chat memory or learned personal-memory store is implemented.}
+\source{\path{core/src/tasks/task-context.ts}: \texttt{taskContextDelta()}, \texttt{readTaskEvidence()}; \path{core/src/llm/llm.service.ts}: \texttt{summarizeTaskContext()}; \path{core/src/llm/context-window.ts}: \texttt{countContext()}, \texttt{compactContext()}.}

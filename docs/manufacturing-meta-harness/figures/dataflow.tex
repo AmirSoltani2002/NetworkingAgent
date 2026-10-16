@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.75cm and 1cm]
+\node[box](csv){Supplied synthetic CSVs\\ten signals + recipe};\node[box,right=of csv](db){External ZSK PostgreSQL\\observations / predictions};\node[box,right=of db](ml){Random Forest service\\versioned inference};
+\node[box,below=of db](core){Core LLM / MCP loops\\persisted evidence};\node[box,left=of core](rag){External RAG\\technical passages};\node[box,right=of core](op){Operator UI\\qualified human review};
+\draw[arr](csv)--(db);\draw[arr](db)--(ml);\draw[arr](ml)--(core);\draw[arr](db)--(core);\draw[arr](rag)--(core);\draw[arr](core)--(op);\end{tikzpicture}

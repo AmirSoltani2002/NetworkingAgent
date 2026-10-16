@@ -1,0 +1,20 @@
+\page{13 / KEEP THE NOTEBOOK, CLEAR THE DESK}{Memory and context management}
+Halfway through the inspection, imagine the application restarts. The agent needs to know what happened already. Now imagine a very long investigation: the model cannot keep every reading and every conversation on its working desk at once. These are two different problems.
+
+\diagram{agent-memory}{Persistent memory keeps the record. Context is the selected information sent to the LLM for its next decision. Summarizing context does not erase the transcript or action evidence.}
+
+\subsection*{Memory: the durable notebook}
+The local database stores conversations and task records: objective, completion checks, approvals, operations, results and checkpoints. The factory and RAG services retain their own machine and document records. These records, rather than the model's recollection, establish what actually happened.
+
+For our gearbox inspection, the saved operation tells the task that the request was already sent. A restart can recover that progress without treating the inspection as a new request. Uncertain outcomes need the recovery procedure on page 15.
+
+\subsection*{Context: the limited working desk}
+Before a model turn, core measures the context size. Near the configured capacity it compacts the working context using the same selected model. The visible conversation remains intact. Persistent tasks deliver changed evidence incrementally and can read exact saved results when a preview or summary is insufficient.
+
+Work-budget checkpoints also carry progress into a fresh prompt. They preserve approvals, task limits and action identities; they do not give the agent new authority or reset its overall allowance.
+
+\subsection*{How we protect continuity}
+Important decisions remain tied to saved operations and fixed checks. Summaries help the model continue, but they can omit detail. When an exact timestamp, sensor value or action outcome matters, the agent can return to the original record instead of relying on a compressed recollection.
+
+\takeaway{Memory is what we retain. Context is what the model sees now. We preserve the full record while keeping each model request manageable.}
+\evidence{Data models, API context handling and persistent-task context/checkpoint contracts. No lossless-memory claim is made.}

@@ -1,0 +1,11 @@
+\partlabel{PART III --- META-HARNESS ENGINEERING}
+\chapter{Agent Architecture and Execution Loop}
+\section{Problem, terminology and design}
+An LLM proposes text or a tool action. An agent couples these proposals to an action--observation loop. A harness supplies execution policy, context construction, persistence, limits and verification. This project's name ``Meta-Harness'' denotes its local control plane around a saved LLM and external services. It does \textbf{not} integrate multiple external coding-agent runtimes. In Barbaste et al.'s narrower terminology, a meta-harness orchestrates harnesses from above; this project instead implements its own agent loop. The paper's separation of loop, model integration, tools, memory and safety is useful as an analysis framework, not a claim of equivalent architecture or benchmark performance~\cite{harness}.
+\fig{architecture}{Complete implemented topology. Local host bindings coexist with outbound OpenAI inference; selected tool observations can leave the machine in model context.}
+\section{Two loops share one LLM service}
+\texttt{ChatsService.respond()} serializes a conversation with a session advisory lock, selects ordered history, reconstructs private context and calls \texttt{LlmService.respond()}. OpenAI Responses emits function calls or final text. The service validates each call, asks for exact approval for writes, executes sequentially and appends \texttt{function\_call\_output} observations. Final text is persisted once per user message.
+
+Durable tasks use \texttt{TaskWorker.run()} and \texttt{LlmService.taskDecision()}. The model receives a bounded snapshot and proposes a strict decision with goal, plan, criteria, step, action and summary. The worker interprets execute/wait/complete/blocked/respond, controls authority and persists results. There is no second reasoning model, queue microservice or agent database.
+\verdict{Owning the loop in core keeps side effects under explicit policy and persistence control. The term Meta-Harness is a project label; reliability comes from these concrete mechanisms rather than from a model or runtime brand.}
+\source{\path{core/src/chats/chats.service.ts}: \texttt{respond()}; \path{core/src/llm/llm.service.ts}: \texttt{respond()}, \texttt{taskDecision()}; \path{core/src/tasks/task-worker.ts}: \texttt{run()}; \path{core/src/app.module.ts}.}

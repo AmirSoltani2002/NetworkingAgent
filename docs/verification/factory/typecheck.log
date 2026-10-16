@@ -1,0 +1,12 @@
+
+> local-meta-harness@0.1.0 typecheck
+> npm run typecheck --workspaces
+
+
+> @meta-harness/ui@0.1.0 typecheck
+> tsc --noEmit
+
+
+> @meta-harness/core@0.1.0 typecheck
+> tsc --noEmit
+

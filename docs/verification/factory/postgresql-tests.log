@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression
+ok 1 - real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression
+  ---
+  duration_ms: 126.066812
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay
+ok 2 - real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay
+  ---
+  duration_ms: 66.149664
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI
+ok 3 - real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI
+  ---
+  duration_ms: 78.567872
+  type: 'test'
+  ...
+# Subtest: PostgreSQL integration receipt atomically creates one template-bound task under concurrent duplicate delivery
+ok 4 - PostgreSQL integration receipt atomically creates one template-bound task under concurrent duplicate delivery
+  ---
+  duration_ms: 48.247303
+  type: 'test'
+  ...
+# [Nest] 2049542  - 10/09/2026, 8:57:02 PM     LOG [Tasks] {"event":"task_slice","taskId":"98169332-f786-4f5b-a94d-e86a293bf33c","durationMs":60}
+# [Nest] 2049542  - 10/09/2026, 8:57:02 PM     LOG [Tasks] {"event":"task_slice","taskId":"98169332-f786-4f5b-a94d-e86a293bf33c","durationMs":72}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"98169332-f786-4f5b-a94d-e86a293bf33c","durationMs":82}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"98169332-f786-4f5b-a94d-e86a293bf33c","durationMs":79}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"d9dc287a-3ee5-4ceb-9860-3e6cb75ea225","durationMs":20}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"d9dc287a-3ee5-4ceb-9860-3e6cb75ea225","durationMs":15}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"3015e14f-689e-4e95-8b28-c61ff3c3cd28","durationMs":47}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"e0087580-cc1c-42c2-95e4-f90da864b8c5","durationMs":41}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"e0087580-cc1c-42c2-95e4-f90da864b8c5","durationMs":37}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"e0087580-cc1c-42c2-95e4-f90da864b8c5","durationMs":21}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM     LOG [Tasks] {"event":"task_slice","taskId":"b5513594-a52a-4083-a192-7c676b8ffbbd","durationMs":20}
+# [Nest] 2049542  - 10/09/2026, 8:57:03 PM    WARN [TaskSchedules] {"event":"task_schedule_poll_failed"}
+# Subtest: real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication
+ok 5 - real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication
+  ---
+  duration_ms: 909.269496
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1959.627207

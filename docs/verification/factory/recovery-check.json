@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "database": "factory_recovery_tests",
+  "epoch": "cd8827fe-8d22-47d2-bdc4-b18ec01e308a",
+  "inspection_id": "3726ed32-47c5-46bc-a149-da9526072c54",
+  "alarm_id": "e5c6ba56-c98b-4177-867d-272f894ba399",
+  "checks": [
+    "browser-independent measurements",
+    "ML outage retains cursor",
+    "factory and database container restart",
+    "stable epoch and clock",
+    "completed inspection not repeated",
+    "pending alarm retained with core unavailable",
+    "ML recovers unprocessed measurements",
+    "one alarm after replay",
+    "core approvals/leases/restart/receipts regression"
+  ]
+}

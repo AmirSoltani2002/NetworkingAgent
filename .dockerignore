@@ -1,0 +1,20 @@
+# Repository metadata, tooling, local credentials, and documentation
+.git
+.codex
+.agent
+.agents
+.aws
+.env
+.env.*
+docs
+AGENTS.md
+README.md
+
+# Dependencies/build output are recreated inside images
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+rag-server/
+manufacturing-demo/
+
+task-workspace

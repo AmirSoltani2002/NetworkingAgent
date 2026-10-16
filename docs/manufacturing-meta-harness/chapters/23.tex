@@ -1,0 +1,14 @@
+\chapter{Validation, Verification, and Observability}
+\section{Problem: success at which layer?}
+A protocol-valid tool response is not a completed workflow, and a completed workflow is not a correct industrial diagnosis. The implementation has strong generic execution checks but no comprehensive equipment-diagnostic validator. These levels must remain separate in user-visible claims.
+\fig{verification}{Implemented execution predicates below a separate industrial review layer. A passed task check verifies the specified stored fact, not the truth of every generated sentence.}
+\section{Execution validation in code}
+Inputs are checked at controller/contract boundaries; MCP arguments use current discovered schema plus server-side validation. Tool errors/timeouts are persisted rather than fabricated as observations. \texttt{TasksService.verify()} runs \texttt{checkCriterion()} over SUCCEEDED operations, matching operation kind, optional server/tool and argument filters. It reads a JSON pointer and evaluates exists/equals/nonempty/gte/contains. Checks and observed operation IDs/values are recorded in \texttt{task\_verifications}.
+
+Criteria are nonempty for completion; the first committed set is retained. Reconciled operator attestations are excluded. \texttt{complete()} writes the final reply and COMPLETED state only after all criteria pass. Response-only tasks get a response-delivery criterion with \texttt{externalExecutionVerified:false}; the UI states that no external operation was verified. Pre-completion progress is the passed-criterion fraction scaled to at most 99\%, not an estimate of physical maintenance completion.
+\section{Traceability and its limits}
+Chat traces show server/tool, duration, success and compact results/source references. Durable events record creation/planning/dispatch/result/retry/approval/checkpoint/model-output and completion; SQL operations retain actual result/error/attempts. Public task reads exclude private model context, lease owner and grants. Events/results are redacted for saved secrets; they are not tamper-evident audit records, and stored model output is not a hidden-reasoning transcript.
+
+Task detail exposes Completion checks, Verification evidence, Tool execution history, Request and result, Events and retries. The history establishes what was observed and accepted by predicates, not a causal explanation of hardware failure.
+\verdict{Deterministic predicates can reject unsupported completion claims about specified external facts. Because the model proposes the initial criteria and no industrial validator is installed, passing them does not certify a maintenance recommendation.}
+\source{\path{core/src/tasks/task-contract.ts}: \texttt{checkCriterion()}, \texttt{pointer()}, \texttt{matches()}; \path{core/src/tasks/tasks.service.ts}: \texttt{verify()}, \texttt{complete()}, \texttt{publicGet()}; \path{ui/src/components/tasks/tasks-workspace.tsx}.}

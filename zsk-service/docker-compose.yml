@@ -1,0 +1,38 @@
+name: zsk-demo
+services:
+  zsk-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: manufacturing
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set the existing manufacturing DB password in root .env}
+    volumes:
+      - zsk-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U manufacturing -d manufacturing"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+  zsk-ml:
+    image: zsk-ml:local
+    build: .
+    environment:
+      ZSK_DB_HOST: zsk-db
+      ZSK_DB_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set existing manufacturing DB password in root .env}
+      ZSK_FORECAST_BOOTSTRAP: ${ZSK_FORECAST_BOOTSTRAP:-true}
+      ZSK_FORECAST_HORIZON_MINUTES: ${ZSK_FORECAST_HORIZON_MINUTES:-30}
+      ZSK_API_KEY: ${ZSK_API_KEY:?Set ZSK_API_KEY in root .env}
+      ZSK_ADMIN_API_KEY: ${ZSK_ADMIN_API_KEY:?Set ZSK_ADMIN_API_KEY in root .env}
+    volumes:
+      - zsk-models:/data/models
+    ports: ["127.0.0.1:8100:8000"]
+    depends_on:
+      zsk-db:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  zsk-data:
+    external: true
+    name: ${ZSK_DATABASE_VOLUME:-manufacturing-demo_manufacturing-data}
+  zsk-models:

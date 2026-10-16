@@ -1,0 +1,86 @@
+{
+  "model_version": "b7622ca3-df96-4036-b369-6ed3ba670e69",
+  "metrics": {
+    "synthetic_only": true,
+    "source": "reproducible simulator episodes, separate from historical condition data",
+    "horizon_minutes": 30,
+    "cadence_minutes": 5,
+    "feature_names": [
+      "screw_speed_rpm",
+      "screw_torque_pct",
+      "motor_current_a",
+      "motor_power_kw",
+      "gearbox_vibration_rms_mm_s",
+      "gearbox_oil_temp_c",
+      "barrel_zone_temp_c",
+      "melt_temp_c",
+      "melt_pressure_bar",
+      "feed_rate_kg_h",
+      "recipe_B",
+      "recipe_C",
+      "screw_torque_pct_mean_3",
+      "screw_torque_pct_std_3",
+      "gearbox_vibration_rms_mm_s_mean_3",
+      "gearbox_vibration_rms_mm_s_std_3",
+      "gearbox_oil_temp_c_mean_3",
+      "gearbox_oil_temp_c_std_3",
+      "melt_pressure_bar_mean_3",
+      "melt_pressure_bar_std_3"
+    ],
+    "train_rows": 835,
+    "test_rows": 200,
+    "embargo_raw_rows": 9,
+    "cutoff_timestamp": "2026-10-07T16:00:00+00:00",
+    "train_last_timestamp": "2026-10-07T15:10:00+00:00",
+    "test_first_timestamp": "2026-10-07T16:00:00+00:00",
+    "training_label_counts": [
+      721,
+      114
+    ],
+    "test_label_counts": [
+      170,
+      30
+    ],
+    "balanced_accuracy": 0.8352941176470587,
+    "classification_report": {
+      "0": {
+        "precision": 0.9482758620689655,
+        "recall": 0.9705882352941176,
+        "f1-score": 0.9593023255813954,
+        "support": 170.0
+      },
+      "1": {
+        "precision": 0.8076923076923077,
+        "recall": 0.7,
+        "f1-score": 0.75,
+        "support": 30.0
+      },
+      "accuracy": 0.93,
+      "macro avg": {
+        "precision": 0.8779840848806366,
+        "recall": 0.8352941176470587,
+        "f1-score": 0.8546511627906976,
+        "support": 200.0
+      },
+      "weighted avg": {
+        "precision": 0.9271883289124667,
+        "recall": 0.93,
+        "f1-score": 0.9279069767441861,
+        "support": 200.0
+      }
+    },
+    "confusion_matrix_0_1": [
+      [
+        165,
+        5
+      ],
+      [
+        9,
+        21
+      ]
+    ],
+    "limitation": "Evaluation candidate is deployed without fitting holdout rows. Synthetic-only probabilities are uncalibrated; no industrial prognosis. Unseen scenarios and simulator distribution shift can fail."
+  },
+  "prediction_kind": "future_fault_onset",
+  "synthetic_only": true
+}

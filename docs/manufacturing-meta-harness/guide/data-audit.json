@@ -1,0 +1,135 @@
+{
+  "historical_rows": 1000,
+  "cadence_minutes": 5,
+  "first_timestamp": "2026-09-01T00:00:00",
+  "last_timestamp": "2026-09-04T11:15:00",
+  "recipe_boundaries_hours": [
+    29.166666666666668,
+    58.333333333333336
+  ],
+  "original_plot_values_match": true,
+  "episode_task_id": "306f5c12-5c55-486c-9d5b-5670fb5cf506",
+  "episode_operation_id": "c99ab505-998f-49e0-b41c-c7a5af82000d",
+  "episode_records": [
+    {
+      "minutes": 0.0,
+      "vibration": 2.0724,
+      "oil": 45.9585,
+      "current": 76.6824,
+      "id": 1418,
+      "timestamp": "2026-09-05 22:19:14.766988"
+    },
+    {
+      "minutes": 5.0,
+      "vibration": 2.5393,
+      "oil": 47.691,
+      "current": 78.1007,
+      "id": 1419,
+      "timestamp": "2026-09-05 22:24:14.766988"
+    },
+    {
+      "minutes": 10.0,
+      "vibration": 3.001,
+      "oil": 49.423,
+      "current": 79.262,
+      "id": 1420,
+      "timestamp": "2026-09-05 22:29:14.766988"
+    },
+    {
+      "minutes": 15.0,
+      "vibration": 3.4568,
+      "oil": 51.1566,
+      "current": 80.1405,
+      "id": 1421,
+      "timestamp": "2026-09-05 22:34:14.766988"
+    },
+    {
+      "minutes": 20.0,
+      "vibration": 3.907,
+      "oil": 52.8939,
+      "current": 80.7453,
+      "id": 1422,
+      "timestamp": "2026-09-05 22:39:14.766988"
+    },
+    {
+      "minutes": 25.0,
+      "vibration": 4.3524,
+      "oil": 54.637,
+      "current": 81.119,
+      "id": 1423,
+      "timestamp": "2026-09-05 22:44:14.766988"
+    }
+  ],
+  "current_confusion_matrix": [
+    [
+      44,
+      2
+    ],
+    [
+      4,
+      150
+    ]
+  ],
+  "forecast_confusion_matrix": [
+    [
+      165,
+      5
+    ],
+    [
+      9,
+      21
+    ]
+  ],
+  "component_routing_at_minute_60_seed_13": [
+    {
+      "scenario": "gearbox_vibration",
+      "scenario_component": "gearbox",
+      "selected_component": "gearbox"
+    },
+    {
+      "scenario": "bearing_deterioration",
+      "scenario_component": "gearbox",
+      "selected_component": "gearbox"
+    },
+    {
+      "scenario": "excessive_torque",
+      "scenario_component": "barrel",
+      "selected_component": "motor"
+    },
+    {
+      "scenario": "oil_overheating",
+      "scenario_component": "gearbox",
+      "selected_component": "gearbox"
+    },
+    {
+      "scenario": "barrel_instability",
+      "scenario_component": "cooling",
+      "selected_component": "barrel"
+    },
+    {
+      "scenario": "high_melt_pressure",
+      "scenario_component": "die",
+      "selected_component": "die"
+    },
+    {
+      "scenario": "unstable_feeding",
+      "scenario_component": "feeder",
+      "selected_component": "barrel"
+    },
+    {
+      "scenario": "excessive_current",
+      "scenario_component": "motor",
+      "selected_component": "motor"
+    }
+  ],
+  "source_sha256": {
+    "zsk-service/data/zsk_labeled_1000.csv": "3480329ce85445e6cec51aa7927540f402ef3289381b243196c374a052d8a6ac",
+    "docs/verification/factory/end-to-end.json": "695c9e27b84962b5b6fe74295d2acff8ec0308756a752e6aa69fe295ef4250cc",
+    "docs/manufacturing-meta-harness/evidence/zsk-final-state.json": "1a14bdef75fc87725a1ee1aa5e8c748a4b571b69ec3117e9047344fedcea99cc",
+    "docs/verification/factory/forecast-metrics.json": "a17c2e7cfd75297930dc9f2ca3b5af23d7dbc00ff604827befdd7edf54eb1ce4",
+    "factory-service/factory/worker.py": "e8928f523a910c7b84ab04981bf3bc1052072c3e879f51065822416f1d9568b3",
+    "docs/verification/factory/factory-running.png": "baa182bac244a71229f8867bf2251334426b43f4cee2abacd54d98eb75538c35",
+    "docs/verification/factory/factory-component.png": "11b97338d6f87b41d174f0e48ca4003840abec8b10c3518bc4f94a18fe1d2409"
+  },
+  "limits": "Saved synthetic evidence only. No fresh ML evaluation or agent run. No smoothing or resampling."
+}

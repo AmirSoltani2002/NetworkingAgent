@@ -1,0 +1,91 @@
+\begin{thebibliography}{10}
+
+\bibitem{coperionmonitor}
+{Coperion}.
+\newblock Condition monitoring on zsk extruder gearbox increases overall
+  machine efficiency.
+\newblock Plastics in Focus 02/2022.
+  \url{https://www.coperion.com/en/news-media/newsletter/2022/plastics-in-focus-edition-022022/condition-monitoring-on-zsk-extruder-gearbox},
+  2022.
+
+\bibitem{jardine}
+Andrew K.~S. Jardine, Daming Lin, and Dragan Banjevic.
+\newblock A review on machinery diagnostics and prognostics implementing
+  condition-based maintenance.
+\newblock {\em Mechanical Systems and Signal Processing}, 20(7):1483--1510,
+  2006.
+
+\bibitem{rfdocs}
+{scikit-learn developers}.
+\newblock Randomforestclassifier api documentation.
+\newblock
+  \url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html},
+  2026.
+\newblock Consulted for ensemble/probability semantics; repository locks own
+  runtime version.
+
+\bibitem{lewis}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+  Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen tau Yih, Tim
+  Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive nlp tasks.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~33, pages 9459--9474, 2020.
+\newblock \url{https://arxiv.org/abs/2005.11401}.
+
+\bibitem{coperion2025}
+{Coperion}.
+\newblock Zsk and sts twin screw extruders: More efficiency in compounding and
+  recycling.
+\newblock September press release, pp. 1--6.
+  \url{https://www.coperion.com/media/tnqbsvnq/coperion_k_2025_zsk_sts_twin_screw_extruders_en.pdf},
+  2025.
+\newblock Live RAG local title: ZSK Condition Monitoring Extruder Brochure;
+  passages on p. 3.
+
+\bibitem{coperionbrochure}
+{Coperion}.
+\newblock Zsk twin screw extruders.
+\newblock Brochure B-600304-en, August.
+  \url{https://www.coperion.com/media/kdxpvjto/b-600304-en-zsk_2025-08.pdf},
+  2025.
+\newblock Live RAG publication; relevant condition-monitoring passage p. 28.
+
+\bibitem{coperionservice}
+{Coperion}.
+\newblock Extruder modernization and service.
+\newblock
+  \url{https://www.coperion.com/media/8959/coperion_service_extruder_modernization.pdf}.
+\newblock Undated publication in live RAG; p. 4 discusses monitoring
+  bottlenecks; not a diagnostic manual.
+
+\bibitem{harness}
+Paul Barbaste, Tristan Darrigol, Germain Vu, and Tom Wiltberger.
+\newblock Harness engineering: Anatomy, architecture, and evolution of coding
+  agents -- a source-code study of eleven systems.
+\newblock arXiv:2609.00006v1, 2026.
+\newblock Sections 2, 6, 9 and 10 consulted; accessed 9 October 2026.
+
+\bibitem{mcp}
+{Model Context Protocol}.
+\newblock Tools: Specification revision 2025-06-18.
+\newblock
+  \url{https://modelcontextprotocol.io/specification/2025-06-18/server/tools},
+  2025.
+\newblock Accessed 9 October 2026.
+
+\bibitem{mcpannotations}
+Ola Hungerford, Sam Morrow, and Luca Chang.
+\newblock Tool annotations as risk vocabulary: What hints can and can't do.
+\newblock MCP Blog, 16 March.
+  \url{https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/},
+  2026.
+\newblock Accessed 9 October 2026.
+
+\bibitem{bergmeir}
+Christoph Bergmeir, Rob~J. Hyndman, and Bonsoo Koo.
+\newblock A note on the validity of cross-validation for evaluating
+  autoregressive time series prediction.
+\newblock {\em Computational Statistics \& Data Analysis}, 120:70--83, 2018.
+
+\end{thebibliography}

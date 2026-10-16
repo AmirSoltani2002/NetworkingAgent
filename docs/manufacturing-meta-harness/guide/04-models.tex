@@ -1,0 +1,14 @@
+\page{3 / UNDERSTAND THE MODELS}{Two questions, two different answers}
+Back in the game, look below the scene. \textbf{Current condition} asks whether the observed pattern resembles synthetic Healthy or Faulty examples. \textbf{Future simulated fault onset} asks whether a still-healthy simulated machine may develop a fault within the registered horizon, usually 30 minutes. It does not estimate remaining machine life.
+
+Both machine-learning (ML) models use ten signals, recipe indicators and recent statistics. A full window contains the current reading and two earlier readings: at five-minute spacing, the first and last are ten minutes apart. Neither receives simulator severity or a hidden fault name as an input.
+
+\subsection*{Read the errors as well as the score}
+\diagram{matrices}{Recorded chronological evaluations on two different synthetic datasets. Rows are actual classes; columns are model decisions; each panel contains 200 cases. The meanings of 0/1 differ between the models, so words replace numeric class codes.}
+
+For current condition, the candidate missed \textbf{2 of 46 faulty readings} and raised \textbf{4 false alarms among 154 healthy readings}. It scored 97\% overall, but that does not mean 97\% accuracy on a real extruder. The deployed current classifier was subsequently fitted on all 1,000 labeled source rows; the plot evaluates the earlier candidate.
+
+For future onset, the separate model missed \textbf{9 of 30 onsets} and raised \textbf{5 false alarms among 170 no-onset cases}. The evaluated forecast candidate itself was deployed without fitting its holdout. Its 30-minute prediction is unavailable when the current classification is Faulty, the line is not running, or three continuous readings are missing.
+
+\takeaway{The game's FAULT/WARNING light comes from simulator fault severity. Healthy/Faulty below the scene comes from ML. They can disagree. A probability is a synthetic model output, not a confirmed diagnosis or calibrated industrial risk.}
+\evidence{Current matrix: \path{evidence/zsk-final-state.json}. Future-onset matrix: \path{docs/verification/factory/forecast-metrics.json}. These saved results were not reevaluated for this rewrite.}

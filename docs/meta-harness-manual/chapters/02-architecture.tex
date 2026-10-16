@@ -1,0 +1,17 @@
+\chapter{Overall Architecture}
+\section{Separation by ownership}
+The browser owns interaction, core owns orchestration and configuration, and PostgreSQL owns chat/task persistence. Retrieval and ML remain independent external services. This keeps domain logic out of the generic harness and lets each external stack operate without the UI.
+\begin{center}\input{figures/architecture.tex}\captionof{figure}{Complete runtime boundary. The RAG and manufacturing stacks have their own persistent stores; OpenAI inference is remote.}\end{center}
+\begin{tabularx}{\linewidth}{@{}lXl@{}}\toprule
+Component & Implementation / responsibility & Host port\\\midrule
+UI & React 19, Vite 8, Tailwind 4, shadcn; Nginx & 8080\\
+Core & NestJS 12, Node 24, \texttt{pg}; chat/MCP/tasks & 8000\\
+Chat database & PostgreSQL 17; messages, files, task ledgers & private\\
+RAG & Python 3.12+, FastAPI, pgvector; API/worker & 8090\\
+Manufacturing & FastAPI, scikit-learn, joblib; ML/MCP & 8100\\\bottomrule
+\end{tabularx}
+\section{Why one core and independent services?}
+The existing core process runs both the task worker and scheduler. PostgreSQL locking supplies concurrency control; no separate broker or queue microservice is introduced. External services retain their own databases, models and files. The shared \texttt{meta-harness-mcp} bridge enables container-to-container connections, while published application ports bind to loopback.
+
+The main Compose stack builds three images. Core includes compiled TypeScript and immutable migrations; the secret file is mounted only at runtime. UI assets contain no connection credentials. \texttt{App.tsx} preserves the chat/draft while management pages replace the main content area. LLM text is not streamed token by token; task status uses SSE and polling.
+\source{\path{core/src/app.module.ts}; \path{ui/src/App.tsx}; \path{docker-compose.yml}; \path{docker-compose.mcp.yml}; \path{core/Dockerfile}; \path{ui/Dockerfile}.}

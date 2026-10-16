@@ -1,0 +1,25 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\foreach \offset/\title/\cA/\cB/\aa/\ab/\ba/\bb in {0/Current condition/Faulty/Healthy/44/2/4/150,8/Future onset/Onset/No onset/21/9/5/165}{
+ \begin{scope}[xshift=\offset cm]
+ \node[font=\sffamily\bfseries\small,text=black] at (3,2.65) {\title};
+ \node[font=\sffamily\scriptsize,text=black] at (3,2.1) {MODEL DECISION};
+ \node[font=\sffamily\small] at (2,1.55) {\cA};
+ \node[font=\sffamily\small] at (4,1.55) {\cB};
+ \node[font=\sffamily\small,anchor=east,align=right] at (.85,.65) {\cA};
+ \node[font=\sffamily\small,anchor=east,align=right] at (.85,-.65) {\cB};
+ \node[font=\sffamily\scriptsize,text=black,rotate=90] at (-1.05,0) {ACTUAL CLASS};
+ \fill[pale] (1,0) rectangle (3,1.3);
+ \fill[red!10] (3,0) rectangle (5,1.3);
+ \fill[red!10] (1,-1.3) rectangle (3,0);
+ \fill[pale] (3,-1.3) rectangle (5,0);
+ \draw[muted!50] (1,-1.3) rectangle (5,1.3);
+ \draw[muted!50] (3,-1.3)--(3,1.3);
+ \draw[muted!50] (1,0)--(5,0);
+ \node[font=\sffamily\bfseries\Large,text=black] at (2,.7) {\aa};
+ \node[font=\sffamily\bfseries\Large,text=black] at (4,.7) {\ab};
+ \node[font=\sffamily\bfseries\Large,text=black] at (2,-.6) {\ba};
+ \node[font=\sffamily\bfseries\Large,text=black] at (4,-.6) {\bb};
+ \node[font=\sffamily\scriptsize,text=black] at (3,-1.75) {200 synthetic holdout cases};
+ \end{scope}
+}
+\end{tikzpicture}

@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+\begin{axis}[anchor=north west,width=.94\linewidth,height=4.1cm,xmin=0,xmax=83.25,xticklabels={},ylabel={Torque (\%)},grid=major,tick label style={font=\small},label style={font=\small}]
+\addplot[teal,thin] table[x=hours,y=torque,col sep=comma]{figures/measurements.csv};\end{axis}
+\begin{axis}[at={(0,-3.35cm)},anchor=north west,width=.94\linewidth,height=3.5cm,xmin=0,xmax=83.25,xticklabels={},ylabel={Vibration (mm/s)},grid=major,tick label style={font=\small},label style={font=\small}]
+\addplot[ink,thin] table[x=hours,y=vibration,col sep=comma]{figures/measurements.csv};\end{axis}
+\begin{axis}[at={(0,-6.15cm)},anchor=north west,width=.94\linewidth,height=2.4cm,xmin=0,xmax=83.25,ymin=-.2,ymax=1.2,ytick={0,1},yticklabels={Faulty,Healthy},xlabel={Hours since 1 September 2026 00:00 UTC},grid=major,tick label style={font=\small},label style={font=\small}]
+\addplot[teal,const plot,thick] table[x=hours,y=label,col sep=comma]{figures/measurements.csv};\end{axis}
+\end{tikzpicture}

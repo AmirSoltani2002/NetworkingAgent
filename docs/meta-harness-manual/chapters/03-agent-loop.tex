@@ -1,0 +1,46 @@
+\chapter{Agent Harness and Execution Loop}
+\partlabel{PART II --- AGENT ENGINEERING}
+\section{Initialization and context construction}
+Nest imports the chat, LLM, MCP, RAG and task modules. Startup loads root environment configuration, initializes PostgreSQL and applies migrations before workers claim tasks. The saved provider/key/model/thinking settings are reused for both chat and durable execution. There is one reasoning-model integration, not a separate task agent.
+
+Ordinary chat enters \texttt{LlmService.respond()}. It builds provider function definitions from currently enabled, connected and allowlisted MCP tools. Responses may contain function calls; the loop resolves the generated function name, validates arguments, performs permitted execution and appends a \texttt{function\_call\_output}. A final text response ends the ordinary loop.
+
+A durable task instead enters \texttt{TaskWorker.run()}. It reconstructs task state, prepares an incremental snapshot and calls \texttt{taskDecision()}. The system instructions in \texttt{task-prompt.ts} ask for one structured decision: execute, wait, complete, blocked or respond. Each worker slice performs at most one selected action, then commits a checkpoint before another slice is claimed.
+\begin{center}\input{figures/agent-loop.tex}\captionof{figure}{Durable THINK--ACT--OBSERVE--VERIFY--CONTINUE loop. Policy and evidence checks are backend decisions.}\end{center}
+\section{Structured decisions are executable proposals}
+The JSON schema includes a goal, ordered plan, measurable criteria, zero-based plan step, action and human summary. A proposed MCP action contains the real registered server UUID, tool name and argument object. Tool metadata is data, not authority. Instructions encourage conservative assumptions for vague objectives, but the backend does not translate vagueness into write permission.
+
+\texttt{parseTaskDecision()} scans quoted/escaped JSON safely, validates with Ajv and parses nested argument/filter JSON. Identical execute/wait duplicates can be collapsed; conflicting or malformed decisions are rejected before dispatch. Response parsing is bounded to 262,144 characters and 512 objects. The raw redacted model output is retained separately for diagnosis.
+\source{\path{core/src/llm/llm.service.ts}: \texttt{respond()}, \texttt{taskDecision()}; \path{core/src/tasks/task-prompt.ts}; \path{core/src/tasks/task-decision-parser.ts}: \texttt{parseTaskDecision()}; \path{core/src/tasks/task-worker.ts}: \texttt{run()}.}
+\nextpage{Continuation, stopping and cancellation}
+\section*{Pseudocode derived from the worker}
+\begin{lstlisting}
+claim due task + advisory lock + lease owner
+while one bounded worker slice is active:
+    restore committed goal, criteria, pending action, context
+    if hard cost/continuation cap exhausted: pause
+    if prompt budget exhausted: summarize, checkpoint, requeue
+    if no pending action:
+        build incremental context; obtain one valid decision
+        commit decision, private window and delivery cursors
+    if respond/complete: verify stored evidence before completion
+    if blocked: pause with explanation
+    if wait: checkpoint and schedule next slice
+    if execute:
+        enforce current tool/workspace policy
+        reuse completed write; request approval if required
+        commit DISPATCHING before sending
+        persist observation; verify; checkpoint and requeue
+on interruption: pause uncertain writes; retry safe reads
+release lease/advisory lock
+\end{lstlisting}
+\section*{Budgets have different purposes}
+Ordinary chat has eight provider rounds, twelve tool calls and a two-minute deadline per prompt. A persisted continuation lets the existing UI automatically request the next prompt, up to twenty continuations per UI run. Three consecutive deadline prompts without progress pause for retry. A confirmation gate suspends continuation until the exact invocation is approved.
+
+Durable tasks continue in core without browser requests. Defaults are eight decision attempts, 200,000 provider tokens and 120,000 active milliseconds per prompt, with twenty automatic checkpoints per task. \texttt{TASK\_MAX\_TURNS}, \texttt{TASK\_MAX\_TOKENS}, \texttt{TASK\_MAX\_ACTIVE\_MS} and \texttt{TASK\_MAX\_CONTINUATIONS} are operator overrides. A slice still has a two-minute abort deadline. Lifetime accounting and optional cost caps survive every checkpoint.
+
+These bounds prevent indefinite execution; they do not prove progress. A completed operation can be followed by an unsuccessful verification or a poor next decision. Repeated provider/tool failures exhaust the bounded retry policy. Authentication and unsafe configuration failures stop instead of silently generating success.
+\section*{What cancellation means}
+Pause/cancel changes persisted state and revokes the running owner's ability to commit another fenced step. Heartbeats detect lease loss and abort local execution. A request already sent to an external service cannot be undone by cancellation. If an interrupted write may have executed, its outcome must be reconciled before reuse or retry. Cancelled and completed tasks are terminal in the control API.
+\note{Observations and final output}{Tool results are committed independently of the final reply. Every task-owned chat message has a live status/output card. The UI stays in chat and offers an optional link to task details. A useful response can be delivered without tools; that verifies delivery only, not external work.}
+\source{\path{core/src/tasks/task-worker.ts}: \texttt{claim()}, \texttt{fenced()}, \texttt{run()}, \texttt{advance()}, \texttt{continuePrompt()}; \path{core/src/tasks/tasks.service.ts}: \texttt{control()}; \path{ui/src/components/chat/task-feedback.tsx}.}

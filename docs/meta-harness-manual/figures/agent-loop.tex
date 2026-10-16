@@ -1,0 +1,14 @@
+\begin{tikzpicture}[scale=.82,transform shape,node distance=4mm]
+\node[darkbox] (claim) {Claim committed task};
+\node[box,below=of claim] (think) {THINK\\incremental context + model};
+\node[box,below=of think] (policy) {Validate decision + policy\\persist action / approval gate};
+\node[box,below=of policy] (act) {ACT\\record dispatch; execute};
+\node[box,below=of act] (obs) {OBSERVE\\persist actual result};
+\node[decision,below=of obs] (verify) {VERIFY\\all criteria pass?};
+\node[darkbox,right=18mm of verify] (done) {COMPLETED\\save reply};
+\draw[arr] (claim)--(think);\draw[arr] (think)--(policy);\draw[arr] (policy)--(act);\draw[arr] (act)--(obs);\draw[arr] (obs)--(verify);
+\draw[arr] (verify)--node[lab,above]{yes} (done);
+\draw[arr] (verify.west)--++(-1.3,0) |- node[lab,pos=.2]{no: checkpoint / next slice} (think.west);
+\node[box,right=18mm of policy] (approval) {\scriptsize WAITING\_APPROVAL\\or safe pause / retry};
+\draw[arr] (policy)--(approval);
+\end{tikzpicture}

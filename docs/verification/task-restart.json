@@ -1,0 +1,9 @@
+{
+  "scenario": "real container SIGKILL during read, after completed MCP write",
+  "before_status": "RUNNING",
+  "after_status": "COMPLETED",
+  "write_count": 1,
+  "write_attempts": 1,
+  "read_attempts": 2,
+  "verified": true
+}

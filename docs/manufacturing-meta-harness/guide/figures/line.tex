@@ -1,0 +1,18 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[box,text width=2.1cm](hopper) at (2.8,2.2) {Hopper\\+ feeder\\meter material};
+\node[box,text width=4.0cm](barrel) at (7.2,0) {Two rotating screws\\inside the barrel\\convey / mix material};
+\node[box,text width=1.5cm](die) at (11,0) {Die\\outlet};
+\node[box,text width=1.9cm](out) at (14,0) {Displayed\\conveyor};
+\node[box,text width=1.5cm](motor) at (1,-2.1) {Motor};
+\node[box,text width=1.7cm](gear) at (3.8,-2.1) {Gearbox};
+\node[box,text width=3.2cm](heat) at (9,-2.1) {Heating / cooling};
+\draw[-{Stealth},teal,very thick] (hopper.south) |- (barrel.west);
+\draw[-{Stealth},teal,very thick] (barrel.east) -- (die.west);
+\draw[-{Stealth},teal,very thick] (die.east) -- (out.west);
+\draw[-{Stealth},ink,thick,dashed] (motor.east) -- (gear.west);
+\draw[-{Stealth},ink,thick,dashed] (gear.north) -- ([xshift=-12mm]barrel.south);
+\draw[-{Stealth},orange,thick] (heat.north) -- ([xshift=12mm]barrel.south);
+\node[lab,text=black,anchor=east] at (4.9,.75) {MATERIAL PATH};
+\node[lab,text=black] at (2.5,-3.05) {MECHANICAL POWER};
+\node[lab,text=black,below=3mm of heat] {THERMAL INFLUENCE};
+\end{tikzpicture}

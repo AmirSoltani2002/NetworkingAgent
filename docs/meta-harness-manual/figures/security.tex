@@ -1,0 +1,11 @@
+\begin{tikzpicture}[scale=.91,transform shape]
+\node[box] (model) at (-4,4.4) {Model proposal\\untrusted tool arguments};
+\node[box] (operator) at (4,4.4) {Operator configuration\\allowlist / exact approval};
+\node[darkbox,text width=5.8cm] (gate) at (0,2.7) {Backend execution gates\\schema + live permission + policy digest};
+\node[box] (workspace) at (-4,.6) {Restricted workspace\\fixed commands / path checks};
+\node[box] (remote) at (4,.6) {Approved MCP / REST\\origin + socket DNS checks};
+\node[box] (ledger) at (0,.6) {Persist before dispatch\\operation / approval ledger};
+\draw[arr] (model)--(gate);\draw[arr] (operator)--(gate);\draw[arr] (gate)--(workspace);\draw[arr] (gate)--(remote);\draw[arr] (gate)--(ledger);
+\node[box,text width=4.5cm] (secrets) at (0,-1.1) {Root .env: backend only\\no secrets in model/tool logs};
+\draw[arr,dashed] (secrets.east) -| (remote.south);
+\end{tikzpicture}

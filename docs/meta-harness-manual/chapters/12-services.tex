@@ -1,0 +1,39 @@
+\chapter{Connecting External Services}
+\section{Generic MCP: configure, discover, allow}
+\begin{enumerate}
+\item Expand \textbf{MCP → Add MCP Server}. Enter a name, purpose description, absolute MCP URL and enabled state. For the containerized demonstration use \texttt{http://manufacturing-ml:8000/mcp}, not host localhost.
+\item Choose None or Bearer Token. Enter a token once, or reference the existing root variable \texttt{MANUFACTURING\_API\_KEY}. No secret is stored in browser localStorage.
+\item \textbf{Test Connection}, then \textbf{Save Connection}. Test/discover the saved profile. A changed draft must be saved before permissions can be granted.
+\item Inspect actual discovered tools/descriptions/schemas. Select permitted tools, enable use in chat and \textbf{Save tool permissions}. Allow only the capabilities needed.
+\item Use Connections to edit, enable/disable, disconnect or remove the profile. A disconnected profile is not silently reconnected by the worker.
+\end{enumerate}
+\screenshot{ui-mcp-add-current.png}{.88}{Genuine Add MCP Server view. Forms open in the main area; the chat layout and sidebar are preserved.}
+\section*{Networking and standalone ML startup}
+From the root, create \texttt{meta-harness-mcp} once if it does not exist; retain the overlay when recreating core. Set the demo's two secret variables locally before starting its stack.
+\begin{lstlisting}[language=bash]
+docker network create meta-harness-mcp  # once only
+docker compose -f docker-compose.yml -f docker-compose.mcp.yml up -d --build
+cd manufacturing-demo
+docker compose --env-file ../.env -f docker-compose.yml \
+  -f docker-compose.meta-harness.yml up -d --build --wait
+\end{lstlisting}
+Host clients use \texttt{localhost:8100/mcp}; core inside Docker uses the service URL. A clean manufacturing volume has no trainable production labels: preserve the trusted trained-artifact volume. If an origin is rejected, add its exact origin to root \texttt{MCP\_ALLOWED\_ORIGINS}; do not relax URL/DNS safety checks.
+\source{\path{ui/src/components/mcp/mcp-workspace.tsx}: \texttt{ConnectionForm}; \path{core/src/mcp/mcp.controller.ts}; \path{manufacturing-demo/docker-compose.meta-harness.yml}; \path{docker-compose.mcp.yml}.}
+\nextpage{RAG connection and knowledge management}
+From \texttt{rag-server/}, with \texttt{RAG\_DB\_PASSWORD} and \texttt{RAG\_API\_KEY} set in root \texttt{.env}, start the independent stack:
+\begin{lstlisting}[language=bash]
+docker compose --env-file ../.env -f docker-compose.yml \
+  -f docker-compose.meta-harness.yml up -d --build
+\end{lstlisting}
+\begin{enumerate}
+\item In \textbf{RAG → Connection}, select an existing profile or New. For bridged Docker, use MCP \texttt{http://rag-api:8090/mcp} and separate REST \texttt{http://rag-api:8090}. Do not assume one URL can always be derived from the other.
+\item Save authentication once; \textbf{Save Connection} and \textbf{Test Connection}. Inspect MCP and REST statuses independently. MCP-only connectivity enables retrieval; REST-only connectivity can still support management.
+\item Select discovered read-only retrieval tools and enable their use in chat; \textbf{Save tool permissions}.
+\end{enumerate}
+\screenshot{ui-rag-current.png}{.83}{Live RAG connection: separate MCP and REST URLs and independently connected states. No token value is displayed.}
+\begin{enumerate}[resume]
+\item \textbf{Devices}: create an identity with name/model/manufacturer. \textbf{Documents}: upload PDF/TXT/Markdown, title/type/version and related devices. Wait for READY; status values are real, not fake percentages.
+\item View document chunks and source pages. In \textbf{Known Issues}, add symptoms and a possible cause. Use evidence search to select a passage and an evidence type, rather than manually inventing chunk IDs.
+\item In \textbf{Knowledge Search}, enter a query and optional device/category/top-k. Inspect matched issues and passages, expand IDs/method/scores, then return to chat. This page retrieves evidence without generating an LLM answer.
+\end{enumerate}
+\source{\path{ui/src/components/rag/connection.tsx}; \path{ui/src/components/rag/management.tsx}; \path{core/src/rag/rag.service.ts}: \texttt{test()}, \texttt{request()}, \texttt{upload()}; \path{rag-server/README.md}.}

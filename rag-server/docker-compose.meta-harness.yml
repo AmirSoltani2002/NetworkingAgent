@@ -1,0 +1,11 @@
+# Optional bridge; the standalone stack works without this file.
+services:
+  rag:
+    networks:
+      private:
+      mcp:
+        aliases: [rag-api]
+networks:
+  mcp:
+    external: true
+    name: meta-harness-mcp

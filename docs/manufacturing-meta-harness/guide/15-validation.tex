@@ -1,0 +1,23 @@
+\page{14 / CHECK BEFORE DECLARING SUCCESS}{Validation and safe recovery}
+The technician stops beside the gearbox and the report says ``inspection complete.'' Before trusting that phrase, our engineer asks for the job record. Was this the right machine, the right experiment and the right action? Did it finish, or was the request merely accepted?
+
+\subsection*{Five checks around the agent}
+\begin{tabularx}{\linewidth}{@{}p{.29\linewidth}X@{}}\toprule
+Check & What it assures\\\midrule
+Valid proposal & The model's next decision and tool inputs must have the required structure. Malformed or conflicting proposals execute nothing.\\
+Permission & Current connection, allowlist, task grant or exact approval must permit the action. The service checks its own rules too.\\
+Recorded execution & The request is recorded before dispatch, and its result is saved afterward. One worker owns a task's execution at a time.\\
+Matching evidence & Factory checks use evidence for the required machine, episode, component and alarm. A request acknowledgment does not prove job completion.\\
+Verified completion & Core evaluates fixed task checks against actual successful results. A convincing summary alone cannot pass an external-action check.\\\bottomrule
+\end{tabularx}
+
+\subsection*{When an answer is lost}
+Suppose the service starts the inspection but the connection drops before core receives the result. Automatically sending another state-changing request could duplicate work. Core marks the outcome unknown and pauses for reconciliation. The operator checks the service and records what happened; fresh evidence is still needed to pass completion checks.
+
+Completed writes are not automatically replayed after a provider failure. Read failures can retry within limits. Stable action identities help the factory recognize repeated requests, but the harness does not assume every external service supports that protection.
+
+\subsection*{What a passed check does not assure}
+The recorded example verifies the required inspection, stop and acknowledgment evidence. It does not prove that the root cause was found, a repair was performed, or the line is safe to restart. As page 8 shows, these are separate outcomes. Ordinary tasks also depend on whether their initially chosen checks adequately express the objective.
+
+\takeaway{Validation proves specified facts from records. Engineering judgment still decides whether the evidence is sufficient to resolve the actual problem.}
+\evidence{Task verification and recovery contracts; fixed factory template checks and saved demonstration evidence. Broader external answer-validation workflows remain planned.}

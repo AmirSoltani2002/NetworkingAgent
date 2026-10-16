@@ -1,0 +1,9 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\foreach \x/\t in {0/Operator,3/Core + LLM,6/ZSK MCP,9/RAG MCP,12/Human review}{\node[box,text width=2.1cm]at(\x,0){\t};\draw[muted,dashed](\x,-.5)--(\x,-4.2);}
+\draw[arr](0,-.8)--node[lab,above]{question + identity}(3,-.8);
+\draw[arr](3,-1.45)--node[lab,above]{read history / predict}(6,-1.45);
+\draw[arr](6,-2.05)--node[lab,above]{signals / version / result}(3,-2.05);
+\draw[arr](3,-2.7)--node[lab,above]{find device / retrieve evidence}(9,-2.7);
+\draw[arr](9,-3.3)--node[lab,above]{passages + source references}(3,-3.3);
+\draw[arr](3,-3.95)--node[lab,above]{qualified recommendation / uncertainty}(12,-3.95);
+\end{tikzpicture}

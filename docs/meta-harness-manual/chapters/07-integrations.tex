@@ -1,0 +1,28 @@
+\chapter{LLM and Tool Integration}
+\section{LLM connection and provider compatibility}
+The LLM sidebar stores the provider (OpenAI), replacement API key, model and thinking selection. \texttt{LlmService.models()} retrieves the authenticated provider model catalog; model discovery is not an inference test. A listed model can still reject Responses input, reasoning effort or structured output. Core converts provider errors to useful messages without exposing raw provider bodies.
+
+\texttt{respond()} uses the Responses API with discovered function definitions and the selected reasoning setting. \texttt{taskDecision()} uses the same settings with a strict JSON-schema output named \texttt{task\_decision}. ``Instant'' maps to reasoning effort \texttt{none}; medium/high use their corresponding effort. A configured model must support the requested combination. No external model is introduced for planning, summaries or task recovery.
+\section{Context construction is a backend operation}
+For ordinary chat, a compatible private window receives only new messages and actual function-call outputs. Durable execution receives an incremental task snapshot containing authoritative progress and fresh evidence. Both count input before inference and compact at 90\% of configured capacity. \texttt{LLM\_CONTEXT\_WINDOW\_TOKENS} can override the source's known-model capacity mapping; otherwise an unrecognized model falls back to 128,000 tokens. A local sixteen-MiB guard bounds serialized context.
+
+The normal system instructions stress source provenance, uncertain device identity, untrusted service content and that RAG ranking is not diagnostic confidence. Task instructions additionally define one-action decisions, immutable criteria and write authorization. These constraints guide model behavior; live policy checks still decide what can execute.
+\section{Progress is not token streaming}
+Responses are returned after completion. The UI displays Responding, retries or task status while work runs. Task events use \texttt{/api/tasks/stream} SSE, with polling fallback in chat. This is progress/status delivery, not a live stream of generated answer tokens.
+
+A provider timeout, 429/rate-limit or temporary service failure can be retried according to the relevant chat/task path. Missing credentials, unsupported model combinations or refused context operations are surfaced explicitly. An interrupted paid request may still be charged. A failed response cannot silently replay a confirmed write.
+\note{Model API versus harness}{The provider supplies reasoning and structured output. Core supplies durable identity, checkpoint consistency, tool permission, idempotency policy and verification. Changing the selected model changes capabilities and summary quality; it does not remove those backend gates.}
+\source{\path{core/src/llm/llm.service.ts}: \texttt{configuration()}, \texttt{models()}, \texttt{save()}, \texttt{respond()}, \texttt{taskDecision()}; \path{core/src/llm/context-window.ts}: \texttt{contextBudget()}, \texttt{openAiRequest()}; \path{ui/src/components/llm/llm-settings.tsx}.}
+\nextpage{MCP discovery and execution}
+\section*{One registry, independently configurable services}
+\texttt{mcp\_servers} stores the operator's name/description, URL, enabled flags, discovered tools, allowlist, last error and authentication-variable reference. RAG adds REST metadata to the same profile rather than introducing a competing registry. Core reconnects enabled agent profiles at startup, except those explicitly disconnected.
+
+\texttt{inspect()} opens an official TypeScript MCP SDK client over Streamable HTTP, initializes the connection and paginates \texttt{listTools}. Discovery is bounded to 500 tools, two MiB of catalog data and 64 KiB per input schema. The discovery deadline is fifteen seconds. Server name and metadata come from the actual server, not the description field.
+
+\texttt{agentTools()} publishes at most sixty-four currently permitted definitions. Each generated function name hashes server UUID plus tool name, preventing same-named tools on different servers from overwriting one another. Descriptions combine the server purpose and actual tool description; parameters use the discovered input schema.
+\begin{center}\input{figures/mcp-sequence.tex}\captionof{figure}{A durable MCP call. The database dispatch checkpoint precedes the remote call; output remains traceable to server/tool/operation.}\end{center}
+\section*{Execution and observation handling}
+\texttt{prepareCall()} validates current enablement, allowlisting, schema and bounded object arguments using Ajv. Regex-pattern schemas are currently unsupported. \texttt{execute()} initializes a session, rechecks configuration identity, records dispatch and calls the tool. It bounds session time to twenty seconds, the call to fifteen seconds and normalized output to 256 KiB. The guarded transport bounds remote response bytes separately.
+
+Results retain MCP content and structured content. Traces record server/tool, duration, success and source/result summaries without credentials. Tool-level \texttt{isError} is different from a network exception; read-only task rejections can be corrected using their actual stored observation. A failed connection gets a saved error state; manually disconnected or revoked tools cannot be silently re-enabled by the planner.
+\source{\path{core/src/mcp/mcp.service.ts}: \texttt{onApplicationBootstrap()}, \texttt{inspect()}, \texttt{discover()}, \texttt{agentTools()}, \texttt{prepareCall()}, \texttt{execute()}; \path{core/src/llm/llm.service.ts} (chat continuation/trace types).}

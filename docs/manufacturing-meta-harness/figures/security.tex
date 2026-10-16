@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.7cm and .9cm]
+\node[box](op){Operator / browser\\local origin, no accounts};\node[dark,right=of op](policy){Core authority boundary\\allowlists / grants / approvals};\node[box,right=of policy](svc){Trusted external servers\\read/admin credentials};
+\node[box,below=of op](secret){Root ignored .env\\backend-only secrets};\node[box,below=of policy](model){LLM / untrusted text\\proposals, no authority};\node[box,below=of svc](machine){Physical equipment\\NO CONTROL PATH};
+\draw[arr](op)--(policy);\draw[arr](policy)--node[lab,above]{guarded network}(svc);\draw[arr](secret)--(policy);\draw[arr](model)--(policy);\draw[muted,dashed](svc)--(machine);\node[lab]at(11,-1.3){not connected};\end{tikzpicture}

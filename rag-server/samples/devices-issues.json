@@ -1,0 +1,11 @@
+{
+  "devices": [
+    {"name": "Device A", "model": "X100", "manufacturer": "Siemens", "description": "Example device"},
+    {"name": "Device B", "model": "X200", "manufacturer": "Example", "description": "Example device"}
+  ],
+  "issues": [
+    {"device_name": "Device A", "title": "Clicking during startup", "category": "Sound", "symptoms": "Repetitive clicking when powered on", "possible_cause": "Defective relay"},
+    {"device_name": "Device A", "title": "Overheating", "category": "Temperature", "symptoms": "High temperature during operation", "possible_cause": "Blocked air intake"},
+    {"device_name": "Device B", "title": "Clicking during startup", "category": "Sound", "symptoms": "Startup clicking near the motor", "possible_cause": "Worn motor bearing"}
+  ]
+}

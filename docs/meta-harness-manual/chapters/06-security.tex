@@ -1,0 +1,29 @@
+\chapter{Security and Permission Management}
+\section{The model proposes; core authorizes}
+System prompts describe safe behavior, but permission enforcement lives in TypeScript. A discovered tool must belong to an enabled, connected profile, be explicitly allowlisted and be enabled for agent use. Its name/schema are revalidated before execution. A server description is untrusted content, not a grant of authority.
+\begin{center}\input{figures/security.tex}\captionof{figure}{Trust and execution gates. Secrets remain in backend configuration; external content does not bypass policy.}\end{center}
+\section{Three backend permission levels}
+\begin{description}
+\item[Safe] Read/list/exists within the configured workspace and narrowly parsed read-only commands. Permitted read-only MCP tools may run without interrupting the operator.
+\item[Controlled] Workspace writes and operator-classified MCP writes. A write needs exact approval, or an explicit per-task grant for an eligible MCP tool. A prompt is not a broad grant.
+\item[Dangerous] Single-file deletion, explicitly dangerous MCP tools and unclassified state-changing MCP tools. These always require exact approval; task-wide grants cannot authorize them.
+\end{description}
+\texttt{TASK\_CONTROLLED\_MCP\_TOOLS} and \texttt{TASK\_DANGEROUS\_MCP\_TOOLS} contain reviewed server-UUID/tool bindings. A grant's digest includes endpoint, credential reference, allowlist and tool metadata, so configuration changes invalidate stale authority. Ordinary chat consumes a single-use confirmation before sending a write and rejects automatic replay of an interrupted confirmed call.
+\section{Scope and residual trust}
+The UI/core ports bind to loopback. Origin checks reject foreign browser mutation origins, but requests without an Origin header are accepted. This is a local operator application, not a multi-user production authorization service. MCP \texttt{readOnlyHint} is server-supplied; the operator must trust and review the service. No LLM prompt can guarantee that a malicious remote tool honors its hint.
+\source{\path{core/src/tasks/execution-policy.ts}: \texttt{grant()}, \texttt{prepare()}; \path{core/src/mcp/mcp.service.ts}: \texttt{prepareCall()}, \texttt{execute()}; \path{core/src/config/local-origin.ts}: \texttt{requireLocalOrigin()}.}
+\nextpage{Filesystem, network and secret protection}
+\section*{Structured commands, not arbitrary shell execution}
+Local tools are disabled until \texttt{TASK\_WORKSPACE\_ROOT} is set. The Docker workspace overlay mounts only an approved directory at \texttt{/workspace}; it does not expose the host Docker socket or the whole repository. Paths cannot escape through traversal or symlinks. Protected names include environment, credential and private-key files.
+
+Commands use fixed binaries and parsed argument grammars, never \texttt{shell:true}. Supported examples are \texttt{pwd}, bounded \texttt{ls/find}, \texttt{cat} of one approved file, literal \texttt{grep -F}, \texttt{git status --short} and \texttt{git diff --stat}. Shell chaining, redirection, substitution and arbitrary SQL/Python are rejected. File reads/writes are bounded to 256 KiB; writes use temporary no-follow files and atomic rename. Execution uses a minimal environment without credentials, a ten-second timeout and bounded output. Git disables hooks/fsmonitor/external diff/text conversion.
+
+The implementation provides application-level path and process restrictions, not a complete hostile-code sandbox. Complex compilation, dependency installation or Docker operations would require a separate operator-controlled MCP runner; none is built into core.
+\section*{Outbound service connections}
+\texttt{approvedUrl()} permits absolute HTTP(S) URLs only, without inline credentials, query or fragment, and requires an exact operator-approved origin. \texttt{guardedFetch()} rejects redirects/cross-origin requests and validates DNS addresses at actual socket lookup to reduce rebinding risk. Link-local/metadata and other unsafe address ranges are blocked. Approved loopback/private addresses remain usable for local services. External RAG operations are additionally constrained to known routes, methods and query names.
+\section*{Credential lifecycle}
+Passwords, API keys and tokens live in the ignored root \texttt{.env}. The core image never contains this file. Compose injects the database password and mounts only root \texttt{.env} into core for authorized settings writes. UI and database do not mount the secret file; frontend assets never receive tokens.
+
+The LLM key entry saves a replacement once, clears the input and returns only the first four characters followed by stars. MCP/RAG tokens use generated \texttt{MCP\_TOKEN\_<UUID>} variables; database profiles keep the variable name, not a token. Reads expose saved-credential flags. Redaction filters traces/model outputs before publication. The screenshot copies in this manual hide the saved-key display completely.
+\note{Injection and disclosure limits}{Tool descriptions and passages are treated as untrusted observations. Permissions, bounded schemas and network gates limit what malicious content can cause; they do not prove that model reasoning is immune to injection. Sending retrieved evidence to OpenAI remains a data-flow decision the local operator must accept. There is no external answer validator or general data-loss-prevention engine.}
+\source{\path{core/src/tasks/execution-policy.ts}: \texttt{workspacePath()}, \texttt{execute()}; \path{core/src/mcp/network-policy.ts}: \texttt{approvedUrl()}, \texttt{guardedFetch()}; \path{core/src/config/environment-store.service.ts}; \path{core/src/rag/rag.controller.ts}: \texttt{validateOperation()}.}

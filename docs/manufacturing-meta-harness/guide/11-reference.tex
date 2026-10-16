@@ -1,0 +1,36 @@
+\page{15 / KEEP THIS PAGE HANDY}{When the screen leaves you unsure}
+\begin{tabularx}{\linewidth}{@{}p{.34\linewidth}X@{}}\toprule
+What you notice & What to check next\\\midrule
+The scene says FAULT; ML says Healthy & The scene uses injected severity; ML uses measured patterns. Check production state and timestamps. Stopped signals can resemble healthy data without clearing the fault.\\
+The technician never finishes & Is the clock paused? Has the character arrived? Check the action ID and backend completion; accepted is not completed.\\
+No forecast appears & Is the current classifier Healthy, production RUNNING, and a continuous three-reading window available? Read the stored not-applicable reason.\\
+No new investigation appears & Confirm injection, then check sampling/monitoring and the unresolved incident. A new fault may still belong to the retained old alarm.\\
+The game is reconnecting & Let the browser resynchronize. The backend may still be running. Do not assume a disconnected scene means production stopped.\\
+The task is paused or failed & Open \textbf{View persistent task}. Read the last error, pending approval and operation history. An UNKNOWN write requires reconciliation before resume.\\
+The task is complete but the fault remains & Read page 8: inspection, repair, restart and alarm resolution are separate outcomes.\\\bottomrule
+\end{tabularx}
+
+\subsection*{Four terms used in the guide}
+{\raggedright\small \textbf{ML}: machine learning. \textbf{LLM}: the language model that chooses tools and writes explanations. \textbf{Episode / epoch}: one experiment and its unique identity. \textbf{RMS}: root mean square, used here as an overall vibration level.\par}
+
+\subsection*{A useful request to the assistant}
+\begin{quote}\small
+For this simulated machine and episode, compare alarm-time readings with the latest readings. Explain the current model result and any future forecast, cite relevant document passages, list completed action IDs, and tell me what remains uncertain. Do not describe an inspection as a repair.
+\end{quote}
+
+\subsection*{Where to go deeper}
+{\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.30\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule
+Setup and operating policy & \path{factory-service/README.md}\\
+Game, clock and actions & \path{docs/FACTORY_ARCHITECTURE.md}\\
+ML lifecycle and limits & \path{zsk-service/README.md}\\
+Agent/task recovery & \path{docs/TASK_EXECUTION.md}\\
+Tool access and RAG & \path{docs/MCP_CONTRACTS.md}; \path{rag-server/README.md}\\
+LLM, context and records & \path{docs/LOCAL_ARCHITECTURE.md}; \path{docs/API_SPEC.md}\newline \path{docs/DATA_MODELS.md}\\
+Recorded demonstration & \path{docs/verification/factory/end-to-end.json}\newline and \path{operator-report.md} in that folder\\
+Figure data and checks & This report's \path{guide/data-audit.json} and \path{guide/build_data.py}\\
+Original technical report & \path{technical-report-2026-10-09.pdf}; its detailed 29-page audit is preserved separately\\\bottomrule
+\end{tabularx}
+\par}
+
+{\raggedright\small\color{black}The guide was verified against source and saved evidence. No new paid-model task, training run, physical test or application change was performed. The plots and matrices are synthetic evidence. Engineering specifications remain authoritative.\par}

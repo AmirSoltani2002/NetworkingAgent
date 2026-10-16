@@ -1,0 +1,10 @@
+\page{2 / READ THE HISTORY}{A rising line needs context}
+Open \textbf{Machine Monitoring}. Each stored point is a reading, not a frame of animation. The live simulator samples every five simulated minutes. Compare signals over time and under comparable loading; one high value alone does not identify a failed component.
+
+The chart below uses the original supplied history, \textbf{not the live game's current episode}. Recipe A/B/C describes the operating recipe. Recipe changes can shift the baseline, so their boundaries are marked across all panels.
+\diagram{history}{All 1,000 original synthetic readings, 1--4 September 2026. Torque, gearbox vibration and oil temperature share time, with separate units and scales. The bottom panel contains supplied health labels, not ML predictions. Labels remain in the source CSV; the initial training labels were purged from the runtime database.}
+
+Lines connect recorded sensor points; they do not measure between samples. The label step trace holds each supplied tag until the next reading. No smoothing, resampling or manufacturer alarm threshold has been added. The two vertical markers indicate recipe changes, not inferred failures.
+
+\takeaway{Use a trend to decide what to investigate. Keep the timestamp, recipe, units and production state with the value. A reading from a stopped drive is not a healthy running baseline.}
+\evidence{Exact source: \path{zsk-service/data/zsk_labeled_1000.csv}. First/last timestamps: 1 Sep 00:00 / 4 Sep 11:15 UTC; 83 h 15 min total. All plotted values and five-minute intervals are checked by \path{guide/build_data.py}.}

@@ -1,0 +1,36 @@
+name: local-rag-tests
+services:
+  database:
+    image: pgvector/pgvector:pg17
+    command: ["postgres", "-c", "log_error_verbosity=terse", "-c", "log_min_error_statement=panic", "-c", "log_parameter_max_length_on_error=0"]
+    environment:
+      POSTGRES_DB: rag_test
+      POSTGRES_USER: rag_test
+      POSTGRES_PASSWORD: ${RAG_DB_PASSWORD:?Set RAG_DB_PASSWORD in .env}
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag_test -d rag_test"]
+      interval: 2s
+      retries: 20
+  tests:
+    image: rag-server-tests:local
+    build:
+      context: .
+      target: test
+    environment:
+      RAG_DB_HOST: database
+      RAG_DB_NAME: rag_test
+      RAG_DB_USER: rag_test
+      RAG_DB_PASSWORD: ${RAG_DB_PASSWORD:?Set RAG_DB_PASSWORD in .env}
+      RAG_AUTH_REQUIRED: "false"
+      RAG_STORAGE_DIR: /tmp/rag-test-documents
+      RAG_MODEL_CACHE_DIR: /data/models
+    volumes:
+      - test-model-cache:/data/models
+    depends_on:
+      database:
+        condition: service_healthy
+    command: ["-q"]
+    init: true
+volumes:
+  test-model-cache:

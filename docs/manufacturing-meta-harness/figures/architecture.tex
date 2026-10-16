@@ -1,0 +1,5 @@
+\begin{tikzpicture}[node distance=.65cm and .85cm]
+\node[dark](ui){React UI / Nginx\\127.0.0.1:8080};\node[dark,right=of ui](core){NestJS core :8000\\chat / tasks / policy};\node[box,right=of core](sql){Core PostgreSQL 17\\private state database};
+\node[box,below=of ui](llm){OpenAI Responses API\\outbound HTTPS};\node[box,below=of core](zsk){ZSK ML / MCP :8100\\forest + dedicated DB};\node[box,below=of sql](rag){RAG API / MCP :8090\\pgvector + files + worker};
+\draw[arr](ui)--(core);\draw[arr](core)--(sql);\draw[arr](core)--(llm);\draw[arr](core)--(zsk);\draw[arr](core)--(rag);
+\node[font=\sffamily\small,below=.65cm of zsk]{MCP bridge: meta-harness-mcp; domain logic stays external};\end{tikzpicture}

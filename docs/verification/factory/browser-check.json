@@ -1,0 +1,8 @@
+{
+  "pass": true,
+  "websocket_live": true,
+  "component_click": true,
+  "chat_draft_preserved": true,
+  "console_exceptions": [],
+  "screenshots": 6
+}

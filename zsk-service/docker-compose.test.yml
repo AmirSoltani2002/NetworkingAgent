@@ -1,0 +1,28 @@
+name: zsk-tests
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: zsk_tests
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Required root .env}
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U manufacturing -d zsk_tests"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  tests:
+    image: zsk-ml:local
+    entrypoint: ["python","tests/check.py"]
+    environment:
+      PYTHONPATH: /app
+      ZSK_DB_HOST: db
+      ZSK_DB_NAME: zsk_tests
+      ZSK_DB_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Required root .env}
+      ZSK_API_KEY: ${ZSK_API_KEY:?Required root .env}
+      ZSK_ADMIN_API_KEY: ${ZSK_ADMIN_API_KEY:?Required root .env}
+    volumes:
+      - ./tests:/app/tests:ro
+    depends_on:
+      db:
+        condition: service_healthy

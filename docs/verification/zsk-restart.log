@@ -1,0 +1,1 @@
+{"result": "passed", "job_id": "8f24605c-44c0-4004-bc92-fe6290679a66", "checkpoint_before_kill": 10, "final_status": "completed", "attempts": 2, "predictions": 1000, "labels_remaining": 0, "model_versions": 1}

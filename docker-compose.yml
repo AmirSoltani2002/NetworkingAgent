@@ -1,30 +1,65 @@
 services:
+  database:
+    image: meta-harness-database:local
+    build:
+      context: .
+      dockerfile: database/Dockerfile
+    environment:
+      POSTGRES_DB: meta_harness
+      POSTGRES_USER: meta_harness
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the project .env}
+    volumes:
+      - message-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U meta_harness -d meta_harness"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
   core:
+    image: meta-harness-core:local
     build:
       context: .
       dockerfile: core/Dockerfile
-    env_file:
-      - path: .env
-        required: false
     environment:
-      META_HARNESS_DATA: /data
-      MCP_TIMEOUT_SECONDS: ${MCP_TIMEOUT_SECONDS:-20}
-      ANALYZER_BASE_URL: ${ANALYZER_BASE_URL:-https://api.openai.com/v1}
-      ANALYZER_API_KEY: ${ANALYZER_API_KEY:-}
+      DB_HOST: database
+      DB_NAME: meta_harness
+      DB_USER: meta_harness
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the project .env}
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
     volumes:
-      - meta-harness-data:/data
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - type: bind
+        source: ./.env
+        target: /app/.env
+        bind:
+          create_host_path: false
+    depends_on:
+      database:
+        condition: service_healthy
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
   ui:
+    image: meta-harness-ui:local
     build:
-      context: ./ui
+      context: .
+      dockerfile: ui/Dockerfile
     depends_on:
-      - core
+      core:
+        condition: service_healthy
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
+
 volumes:
-  meta-harness-data:
+  message-data:

@@ -1,0 +1,17 @@
+\page{10 / FOLLOW THE AGENT}{One step, one result, then another decision}
+The alarm opens a persistent investigation. Imagine an engineer working through a checklist: read the alarm, ask for measurements, compare the model result, consult a manual, then decide whether an inspection is needed. The agent follows the same rhythm.
+
+\diagram{agent-loop}{The persistent-task execution loop. Every proposed action crosses the backend checks before a tool is called. A reply or an animation cannot bypass those checks.}
+
+\subsection*{What makes the loop controlled?}
+The LLM proposes one next decision at a time. Core checks that the proposal is valid and permitted, records the operation, and calls the tool. It saves the returned result before asking the model what to do next. Invalid or conflicting decisions dispatch nothing.
+
+For the game, ``send a technician'' is only the start of an action. The agent must read its status later to learn whether the technician arrived and finished. That returned record becomes evidence for the next decision.
+
+\subsection*{What makes it stop?}
+The task has measurable completion checks. Core evaluates them against saved results; the model cannot replace established checks simply to finish sooner. The factory alarm template supplies fixed checks for this demonstration. Page 15 explains what those checks prove.
+
+The loop also has limits on work, retries and overall continuation. It can checkpoint and continue, request an approval, or pause with its progress saved. It does not receive unlimited attempts because an answer is difficult.
+
+\takeaway{The agent repeatedly asks, acts within permission, observes and checks. ``I have finished'' becomes task completion only when the required evidence passes.}
+\evidence{Persistent task execution, factory event templates and completion checks. Ordinary chat uses the same model and tool permissions, but has a simpler reply loop.}

@@ -1,0 +1,10 @@
+\page{6 / A RECORDED EPISODE}{From shaking to an operator report}
+Here the story becomes a saved execution record. In a gradual gearbox scenario, six retrieved readings showed rising vibration, oil temperature and motor current while the line was running. The plots use their exact five-minute timestamps and values. This is a previously completed demonstration, not a new run made for this manual.
+\diagram{episode}{Six saved readings from 5 September 2026, 22:19--22:44 UTC (simulated time). Dots are measurements; lines only connect them. The vertical marker is alarm-time reading 1420 at 22:29 UTC, not an invented sensor limit.}
+
+At the alarm, vibration was \textbf{3.001 mm/s RMS}, oil temperature \textbf{49.423°C}, and current \textbf{79.262 A}. The current model returned Faulty with probability \textbf{0.60442}; future-onset forecasting was not applicable. Retrieved publication passages described vibration/oil monitoring, providing context rather than confirming a bearing failure.
+
+The agent inspected the gearbox, checked completion, executed the permitted simulated stop and acknowledged the alarm. Its fixed checks passed. The final state was \textbf{STOPPED / FAULT}: the investigation finished, but the injected fault remained. Later zero speed, current and vibration reflected stopped production, not repair.
+
+\takeaway{A useful report tells the operator what changed, what was checked and what still needs investigation. This episode supports an inspection recommendation; it does not prove a physical root cause.}
+\evidence{Task \texttt{306f5c12-5c55-486c-9d5b-5670fb5cf506}; six readings 1418--1423 in the saved \texttt{get\_machine\_measurements} result. Sources: \path{docs/verification/factory/end-to-end.json} and \path{operator-report.md} in that same verification directory.}

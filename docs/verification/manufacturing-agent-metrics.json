@@ -1,0 +1,49 @@
+{
+  "scenario": "metrics",
+  "chat_id": "ec6a5b63-59e1-4c28-add9-009672f7edf9",
+  "prompt": "How accurate is the manufacturing quality model?",
+  "reply": "The model achieved **67.0% accuracy** on a fixed held-out test set of 200 **synthetic** examples\u2014above the 51.5% majority-class baseline.\n\nOther held-out metrics: **precision 68.7%**, **recall 66.0%**, and **F1 67.3%** (with \u201cGood\u201d as the positive class). For defective products specifically, recall was **68.0%**. These results describe the synthetic evaluation, not real-world manufacturing performance.",
+  "tool_calls": [
+    {
+      "tool": "get_quality_model_metrics",
+      "result": {
+        "recall": 0.6601941747572816,
+        "dataset": "synthetic; fixed held-out evaluation",
+        "accuracy": 0.67,
+        "f1_score": 0.6732673267326733,
+        "precision": 0.6868686868686869,
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+        "positive_class": "Good (1)",
+        "confusion_matrix": [
+          [
+            66,
+            31
+          ],
+          [
+            35,
+            68
+          ]
+        ],
+        "defective_recall": 0.6804123711340206,
+        "test_fingerprint": "ac7b00c2c4c097a80dd704ace34707a29f276ce88ab0155dca1ec6cc489f2f56",
+        "training_timestamp": "2026-10-09T02:16:44.482899+00:00",
+        "defective_precision": 0.6534653465346535,
+        "training_sample_count": 800,
+        "confusion_matrix_labels": [
+          "Defective (0)",
+          "Good (1)"
+        ],
+        "evaluation_sample_count": 200,
+        "majority_baseline_accuracy": 0.515
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 37
+    }
+  ],
+  "training_jobs_before": 1,
+  "training_jobs_after": 1,
+  "confirmation_restored_after_reload": false,
+  "browser_errors": 0
+}

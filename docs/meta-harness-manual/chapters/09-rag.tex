@@ -1,0 +1,34 @@
+\chapter{RAG and Knowledge Retrieval}
+\partlabel{PART III --- RAG AND MANUFACTURING INTEGRATION}
+\section{An independent retrieval service}
+The RAG server is a standalone Python/FastAPI application, with SQLAlchemy, Alembic, PostgreSQL/pgvector, local HuggingFace embeddings and the Python MCP SDK. Its image runs either API/MCP or the ingestion worker. A separate pgvector-compatible database container and persistent document/model-cache volumes complete the stack. It has no chatbot, answer generation or OpenAI API requirement.
+\begin{center}\input{figures/rag.tex}\captionof{figure}{RAG ingestion and retrieval. Only retrieved passages enter the agent's working context; original documents remain external.}\end{center}
+\section{Six domain tables preserve relationships}
+\texttt{devices} stores identity and metadata. \texttt{issues} stores symptoms, possible causes, text and automatically maintained embeddings. \texttt{documents} stores upload metadata, version and processing status, while original files remain in persistent storage. \texttt{device\_documents} associates a shared manual with multiple devices. \texttt{document\_chunks} preserves text, section path, page, order and vector. \texttt{issue\_evidence} explicitly links an issue and chunk with an evidence type.
+
+Device identity uses UUIDs and constraints; names are not interchangeable with IDs. Possible causes are hypotheses, not confirmed faults. Evidence links are explicit operator relationships, not automatically inferred from semantic similarity.
+\section{Uploads are durable work, not request-time indexing}
+\texttt{DocumentService.upload()} validates references, extension/content type, size and UTF-8/PDF content, stores a UUID-based original filename and commits status \texttt{uploaded}. Content hashing supports duplicate handling. The HTTP response returns before embedding work. The worker selects due uploaded/interrupted/retryable documents, acquires a per-document lock and records attempts in document metadata; no seventh job-domain table is added.
+
+Encrypted/corrupt or textless PDFs fail clearly. Scanned PDFs require external OCR before upload. Structure detection recognizes Markdown and simple text headings and preserves page provenance. These heuristics do not perfectly recover every technical layout.
+\source{\path{rag-server/rag/models.py}; \path{rag-server/migrations/versions/0001_knowledge.py}; \path{rag-server/rag/documents.py}: \texttt{upload()}; \path{rag-server/rag/worker.py}: \texttt{run\_once()}, \texttt{process()}.}
+\nextpage{Chunking, hybrid search and agent evidence}
+\section*{Structure first, semantics second}
+\texttt{extract()} reads PDF text or UTF-8 TXT/Markdown. \texttt{structures()} detects headings and marks warnings, steps and symptom/cause/solution blocks as protected. \texttt{Chunker.split()} applies LlamaIndex \texttt{SemanticSplitterNodeParser} inside sufficiently large unprotected sections, then enforces embedding-token bounds. Long procedures are packed by paragraph/step and warnings are repeated when a split is unavoidable.
+
+The default embedding contract uses a pinned \texttt{all-MiniLM-L6-v2} revision and 384 dimensions. Local model initialization checks vector dimension; database/model-contract checks reject incompatible reconfiguration. Chunks retain embedding model metadata and document version. Cached local weights may require an initial network download; inference itself remains local. Offline mode requires a populated cache.
+
+The worker stores replacement chunks and READY status in one transaction. Old chunks are deleted safely; foreign keys remove their explicit evidence links, which the operator must relink after reprocessing. Failures preserve status/error/attempt metadata and use bounded retries.
+\section*{Complementary retrieval paths}
+\texttt{RetrievalService.search()} resolves explicit or deterministic device identity, filters issues/documents through relational SQL and searches both issue vectors and full-text keywords. Matched issues contribute only their explicitly linked evidence. Direct document search works even when the device has no issues.
+
+Document streams include cosine vector ranking, PostgreSQL English full-text ranking and linked issue evidence. Candidate UUIDs are deduplicated and fused by reciprocal rank:
+\[
+\operatorname{RRF}(d)=\sum_{r\in\mathcal R}\frac{1}{k+\operatorname{rank}_r(d)},\qquad k=60\ \text{by default}.
+\]
+An optional local cross-encoder reranks candidates when enabled. Output includes document/chunk IDs, title, section, page, device associations, matched issues, method and separate scores. Ranking values are not calibrated probabilities of a diagnosis.
+\section*{How retrieved knowledge reaches the model}
+The RAG MCP server exposes \texttt{find\_device}, \texttt{get\_device\_issues}, \texttt{search\_knowledge} and \texttt{get\_document\_context}. They reuse the same services as REST. Core exposes only discovered, explicitly selected read-only tools from this profile. Ordinary chat appends actual function-call observations; tasks store the full result and deliver an incremental preview or bounded exact evidence read.
+
+The agent interprets these passages and reports sources. RAG supplies evidence, not a natural-language answer or an automatic proof of a fault. A vague device match, empty results or an unsupported manual can still leave the user's task incomplete.
+\source{\path{rag-server/rag/chunking.py}: \texttt{extract()}, \texttt{structures()}, \texttt{Chunker.split()}; \path{rag-server/rag/embeddings.py}: \texttt{LocalEmbeddings}; \path{rag-server/rag/retrieval.py}: \texttt{search()}, \texttt{rrf()}; \path{rag-server/rag/mcp_server.py}: \texttt{build\_mcp()}.}

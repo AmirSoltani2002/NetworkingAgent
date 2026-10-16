@@ -1,0 +1,10 @@
+services:
+  zsk-ml:
+    networks:
+      default:
+      mcp:
+        aliases: [manufacturing-ml]
+networks:
+  mcp:
+    external: true
+    name: meta-harness-mcp

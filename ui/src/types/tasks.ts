@@ -1,0 +1,5 @@
+export type TaskPage='Active Tasks'|'Task History'|'Scheduled Tasks';
+export type TaskState='PENDING'|'RUNNING'|'WAITING_APPROVAL'|'RETRYING'|'PAUSED'|'COMPLETED'|'FAILED'|'CANCELLED';
+export interface TaskSummary{id:string;conversation_id:string;goal:string;status:TaskState;progress:number;current_step:number;last_error:string|null;created_at:string;updated_at:string;}
+export interface TaskDetail extends TaskSummary{user_request:string;plan:string[];completed_steps:string[];next_action:{step:string;summary:string}|null;result:string|null;operations:{id:string;status:string;kind:string;action:unknown;result:unknown;attempts:number;last_error:string|null}[];approvals:{id:string;decision:boolean|null;action:unknown}[];criteria:{id:string;description:string;kind?:string}[];verifications:{id:string;criterion_id:string;passed:boolean;evidence:unknown}[];events:{sequence:string;type:string;data:unknown;created_at:string}[];}
+export interface TaskConfig{id:string;name:string;enabled:boolean;kind?:'once'|'cron';cron?:string;timezone?:string;next_run_at?:string;event_type?:string;filters?:Record<string,unknown>;template:{request:string;_lastError?:string};}

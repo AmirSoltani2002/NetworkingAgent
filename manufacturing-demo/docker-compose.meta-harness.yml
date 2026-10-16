@@ -1,0 +1,10 @@
+# Optional bridge: only ML/MCP joins; database remains private.
+services:
+  manufacturing-ml:
+    networks:
+      - default
+      - mcp
+networks:
+  mcp:
+    external: true
+    name: meta-harness-mcp

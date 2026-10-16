@@ -1,0 +1,9 @@
+{
+  "health": true,
+  "tasks_api": true,
+  "invalid_request_rejected": true,
+  "event_authentication_enforced": true,
+  "schedule_crud": true,
+  "sse": true,
+  "live_model_calls": 0
+}

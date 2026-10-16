@@ -1,0 +1,122 @@
+{
+  "chat_id": "417e20a5-9d84-41d8-af85-71e1338e373b",
+  "message_id": "2a211271-6efd-4109-86f8-d1247998d3f7",
+  "status": 201,
+  "output": {
+    "chat": {
+      "id": "417e20a5-9d84-41d8-af85-71e1338e373b",
+      "title": "Use the connected ZSK Synthetic Condition Monit…",
+      "createdAt": "2026-10-09T14:10:01.019Z",
+      "updatedAt": "2026-10-09T14:13:03.439Z"
+    },
+    "message": {
+      "id": "f98e1e69-0612-4753-927e-3e6c4637bdf6",
+      "text": "- **Measurement 1000 prediction:** Healthy (label **1**)\n- **Fault probability:** **0.0**\n- **Model version:** `5d27c404-646a-4122-b79a-9c8226d47f9f`\n- **Chronological holdout accuracy:** **97.0%** (200 test rows)\n\nThis is a **synthetic-data demonstration**, not a validated machine diagnosis or validated industrial failure risk. The holdout accuracy describes the evaluation candidate, not an independent test of the final model.",
+      "role": "assistant",
+      "createdAt": "2026-10-09T14:13:03.439Z",
+      "replyToMessageId": "2a211271-6efd-4109-86f8-d1247998d3f7",
+      "toolCalls": [
+        {
+          "tool": "predict_zsk_health",
+          "result": {
+            "notice": "SYNTHETIC DEMO ONLY. 0=Faulty, 1=Healthy. Probabilities are not validated industrial failure risks; no equipment control.",
+            "timestamp": "2026-09-04T11:15:00",
+            "machine_id": "ZSK-SIM-01",
+            "history_count": 2,
+            "model_version": "5d27c404-646a-4122-b79a-9c8226d47f9f",
+            "warmup_window": false,
+            "predicted_status": "Healthy",
+            "fault_probability": 0,
+            "predicted_health_label": 1
+          },
+          "sources": [],
+          "success": true,
+          "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+          "durationMs": 177
+        },
+        {
+          "tool": "get_zsk_model_metrics",
+          "result": {
+            "notice": "SYNTHETIC DEMO ONLY. 0=Faulty, 1=Healthy. Probabilities are not validated industrial failure risks; no equipment control.",
+            "metrics": {
+              "note": "Synthetic demo. Evaluation model used earlier periods; final model is retrained on all labeled rows.",
+              "recall": 0.9652738565782044,
+              "accuracy": 0.97,
+              "f1-score": 0.9582811848143513,
+              "precision": 0.9517543859649122,
+              "test_rows": 200,
+              "limitation": "Chronological holdout metrics describe the evaluation candidate, not an independent test of the final all-labeled model. Synthetic faults may be highly separable; these probabilities are not validated industrial risks.",
+              "test_start": "2026-09-03T18:40:00",
+              "label_counts": {
+                "0": 153,
+                "1": 847
+              },
+              "labeled_rows": 1000,
+              "synthetic_only": true,
+              "balanced_accuracy": 0.9652738565782044,
+              "evaluation_config": {
+                "test_fraction": 0.2,
+                "gap_per_machine": 20
+              },
+              "test_label_counts": {
+                "0": 46,
+                "1": 154
+              },
+              "embargo_labeled_rows": 20,
+              "classification_report": {
+                "Faulty": {
+                  "recall": 0.9565217391304348,
+                  "support": 46,
+                  "f1-score": 0.9361702127659575,
+                  "precision": 0.9166666666666666
+                },
+                "Healthy": {
+                  "recall": 0.974025974025974,
+                  "support": 154,
+                  "f1-score": 0.9803921568627451,
+                  "precision": 0.9868421052631579
+                },
+                "accuracy": 0.97,
+                "macro avg": {
+                  "recall": 0.9652738565782044,
+                  "support": 200,
+                  "f1-score": 0.9582811848143513,
+                  "precision": 0.9517543859649122
+                },
+                "weighted avg": {
+                  "recall": 0.97,
+                  "support": 200,
+                  "f1-score": 0.9702211097204838,
+                  "precision": 0.9707017543859648
+                }
+              },
+              "training_label_counts": {
+                "0": 107,
+                "1": 673
+              },
+              "deployed_training_rows": 1000,
+              "training_rows_for_evaluation": 780,
+              "confusion_matrix_label_order_0_1": [
+                [
+                  44,
+                  2
+                ],
+                [
+                  4,
+                  150
+                ]
+              ]
+            },
+            "created_at": "2026-10-09T14:02:58.998405+00:00",
+            "model_version": "5d27c404-646a-4122-b79a-9c8226d47f9f"
+          },
+          "sources": [],
+          "success": true,
+          "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+          "durationMs": 38
+        }
+      ],
+      "attachments": []
+    }
+  }
+}

@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.55cm and .8cm]
+\node[box](load){Load checkpoint\\and changed evidence};\node[box,right=of load](model){Saved model proposes\\strict decision};\node[box,right=of model](valid){Schema + policy +\\approval validation};
+\node[box,below=of valid](act){Persist dispatch\\execute permitted action};\node[box,left=of act](obs){Persist result\\evaluate criteria};\node[dark,left=of obs](done){Complete if predicates pass\\otherwise requeue / pause};
+\draw[arr](load)--(model);\draw[arr](model)--(valid);\draw[arr](valid)--(act);\draw[arr](act)--(obs);\draw[arr](obs)--(done);\draw[arr](done)--(load);\end{tikzpicture}

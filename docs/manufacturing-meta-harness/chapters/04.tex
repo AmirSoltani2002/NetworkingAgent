@@ -1,0 +1,21 @@
+\section{Operational concerns and diagnostic scope}
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}p{.27\linewidth}XX@{}}\toprule
+Concern & Relevant observation & Interpretation limit\\\midrule
+Gearbox vibration & RMS velocity in mm/s; trend with load & No spectral or bearing-frequency measurement\\
+Bearing deterioration & Vibration increase; noise reported by operator & No measured defect frequencies or inspection labels\\
+Oil overheating & Oil temperature, load and vibration & No viscosity, debris or oil chemistry signal\\
+Excessive screw torque & Torque percentage, speed, feed, pressure & Recipe resistance and obstruction can look similar\\
+Barrel instability & Aggregate barrel temperature & No zone-wise heater/cooler diagnosis\\
+Melt-pressure abnormality & Pressure, melt temperature, throughput & No die geometry or material viscosity measurement\\
+Unstable feeding & Feed-rate change with torque variation & No direct hopper/feeder blockage sensor\\
+Excessive motor current & Current, power and torque & No phase currents or electrical fault waveform\\\bottomrule
+\end{tabularx}\par\smallskip
+These are engineering hypotheses, not validated procedures or machine-specific thresholds. The live RAG issues contain the same eight concern categories, with symptom and possible-cause text. Those records are illustrative maintenance knowledge: they are not verified incidents, work orders or manufacturer fault diagnoses. The database's \texttt{possible\_cause} field deliberately preserves this distinction.
+\section{Four different questions}
+\textbf{Fault detection} asks whether observed behavior appears abnormal. The binary synthetic classifier addresses this limited question. \textbf{Fault diagnosis} identifies a physical cause and often requires discriminating tests, inspection and domain expertise. \textbf{Predictive maintenance} forecasts deterioration or useful life sufficiently to plan intervention. The implementation has no remaining-useful-life model or forecast horizon. \textbf{Maintenance decision support} organizes measurements, model outputs, documents and uncertainty for a human decision. These concepts follow the separation between diagnostics and prognostics in condition-based maintenance research~\cite{jardine}.
+\section{Requirements derived from the operator's question}
+The assistant should identify the correct asset, state when each observation was measured, preserve recipe and units, report the actual model version, retrieve relevant passages, and distinguish evidence from interpretation. A recommendation should say which inspection merits consideration and what is still unknown. It should not turn a binary label into an automatic shutdown, repair instruction or certification that operation is safe.
+
+Historical behavior is useful only when comparable operating conditions are identified. A current reading at high load should not be compared indiscriminately with a low-load recipe baseline. The repository does not contain a complete physical asset record, screw configuration, rated motor power, die configuration, approved alarm envelope or plant safety case. Its sensor validation bounds are API input limits, not Coperion operating limits.
+\verdict{Combining modalities can improve the explanation available to an operator, but correct diagnosis still requires independently verified asset identity, measurement validity and qualified maintenance judgment.}
+\source{\path{rag-server/rag/services.py}: issue CRUD and serialization; \path{zsk-service/zsk/zsk_model.py}: \texttt{LABELS}; live issue catalog (eight records).}

@@ -1,0 +1,20 @@
+\chapter{Design Verdicts and Limitations}
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}p{.21\linewidth}XXp{.23\linewidth}@{}}\toprule
+Decision & Rationale / benefit & Limitation & Verdict\\\midrule
+LLM proposes; core executes & Flexible reasoning with deterministic gates & Reasoning can be wrong & Keep authority outside text\\
+MCP abstraction & External ML/RAG evolve independently & Hints/schemas need trust & Appropriate modular boundary\\
+PostgreSQL checkpoints & Shared local durable state and history & Remote effects cannot transact with SQL & Recover with uncertainty states\\
+Short-window Random Forest & Causal context and simple CPU deployment & Synthetic, no forecasting & Integration model only\\
+Hybrid RAG & Semantic, keyword and issue retrieval routes & Extraction and corpus gaps & Inspect exact source passages\\
+Structured decisions & Machine-readable plan/action/checks & Initial criteria can be weak & Validate again in backend\\
+Exact approval / grants & Bind authority to action/configuration & Does not undo sent requests & Conservative for writes\\
+Evidence predicates & Block unsupported external completion & No industrial truth oracle & Distinguish task/diagnosis\\
+Human decision support & Operator reviews evidence and uncertainty & Requires qualified personnel & Essential product boundary\\\bottomrule
+\end{tabularx}\par\smallskip
+\section{Implemented, partial and planned}
+\textbf{Implemented:} saved chat/files/settings, owned LLM/MCP loops, private compaction, durable tasks/evidence paging, schedules, write approval/reconciliation, standalone RAG ingestion/hybrid search, and versioned synthetic ZSK inference. \textbf{Partial:} industrial maintenance workflow, trusted asset mapping, complete industrial validation, calibration/freshness enforcement, comprehensive malicious-server protection and measured recommendation quality. \textbf{Planned:} operator-designed domain workflows and deterministic validators described in \path{docs/ROADMAP.md}. Event triggers are currently removed, not an available planned-by-assumption feature.
+\section{Prioritized development recommendations}
+First establish an explicit verified mapping between RAG asset UUID/\texttt{ZSK-001} and dataset \texttt{ZSK-SIM-01}; never substitute a guessed mapping. Next add approved model-input/freshness checks and a reviewed evidence/recommendation contract through external validators, keeping domain logic outside core. Curate authoritative operating/maintenance manuals with version-specific passage links; validate PDF extraction and diagnostic relevance. Collect real labeled longitudinal data under qualified review before evaluating cross-machine, recipe and fault generalization. Compare algorithms and calibrate probabilities on independent data; do not use predictions as labels.
+
+Then test uncertain side effects under connection/partition faults, require least-privilege credentials for each server and measure operator-visible grounding/uncertainty quality. These recommendations are not implemented features or authorization to widen the project. The central answer is architectural: independent time-series and retrieval services can supply evidence to an LLM, while core persists context, validates actions and verifies specified outcomes; the human retains the industrial decision.
+\source{\path{docs/ROADMAP.md}; \path{docs/MCP_CONTRACTS.md}; \path{docs/TASK_EXECUTION.md}; source/verification mappings throughout Chapters 6--12.}

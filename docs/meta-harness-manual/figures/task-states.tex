@@ -1,0 +1,18 @@
+\begin{tikzpicture}[scale=.88,transform shape]
+\node[box] (pending) at (0,4.6) {PENDING};
+\node[darkbox] (running) at (0,2.8) {RUNNING};
+\node[box] (approval) at (-4,2.8) {\scriptsize WAITING\_APPROVAL};
+\node[box] (retry) at (4,2.8) {RETRYING};
+\node[box] (pause) at (-4,.6) {PAUSED};
+\node[darkbox] (done) at (0,.6) {COMPLETED};
+\node[box] (fail) at (4,.6) {FAILED};
+\node[box] (cancel) at (0,-1.2) {CANCELLED};
+\draw[arr] (pending)--node[lab,right]{claim} (running);
+\draw[arr] (running)--(approval);\draw[arr] (approval.north) |- node[lab,pos=.2]{approve} (pending.west);
+\draw[arr] (running)--(retry);\draw[arr] (retry.north) |- node[lab,pos=.2]{due} (pending.east);
+\draw[arr] (running)--node[lab,right]{verified} (done);
+\draw[arr] (running)--(pause);\draw[arr] (running)--(fail);
+\draw[arr] (pause.west)--++(-.7,0) |- node[lab,pos=.2]{resume} (pending.west);
+\draw[arr] (fail.east)--++(.7,0) |- node[lab,pos=.2]{retry} (pending.east);
+\draw[arr,dashed] (pause.south) |- (cancel.west);\draw[arr,dashed] (fail.south) |- (cancel.east);
+\end{tikzpicture}

@@ -1,0 +1,22 @@
+\section{Operation ledger, retries and reconciliation}
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Operation state & Recovery meaning\\\midrule
+PREPARED & Proposal persisted; no dispatch recorded\\
+DISPATCHING & External send may have occurred\\
+SUCCEEDED & Actual result persisted; a completed write is reused\\
+FAILED & Failure recorded; replay depends on policy and outcome\\
+UNKNOWN & Write outcome unresolved; inspect remote state first\\
+REJECTED & Operator declined; revise rather than repeat\\\bottomrule
+\end{tabularx}\par\smallskip
+\texttt{retryDelay()} uses exponential backoff and jitter, starting at one second, with a five-minute base cap and Retry-After support. The default allows five retries after the initial failure. A read-only tool rejection retains the failed result and asks for a corrected decision; unsafe policy/authentication or permanent failures stop. Network unavailability can trigger rediscovery only for enabled, permitted profiles not manually disconnected.
+
+\texttt{TasksService.reconcile()} records an operator's externally checked outcome: succeeded or definitely not executed. It does not promote supplied narrative/result data into completion evidence. \texttt{checkCriterion()} excludes operator-reconciled results, requiring a fresh verification read. Terminal COMPLETED/CANCELLED tasks cannot be resumed; FAILED uses Retry, and PAUSED uses Resume once pending approvals/unknown writes are resolved.
+\section{Schedules and schema evolution}
+\texttt{TaskSchedulesService.save()} validates one-time or cron scheduling and IANA timezone. \texttt{tick()} transactionally inserts a task using a schedule/time dedupe key, then advances or disables the schedule. Missed cron occurrences coalesce into one catch-up task; future recurrence is computed from current time. Invalid task templates disable with a persisted explanation rather than starving the queue. Scheduled requests keep configured scope; the schedule form supplies no broad write grant.
+
+Event-driven configuration, webhook intake and trigger execution are temporarily removed. Historical trigger tables remain inert in immutable migrations. Earlier logs mention event-authentication tests; they are historical evidence, not available product behavior.
+
+\texttt{DatabaseService.onModuleInit()} applies the schema and lexically ordered migrations under a transaction/advisory lock. Recorded SHA-256 checksums reject changes to applied upgrades. Migration 001 adds durable execution, 002 cost accounting and 003 context checkpoints. This is a reproducible upgrade mechanism, not a promise of painless arbitrary schema changes.
+\section{Recorded recovery test}
+The stored task restart fixture killed a container during a read after a committed write. The task completed with one write and two read attempts. It used real PostgreSQL/worker/MCP and a deterministic planner, not a paid live model. ZSK separately records a killed batch resuming to 1,000 outputs with attempts=2. Those results are finite examples, not adversarial partition/concurrency proofs.
+\source{\path{core/src/tasks/tasks.service.ts}: \texttt{reconcile()}, \texttt{complete()}; \path{core/src/tasks/task-schedules.service.ts}; \path{docs/verification/task-restart.json}; \path{docs/verification/zsk-restart.log}.}

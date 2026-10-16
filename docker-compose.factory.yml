@@ -1,0 +1,11 @@
+# Optional factory bridge. Combine with docker-compose.yml and mcp overlay.
+services:
+  core:
+    networks:
+      default:
+      mcp:
+        aliases: [core]
+networks:
+  mcp:
+    external: true
+    name: meta-harness-mcp

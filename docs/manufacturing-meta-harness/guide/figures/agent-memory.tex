@@ -1,0 +1,11 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[dark,text width=4cm](record) at (2.2,0) {Durable notebook\\full saved records};
+\node[box,text width=4cm](desk) at (8,0) {Working desk\\selected context};
+\node[box,text width=3.2cm](llm) at (13.4,0) {LLM\\next decision};
+\draw[arr](record)--node[lab,above,inner sep=1pt,text width=1cm,font=\sffamily\fontsize{7}{8}\selectfont]{select\\evidence}(desk);
+\draw[arr](desk)--(llm);
+\node[box,text width=4cm](compact) at (8,-2.2) {Compact or summarize\\when the desk fills};
+\draw[arr,<->](desk)--(compact);
+\node[box,fill=white,text width=4cm,font=\sffamily\scriptsize,below=7mm of record](note) {Exact results can be read again.\\The notebook is retained.};
+\draw[draw=black!60,densely dotted,thick] (record.south)--(note.north);
+\end{tikzpicture}

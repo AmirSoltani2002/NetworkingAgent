@@ -1,47 +1,39 @@
 # Execution Plans
 
-Use an ExecPlan for:
+Use an ExecPlan for significant implementation work: new major components, changes across modules, architecture/schema changes, external integrations, or orchestration changes.
 
-- new major components
-- changes involving multiple modules
-- architecture changes
-- database/schema changes
-- new external providers
-- major agent-loop changes
+Place active plans in docs/plans/. Keep them updated while work is in progress. When a plan is complete, preserve current design choices in docs/IMPLEMENTATION_DECISIONS.md and relevant behavior in the owning specification; remove the redundant completed plan.
 
-An ExecPlan must contain:
+Each plan must contain:
 
 ## Goal
 
-What should exist when this work is complete?
+The authorized outcome and its current/future product scope.
 
 ## Motivation
 
-Why is this needed for the project/research?
+Why the change is needed.
 
 ## Existing architecture
 
-Which components are affected?
+Affected services/modules and their present behavior.
 
 ## Proposed design
 
-Interfaces, data flow, schemas, and important decisions.
+Interfaces, data flow, schema changes, and significant decisions. Preserve the boundaries in AGENTS.md.
 
 ## Implementation steps
 
-Concrete implementation order.
+Concrete order of work and any migration/compatibility steps.
 
-## Tests
+## Validation
 
-How will correctness be demonstrated?
+How correctness will be demonstrated. Separate automated checks from manual/API/browser review. UI work requires screenshots compared with the user's reference.
 
 ## Evaluation impact
 
-Does this change affect any research metric or baseline?
+Whether research metrics or baselines are affected; use “none” for changes without evaluation impact.
 
 ## Risks
 
-Security, hallucination, data-quality, compatibility, and
-operational risks.
-
-Update the plan as implementation progresses.
+Concrete compatibility, persistence, security, and operational risks.

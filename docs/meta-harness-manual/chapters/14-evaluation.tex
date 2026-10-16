@@ -1,0 +1,21 @@
+\chapter{Evaluation and Future Development}
+\partlabel{PART V --- LIMITATIONS AND CONCLUSION}
+\section{What has been checked}
+The manual was grounded in actual TypeScript/Python source, schema/migrations, deployment files and existing verification records. Fresh read-only checks rediscovered four RAG tools and six manufacturing tools through core, verified RAG REST access, confirmed ML readiness and 1,000 products, and obtained actual metrics and a product prediction. UI figures were captured from the running application; credentials were hidden in the browser before screenshot capture.
+
+Earlier records report task/UI suites and a real isolated container-restart fixture. The CNC checkpoint record demonstrates live paid-model continuation, four passed predicates and no repeated previously successful MCP calls. Those records have different scopes and dates; they are not newly rerun benchmark results. PDF compilation/render inspection validates this artifact, not every runtime scenario.
+\section{Current limitations and status}
+\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Status & Capability or boundary\\\midrule
+IMPLEMENTED & Saved chat/context, discovered MCP tools, exact approvals, durable task checkpoints, retries, deterministic predicates, schedules, external RAG and saved-artifact ML inference\\
+PARTIAL & Model-generated criteria may be weak; summary fidelity is not guaranteed; exact external-write recovery needs an operator; loopback access is not multi-user authentication\\
+REMOVED & Event-trigger UI/API/dispatcher; production ground-truth label column\\
+UNAVAILABLE & Manufacturing retraining with the current label-free production schema; a clean deployment cannot create a new classifier artifact\\
+PLANNED & Operator-configured ordered workflows/mappings, immutable workflow versions and external answer validators\\\bottomrule
+\end{tabularx}
+\section{Reliability and future work}
+Budgets and conservative write handling prevent uncontrolled execution but cannot guarantee a correct plan or semantic relevance. RAG chunking uses heuristic structure detection, English full-text search and no OCR. Similarity scores are rankings. Synthetic model accuracy is not evidence of real manufacturing quality. Ordinary file attachments are not analyzed automatically, and there is no persistent vector-based chat-memory retrieval.
+
+The most useful next work is stronger operator-defined completion criteria, explicit result-schema contracts, additional isolated tests for fresh context-budget boundaries/evidence paging, approved labeled-data restoration and external validators. These are future work, not implicit authorization to broaden tools or infrastructure.
+\note{Engineering contribution}{Meta-Harness makes continuity and execution observable: the selected model proposes; configured tools act; PostgreSQL preserves what actually happened; backend policy restricts authority; deterministic checks decide when stored evidence permits completion. That surrounding runtime is the project's contribution beyond a sequence of LLM API calls.}
+\source{\path{docs/ACCEPTANCE_TESTS.md}; \path{docs/verification/task-context-checkpoints.json}; \path{docs/verification/task-restart.json}; \path{docs/ROADMAP.md}; \path{manufacturing-demo/manufacturing/model.py}.}

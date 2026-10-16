@@ -1,0 +1,20 @@
+\page{1 / MEET THE MACHINE}{A mixer with three connected jobs}
+Stand in front of the game and read it from left to right. The motor is the source of rotation. The gearbox passes that rotation to two screws inside the barrel. Above them, the hopper holds material and the feeder controls how much enters. The screws carry and mix the material; the barrel's heating and cooling regulate temperature. Material then leaves through the die, the outlet restriction, toward the displayed conveyor.
+
+Three things travel through this arrangement: \textbf{material}, \textbf{mechanical power}, and \textbf{heat}. They interact, but they are different flows. The diagram separates them so an arrow from the motor cannot be mistaken for a material pipe.
+\diagram{line}{Functional map of the game's line. Solid teal arrows carry material; dashed dark arrows carry mechanical power; orange arrows show thermal influence. Positions are schematic, not a construction drawing.}
+
+\subsection*{What each part tells the engineer}
+\begin{tabularx}{\linewidth}{@{}p{.19\linewidth}p{.24\linewidth}X@{}}\toprule
+Look at & Read & Ask\\\midrule
+Motor & Current (A), power (kW) & Is the drive working harder?\\
+Gearbox & Vibration (mm/s RMS), oil temperature (°C) & Has shaking or oil heating changed?\\
+Screws / barrel & Speed (rpm), torque (\%), barrel temperature (°C) & Is resistance or thermal control changing?\\
+Feeder & Feed rate (kg/h) & Is material arriving steadily?\\
+Outlet / die & Pressure (bar), melt temperature (°C) & Is downstream resistance or melt condition changing?\\\bottomrule
+\end{tabularx}
+
+If the outlet becomes more restrictive, pressure and screw torque can rise together. That does not automatically mean the gearbox is damaged. Follow the interacting readings before choosing an inspection.
+
+\takeaway{Clicking a drawn component opens its details. It does not diagnose or repair it. The model receives ten numerical signals, not a picture of the machine.}
+\evidence{Game component map: \path{factory-service/factory/domain.py}. Signal definitions and scenario effects: \path{zsk-service/zsk/synthetic.py}. The software stores one barrel-temperature signal, not separate readings for every drawn heating zone.}

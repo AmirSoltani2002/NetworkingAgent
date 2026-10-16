@@ -1,0 +1,20 @@
+\page{7 / FINISH THE STORY}{Inspection is not repair}
+The technician has returned to IDLE and the task says COMPLETED. It is tempting to restart. But read both status words: \textbf{STOPPED} describes production; \textbf{FAULT} describes the unresolved simulated deterioration. Completing an investigation changes neither into a repaired machine.
+\diagram{repair}{Current operator path for a gearbox scenario. Acknowledging the alarm records receipt; it is not a repair step. Repair and restart are explicit simulation actions, separate from the completed AI investigation.}
+
+\subsection*{What the operator can do in the current game}
+After stopping production and obtaining a completed component inspection, the operator can use \textbf{Simulation Settings → Simulate gearbox repair}. The backend removes the active gearbox scenarios, runs the maintenance job, and leaves production stopped. Residual vibration/oil effects decay gradually while simulated time advances. \textbf{Restart simulated line} is a separate confirmed action and rejects severe faults or unfinished jobs.
+
+The current button repairs only the gearbox. Other components have backend maintenance support but no corresponding settings-page repair button. The operator interface is incomplete for those faults.
+
+By default, automatic stop, restart and maintenance are disabled. The explicitly configured stop demonstration grants stop and inspection, not automatic repair or restart. An AI request cannot create those permissions.
+
+\subsection*{Three outcomes to keep separate}
+\begin{tabularx}{\linewidth}{@{}p{.24\linewidth}X@{}}\toprule
+Investigation complete & Required evidence and actions were recorded.\\
+Repair complete & The backend removed the selected programmed fault.\\
+Alarm resolved & The worker received qualifying fresh running healthy model evidence with below-threshold future risk after a completed/cancelled investigation.\\\bottomrule
+\end{tabularx}
+
+\takeaway{The demonstration can remove a programmed fault. It cannot verify or repair physical equipment. Resetting clears the experiment into a new episode; it is not evidence that a maintenance diagnosis was correct.}
+\evidence{Action preconditions and repair transitions: \path{factory-service/factory/domain.py}. Current buttons: \path{ui/src/components/factory/factory-workspace.tsx}. Alarm recovery rule: \path{factory-service/factory/worker.py}.}

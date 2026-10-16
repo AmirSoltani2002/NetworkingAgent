@@ -1,0 +1,65 @@
+name: factory-recovery-tests
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: factory_recovery_tests
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${FACTORY_TEST_DB_PASSWORD:?Set isolated test secret}
+    ports: ["127.0.0.1:15437:5432"]
+    volumes: ["recovery-db:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U manufacturing -d factory_recovery_tests"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+  ml:
+    image: zsk-ml:local
+    environment:
+      ZSK_DB_HOST: database
+      ZSK_DB_NAME: factory_recovery_tests
+      ZSK_DB_PASSWORD: ${FACTORY_TEST_DB_PASSWORD:?Set isolated test secret}
+      ZSK_API_KEY: ${ZSK_API_KEY:?Set test credential}
+      ZSK_ADMIN_API_KEY: ${ZSK_ADMIN_API_KEY:?Set test credential}
+    volumes: ["recovery-models:/data/models"]
+    depends_on:
+      database:
+        condition: service_healthy
+  factory:
+    image: factory-simulation:local
+    environment:
+      FACTORY_DB_HOST: database
+      FACTORY_DB_NAME: factory_recovery_tests
+      FACTORY_DB_PASSWORD: ${FACTORY_TEST_DB_PASSWORD:?Set isolated test secret}
+      FACTORY_API_TOKEN: ${FACTORY_API_TOKEN:?Set test credential}
+      FACTORY_MCP_AUTH_TOKEN: ${FACTORY_MCP_AUTH_TOKEN:?Set test credential}
+      FACTORY_ML_API_TOKEN: ${ZSK_API_KEY:?Set test credential}
+      FACTORY_TASK_SERVICE_TOKEN: ${TASK_INTEGRATION_TOKEN:?Set test credential}
+      FACTORY_ML_URL: http://ml:8000
+      FACTORY_META_HARNESS_URL: http://unavailable-core:8000/api
+      FACTORY_AUTOMATIC_FAULTS: 'false'
+    ports: ["127.0.0.1:18110:8110"]
+    depends_on:
+      ml:
+        condition: service_healthy
+  task-runtime:
+    image: meta-harness-core:local
+    container_name: factory-task-restart-test
+    command: ["node","core/tests/task-restart-fixture.cjs"]
+    environment:
+      DB_HOST: database
+      DB_NAME: factory_recovery_tests
+      DB_USER: manufacturing
+      DB_PASSWORD: ${FACTORY_TEST_DB_PASSWORD:?Set isolated test secret}
+    volumes:
+      - ../.env:/app/.env:ro
+      - ../core/tests/task-restart-fixture.cjs:/app/core/tests/task-restart-fixture.cjs:ro
+    ports: ["127.0.0.1:18097:8098"]
+    depends_on:
+      database:
+        condition: service_healthy
+    profiles: [task-restart]
+
+volumes:
+  recovery-db:
+  recovery-models:

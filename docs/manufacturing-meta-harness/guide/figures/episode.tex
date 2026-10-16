@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 3,vertical sep=11pt},
+ width=15.4cm,height=3.1cm,xmin=0,xmax=25,xtick={0,5,10,15,20,25},
+ xticklabels={},grid=major,grid style={gray!18},
+ tick label style={font=\scriptsize},label style={font=\small},
+ ylabel style={align=center},scaled ticks=false,
+ extra x ticks={10},extra x tick labels={},
+ extra x tick style={grid=major,grid style={red,dashed,line width=.8pt}}]
+\nextgroupplot[ylabel={RMS (mm/s)},ymin=0,ymax=5,ytick={0,1,2,3,4,5},yticklabels={0,1,2,3,4,5}]
+\addplot[teal,mark=*,mark size=2pt] table[x=minutes,y=vibration,col sep=comma]{guide/figures/episode.csv};
+\node[font=\sffamily\scriptsize,anchor=north,text=black] at (axis cs:10,4.9) {Alarm at 22:29};
+\nextgroupplot[ylabel={Oil (°C)},ymin=40,ymax=60,ytick={40,45,50,55,60},yticklabels={40,45,50,55,60}]
+\addplot[orange,mark=*,mark size=2pt] table[x=minutes,y=oil,col sep=comma]{guide/figures/episode.csv};
+\nextgroupplot[ylabel={Current (A)},ymin=70,ymax=85,ytick={70,75,80,85},yticklabels={70,75,80,85},
+ xticklabels={22:19,22:24,22:29,22:34,22:39,22:44},xlabel={5 September 2026, UTC (simulated time)}]
+\addplot[ink,mark=*,mark size=2pt] table[x=minutes,y=current,col sep=comma]{guide/figures/episode.csv};
+\end{groupplot}
+\end{tikzpicture}

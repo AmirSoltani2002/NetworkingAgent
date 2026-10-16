@@ -1,0 +1,16 @@
+\begin{tikzpicture}[scale=.89,transform shape]
+\node[darkbox] (browser) at (0,6.3) {Browser / operator};
+\node[box] (ui) at (-4,4.6) {React UI + Nginx\\127.0.0.1:8080};
+\node[darkbox] (core) at (0,4.6) {NestJS core\\127.0.0.1:8000};
+\node[box] (llm) at (4,4.6) {OpenAI Responses\\selected model};
+\node[box] (db) at (-4,2.6) {PostgreSQL 17\\chat + task state};
+\node[box] (task) at (0,2.6) {Worker + scheduler\\same core process};
+\node[box] (mcp) at (4,2.6) {Generic MCP client\\REST integration};
+\node[box] (rag) at (2,.3) {External RAG\\API + ingestion worker\\pgvector / files / cache};
+\node[box] (ml) at (6,.3) {Manufacturing ML\\API + MCP\\PostgreSQL / artifact};
+\draw[arr] (browser) -| (ui);\draw[arr] (ui) -- node[lab]{/api} (core);
+\draw[arr] (core) -- node[lab]{HTTPS} (llm);
+\draw[arr] (core) -- (task);\draw[arr] (core) -- (db);
+\draw[arr] (task) -- (db);\draw[arr] (core) -- (mcp);
+\draw[arr] (task) -- (mcp);\draw[arr] (mcp) -- (rag);\draw[arr] (mcp) -- (ml);
+\end{tikzpicture}

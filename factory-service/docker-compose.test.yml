@@ -1,0 +1,32 @@
+name: factory-tests
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: factory_tests
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${FACTORY_TEST_DB_PASSWORD:?Set isolated test secret}
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U manufacturing -d factory_tests"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+  tests:
+    build:
+      context: ..
+      dockerfile: factory-service/Dockerfile
+      target: test
+    environment:
+      FACTORY_DB_HOST: database
+      FACTORY_DB_NAME: factory_tests
+      FACTORY_DB_PASSWORD: ${FACTORY_TEST_DB_PASSWORD:?Set isolated test secret}
+      FACTORY_API_TOKEN: ${FACTORY_API_TOKEN:?Set test secret}
+      FACTORY_MCP_AUTH_TOKEN: ${FACTORY_MCP_AUTH_TOKEN:?Set test secret}
+      FACTORY_ML_API_TOKEN: ${ZSK_API_KEY:?Set test secret}
+      FACTORY_TASK_SERVICE_TOKEN: ${TASK_INTEGRATION_TOKEN:?Set test secret}
+      FACTORY_MIGRATIONS: /app/factory-migrations
+      FACTORY_WORKER_ENABLED: 'false'
+    depends_on:
+      database:
+        condition: service_healthy

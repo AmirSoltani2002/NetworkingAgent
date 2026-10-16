@@ -1,102 +1,261 @@
-# Local Core API Specification
+# Current HTTP API
 
-The UI talks only to the local core API. Exact route organization below is required behavior; serialization details may be refined by Codex while keeping compatibility with the UI.
+NestJS serves the /api prefix. Direct local base URL: http://localhost:8000/api. The browser uses relative /api URLs through Nginx in Docker or Vite in native development.
 
-## MCP registry
+This file documents implemented routes only, including OpenAI text inference. RAG management/proxy and model-selected MCP retrieval are implemented; ordered workflow/ML/validator/run APIs remain unimplemented.
 
-```text
-GET    /api/mcp/servers
-POST   /api/mcp/servers
-GET    /api/mcp/servers/{id}
-PATCH  /api/mcp/servers/{id}
-DELETE /api/mcp/servers/{id}
-POST   /api/mcp/servers/{id}/test
-POST   /api/mcp/servers/{id}/discover
-PATCH  /api/mcp/servers/{id}/tools/{tool_name}
-```
+## Routes
 
-`discover` refreshes tool descriptors from that MCP server.
+| Method | Route | Success | Purpose |
+| --- | --- | --- | --- |
+| GET | /api/health | 200 | Query database health |
+| GET | /api/llm | 200 | Read provider/model/thinking and masked key metadata |
+| PUT | /api/llm | 200 | Save allowlisted LLM settings in .env |
+| GET | /api/llm/models | 200 | Fetch available model IDs from OpenAI |
+| GET | /api/chats | 200 | List saved chat summaries |
+| POST | /api/chats | 201 | Create an empty chat |
+| GET | /api/chats/:id | 200 | Read a chat with ordered messages and files |
+| POST | /api/chats/:id/messages | 201 | Save text and/or attached files |
+| POST | /api/chats/:id/messages/:messageId/response | 201 | Generate/persist a reply, or return the existing saved reply |
+| GET | /api/chats/:id/attachments/:attachmentId | 200 | Download a file belonging to that chat |
 
-The tool patch supports explicit allowlist enable/disable.
+No user-account authentication or chat edit/rename/delete routes are implemented. RAG mutators reuse the existing loopback browser Origin guard. Host bindings are local; see [OPERATIONS.md](OPERATIONS.md).
 
-## Workflows
+DB_PASSWORD is required server-side configuration from the root .env or the container's injected environment. It is never an HTTP request field or response value. The authorized LLM key-entry route accepts a new OpenAI key once; it returns only masked metadata. Persisted connection profiles use environment-variable references and never return full secrets. Missing database credentials stop core before the API listens.
 
-```text
-GET    /api/workflows
-POST   /api/workflows
-GET    /api/workflows/{id}
-PUT    /api/workflows/{id}
-POST   /api/workflows/{id}/duplicate
-POST   /api/workflows/{id}/validate
-```
+## Health
 
-Saving an existing workflow creates/advances a version; completed run records continue to reference the version used at execution time.
+GET /api/health performs SELECT 1 against PostgreSQL:
 
-## RAG/documents
+~~~json
+{"status":"ok","service":"core"}
+~~~
 
-```text
-GET    /api/rag/profiles
-POST   /api/rag/profiles
-PUT    /api/rag/profiles/{id}
-DELETE /api/rag/profiles/{id}
+An unavailable database returns an error rather than reporting a healthy service.
 
-GET    /api/documents
-POST   /api/documents
-GET    /api/documents/{id}
-PUT    /api/documents/{id}
-DELETE /api/documents/{id}
-POST   /api/documents/{id}/ingest
-```
+## Chat creation and listing
 
-`/ingest` is valid only when the assigned RAG profile has an external ingestion tool configured. The core calls that MCP tool; it does not perform RAG ingestion itself.
+POST /api/chats needs no request body. It returns a ChatSummary with a new UUID and title New chat.
 
-## Analyzer profiles
+GET /api/chats returns an array of summaries ordered by updatedAt descending, then id:
 
-```text
-GET    /api/analyzers
-POST   /api/analyzers
-PUT    /api/analyzers/{id}
-DELETE /api/analyzers/{id}
-```
+~~~json
+[
+  {
+    "id": "a8759285-c89c-49b7-859a-6de72fbf06cb",
+    "title": "Plan the local setup",
+    "createdAt": "2026-10-08T18:00:00.000Z",
+    "updatedAt": "2026-10-08T18:01:00.000Z"
+  }
+]
+~~~
 
-## Validator profiles
+## Chat detail
 
-```text
-GET    /api/validators
-POST   /api/validators
-PUT    /api/validators/{id}
-DELETE /api/validators/{id}
-```
+GET /api/chats/:id returns that summary plus ordered messages:
 
-## Runs
+~~~json
+{
+  "id": "a8759285-c89c-49b7-859a-6de72fbf06cb",
+  "title": "Plan the local setup",
+  "createdAt": "2026-10-08T18:00:00.000Z",
+  "updatedAt": "2026-10-08T18:01:00.000Z",
+  "messages": [
+    {
+      "id": "2a8f130e-af35-4ff4-8863-8b39e36023f8",
+      "role": "user",
+      "text": "Plan the local setup",
+      "createdAt": "2026-10-08T18:01:00.000Z",
+      "replyToMessageId": null,
+      "attachments": [
+        {
+          "id": "92c03ca8-0bda-4f46-8689-4d88f4c4d22d",
+          "name": "notes.txt",
+          "size": 128,
+          "downloadUrl": "/api/chats/a8759285-c89c-49b7-859a-6de72fbf06cb/attachments/92c03ca8-0bda-4f46-8689-4d88f4c4d22d"
+        }
+      ]
+    }
+  ]
+}
+~~~
 
-```text
-GET    /api/runs
-POST   /api/runs
-GET    /api/runs/{id}
-GET    /api/runs/{id}/trace
-POST   /api/runs/{id}/cancel
-```
+Examples are illustrative; these IDs are not seeded into the database.
 
-`POST /api/runs` accepts:
+## Message submission
 
-```text
-workflow_id
-analyzer_profile_id
-validator_profile_id | null
-operator_prompt
-```
+POST /api/chats/:id/messages uses multipart/form-data:
 
-The response returns a run ID immediately. The UI then observes the run/trace through polling, server-sent events, WebSocket, or another local implementation chosen by Codex.
+| Field | Required | Definition |
+| --- | --- | --- |
+| text | Yes | String, may be empty when files are attached |
+| clientMessageId | Yes | UUID version 4 generated by the client |
+| files | No | Repeated file field, at most 10 files |
 
-## Error shape
+At least nonblank text or one file is required. Text may contain up to 20,000 UTF-16 code units. Each file may be at most 10 MiB; combined file bytes may be at most 25 MiB. The UI labels these as MB. Multipart parsing also limits the request to 2 text fields, 12 parts, and 100,000 bytes per text field. Nginx permits a 26 MiB request body.
 
-Expose structured errors containing at least:
+The response is:
 
-```text
-code
-message
-field_errors | null
-```
+~~~text
+{
+  "chat": ChatSummary,
+  "message": MessageWithAttachments
+}
+~~~
 
-Do not expose raw stack traces to the browser.
+MessageWithAttachments has the same shape as a message in chat detail. The first save generates the chat title; subsequent saves update its activity timestamp. Storage rules are in [DATA_MODELS.md](DATA_MODELS.md).
+
+Retrying a valid submission with the same clientMessageId in the same chat returns the original message without duplicating it. Retrying is not an edit operation. Validation still applies to retry requests. The client retains the same UUID after a failed send and resets it when the draft changes.
+
+## Attachment downloads
+
+GET /api/chats/:id/attachments/:attachmentId returns saved bytes with:
+
+- Content-Type: application/octet-stream
+- Content-Disposition: attachment, with an encoded UTF-8 filename
+- Content-Length: byte count
+
+The query checks that the file belongs to the specified chat. Saved files are downloaded rather than rendered inline.
+
+## Assistant response
+
+POST /api/chats/:id/messages/:messageId/response needs no body. IDs must identify a saved user in that chat. It returns the same {chat, message} envelope as submission, with role assistant, replyToMessageId set to the answered user's UUID, and attachments empty. Repeated calls return the existing saved reply without an upstream request. New replies are allowed only for the latest unanswered user. GET chat detail includes both roles and their linkage in position order.
+
+Core snapshots current OpenAI settings from .env. Input uses this chat's private saved model window plus newer messages and attachment filenames with an explicit contents-unavailable note. A changed model rebuilds input from the visible transcript. Permitted MCP schemas/calls/results enter model input; attachment bytes, other chats and saved credentials do not. Responses use store:false, stream:false, encrypted reasoning carryover and reasoning.effort none for Instant or medium/high directly. Output is capped at the smaller of 8,192 tokens and 8% of the configured window. There is no silent model/effort substitution. Provider retention and billing policies still apply.
+
+Before each model turn, core calls fixed HTTPS `/v1/responses/input_tokens` with the actual input, instructions and tools. At or above 90% of the configured token capacity, `/v1/responses/compact` runs with the same selected model. Its complete returned window, including retained messages and an opaque model summary, becomes the next context and is token-counted again. Ineffective/unsupported compaction fails visibly without deleting the transcript. This is model-generated memory, not a readable summary or guaranteed lossless recall. Capacities are specified in OPERATIONS.md. See the official [token-counting](https://developers.openai.com/api/docs/guides/token-counting) and [compaction](https://developers.openai.com/api/docs/guides/compaction) contracts.
+
+Each response HTTP request has fresh limits of eight provider turns, twelve tool calls and 120 seconds including counting/compaction/body reading; Nginx permits 150 seconds. Reaching a work budget saves private tool_state and returns `{chat,continuation:{reason:"model_turns"|"tool_calls"|"deadline"}}` without an assistant message. The UI automatically calls the same response endpoint for the same saved user with fresh budgets until a final reply or confirmation is returned. Completed MCP outputs are not replayed. Twenty automatic continuations per UI run and three consecutive deadline prompts without model/tool progress stop with an actionable retry error. Ordinary network/authentication/quota failures are not retried automatically. A page reload preserves work but requires Retry response to resume.
+
+Serialized model context/checkpoints have a separate 16 MiB safety cap. Only completed text/refusal responses are saved; incomplete/malformed/empty responses fail visibly. Completed context, its message-position watermark, assistant insertion and activity update commit together. The visible transcript remains intact; private context is never returned to the browser. Per-chat advisory locks exclude concurrent saves/generation within each request without a long SQL transaction; continuation releases the lock between requests.
+
+Errors: 400 for missing settings or rejected model/effort/conversation/key; 403 for foreign browser Origin; 404 for missing chat/user or a user belonging to another chat; 409 for concurrent activity or an older unanswered user; 503 for provider quota/network/timeout/incomplete/malformed responses. Raw provider error bodies and full credentials are never returned or logged. A failure leaves the user saved. Timeout/crash can require another billed request even though saved replies are idempotent; exactly-once provider billing is not guaranteed.
+
+## Errors
+
+Core's HttpExceptionFilter returns:
+
+~~~json
+{
+  "code": "HTTP_400",
+  "message": "Enter a message or attach a file.",
+  "field_errors": null
+}
+~~~
+
+message can be a string or a framework validation-message array. Current UI displays string messages and uses a generic fallback otherwise.
+
+| Status | Typical cause |
+| --- | --- |
+| 400 | Invalid UUID, missing/invalid field, empty message, text/combined-file limit, unexpected multipart field/count |
+| 404 | Chat or attachment not found |
+| 413 | Individual file too large |
+| 500 | Unexpected database/server failure; generic message, details logged server-side |
+
+Nginx can reject an oversized body with its own 413 response before core receives it; the JSON envelope applies to errors handled by core.
+
+## LLM configuration and discovery
+
+All LLM responses use Cache-Control: no-store.
+
+GET /api/llm returns:
+
+~~~json
+{
+  "provider": "openai",
+  "hasApiKey": false,
+  "maskedApiKey": null,
+  "model": null,
+  "thinking": "medium"
+}
+~~~
+
+When a key is saved, hasApiKey is true and maskedApiKey contains only its first four characters plus stars for all remaining characters. No response includes the full key.
+
+PUT /api/llm accepts JSON with any of: provider (openai only), apiKey (new secret), model (remote ID or null to clear), thinking (instant/medium/high). Unknown fields are rejected. API keys accept 12–512 letters/numbers/underscores/hyphens; model IDs accept 1–200 letters/numbers/colon/dot/underscore/hyphen. Raw credentials must not be included in example payloads or logs.
+
+Writes preserve unrelated .env entries and return the public configuration shape. Replacing a key clears the selected model unless a new model is supplied. Selecting a model checks it against OpenAI before saving. A concurrent key change yields 409 rather than persisting a model checked against the old key. Local browser origins are restricted to loopback UI/API ports; non-browser requests may omit Origin.
+
+GET /api/llm/models requires a saved OPENAI_API_KEY and returns:
+
+~~~text
+{ "provider": "openai", "models": [model IDs], "fetchedAt": ISO timestamp }
+~~~
+
+Core calls the fixed https://api.openai.com/v1/models endpoint with the key server-side, a 15-second timeout, and no redirects. All valid returned IDs are sorted/deduplicated. No static catalog, paid inference, or provider key is returned. The API returns model availability, not reasoning compatibility.
+
+Errors: 400 for invalid configuration/missing/rejected keys/unavailable models; 403 for rejected browser origin; 409 for concurrent key changes; 503 for .env read/write failures, network/provider failures, or provider rate limits. Provider error bodies are discarded; messages never echo submitted keys.
+
+## Generic MCP registry routes
+
+All mutating routes enforce the same local-browser Origin guard as LLM updates. IDs are UUIDs; configuration accepts only `name`, HTTP(S) `url`, optional `authEnvVar` reference. URLs reject embedded credentials/query/fragment and unapproved origins. Responses expose metadata/reference names, never bearer values. Discovery performs initialization/tool listing only.
+
+| Method/path | Behavior |
+| --- | --- |
+| GET /api/mcp/servers | List public registered connections/tools/allowlists/status; no-store |
+| POST /api/mcp/servers | Register `{name,description,url,authEnvVar,enabled}`; duplicate URL 409 |
+| PUT /api/mcp/servers/{id} | Update connection; changed URL/auth reference clears tool metadata/allowlist |
+| DELETE /api/mcp/servers/{id} | Remove registration, return `{deleted:true}` |
+| POST /api/mcp/servers/{id}/discover | Connect and discover read-only annotations/input schemas; persist status/tools; sanitized 503 on failure |
+| PUT /api/mcp/servers/{id}/allowlist | Legacy read-only allowlist; only discovered read-only tools accepted |
+| GET /api/mcp/servers/managed | List public generic MCP profiles; never returns token values |
+| POST /api/mcp/servers/managed | Save a generic profile and optional write-only bearer token |
+| POST /api/mcp/servers/test | Test and discover a draft connection without saving it |
+| PUT /api/mcp/servers/{id}/configuration | Save description/auth/enabled settings; token input is write-only |
+| POST /api/mcp/servers/{id}/test | Reconnect and discover tools on a saved profile |
+| PUT /api/mcp/servers/{id}/permissions | Save explicit discovered-tool allowlist and agent-enabled state |
+| POST /api/mcp/servers/{id}/disconnect | Revoke availability while retaining the profile |
+
+Public connection: metadata, descriptions, enabled/agent-enabled flags, credential-presence indicator, tools/permissions and sanitized status; no bearer values. Tool: `{name,description,readOnly,inputSchema}`. Missing env credential returns 400; unknown ID 404. There is no arbitrary public tool-call endpoint or workflow API; chat may select its explicitly enabled permitted tools.
+
+`POST /api/chats/{chatId}/messages/{messageId}/confirmation` accepts `{id,approved}` for the exact pending tool invocation. Chat message responses may include a public `pendingConfirmation` summary; private arguments/configuration digests and continuation are never returned. Approval is expiring and single-use. Changed profile/schema/arguments or interrupted execution cannot be replayed.
+
+Standalone RAG REST/MCP/OpenAPI routes live at port 8090 and are specified in [its README](../rag-server/README.md); they require their own bearer token. Core proxies management/retrieval through the dedicated RAG routes below; chat attachments are not RAG uploads.
+
+## RAG integration routes
+
+All routes use the existing local browser Origin guard for writes. No secrets appear in public profiles. IDs are UUIDs; malformed inputs fail 400, missing records 404, duplicate MCP URL 409.
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| GET | /api/rag/connections | Existing generic profiles plus REST/status/credential flag; no-store |
+| POST | /api/rag/connections | Save new profile/token reference |
+| PUT | /api/rag/connections/:id | Save settings; reset connectivity/disable chat retrieval |
+| POST | /api/rag/connections/test | Test unsaved endpoints without persistence |
+| POST | /api/rag/connections/:id/test | Test draft, persist discovery/health only for unchanged saved endpoints |
+| PUT | /api/rag/connections/:id/permissions | `{allowedTools,agentEnabled}`; validate actual read-only tools/connected state |
+| POST | /api/rag/connections/:id/disconnect | Retain configuration but revoke retrieval/management access |
+| POST | /api/rag/connections/:id/request | Restricted JSON REST operation `{path,method,data?}` |
+| POST | /api/rag/connections/:id/upload | Forward multipart document fields/file to external upload endpoint |
+
+Connection write: `{name,url,restUrl,authentication:"none"|"bearer",token?}`. Token may be omitted to retain a saved credential; None removes this profile's reference without deleting the secret. URLs are independent and validated against RAG_ALLOWED_ORIGINS. Token accepts a single printable line up to 2,048 characters and is never returned. Public profile adds `restUrl,restStatus,restError,ragEnabled,agentEnabled,disconnected,serverName,hasCredential`. Existing authEnvVar references remain readable metadata.
+
+Test initializes/lists MCP and separately checks authenticated `GET /api/devices?limit=1` with items/total schema validation. Response `{mcpStatus,restStatus,mcpError,restError,tools,serverName,retrievalAvailable}` has independent results; one failure does not prevent the other service from being used. Tool discovery reflects actual server metadata, never fabricated availability.
+
+REST paths are allowlisted: device/issue/document collection/detail CRUD; document status/chunks/reprocess; issue evidence list/link/unlink; retrieval search. Routes containing UUID references validate their shape. There is no arbitrary URL/path/method proxy. GET filters allow offset/limit/name/model/manufacturer/device_id/category/symptoms/document_type/status; request fields are bounded to 64 KiB. Responses cap at 4 MiB with a 20-second request deadline. Upstream error bodies are discarded and mapped to fixed actionable messages. 204 deletion normalizes to `{deleted:true}`. Administrative and upload data is stored only by external RAG.
+
+Upload: file plus title/document_type/version/device_ids(JSON array)/metadata(JSON object), one PDF/TXT/MD/Markdown up to 25 MiB. Core validates extension/nonempty/size/PDF signature or nonbinary text, sanitizes filenames and forwards fixed fields; RAG owns full extraction/metadata/device validation/processing. Description belongs in metadata.description. Actual device API requires name/model/manufacturer; issue API requires device_id/title/category/symptoms. Refer to the verified [external API contract](../rag-server/README.md); no original-document download endpoint exists.
+
+Messages now include `toolCalls:[{serverId,tool,success,durationMs,sources:[{chunk_id,document_id,document_title?,section_heading?,page_number?}]}]`. Arguments/raw passages/credentials are excluded. Source metadata on the user also preserves calls before a failed provider response; successful assistants carry their reply's call metadata. Ordinary text/no-tool behavior and reply idempotency remain.
+
+## Durable tasks
+
+The existing `/api` namespace now includes task CRUD/detail/steps/events/SSE, pause/resume/cancel/retry, exact approvals and reconciliation, schedule configuration and history, and execution-policy inspection. Route/body definitions are in [TASK_EXECUTION.md](TASK_EXECUTION.md#rest-api). Local mutation origin checks follow existing application conventions; event-trigger and event-intake routes are temporarily removed. Task-owned messages use the worker instead of ordinary response generation. Chat detail includes optional `taskId` for its latest task-owned user message and on every task-owned message, enabling live outcomes after reopening the conversation. Redacted model request outputs are included in task detail events; malformed decisions retry within existing limits.
+
+Task decisions may produce a direct `respond` output without tools. Fresh response-only tasks verify saved text delivery, with `response` operations carrying `externalExecutionVerified:false`. This never satisfies MCP/command/workspace criteria. Unmet external criteria retain a paused task with its best-effort response.
+
+### Durable task context checkpoints
+
+Task details expose cumulative tokens_used, turn_count, active_ms, estimated_cost_usd, per-prompt baselines and continuation_count. Private context_window and context_state are excluded. prompt_continuation and budget_paused events use existing task SSE/polling; no browser request is required to continue. Internal evidence operation results remain visible in existing task tool history. Task prompt budgets, summary behavior and lifetime caps are defined in [TASK_EXECUTION.md](TASK_EXECUTION.md).
+
+## External ZSK service
+
+Current manufacturing endpoints are owned by zsk-service/README.md and served on 8100. Core APIs are unchanged. MCP discovery supplies eight ZSK tool schemas; only five read tools are enabled in the existing profile. Old six-tool manufacturing names are superseded; saved historical traces remain unchanged.
+
+## Factory simulation integration (2026-10-09)
+
+- `POST /api/internal/task-events`: Bearer `TASK_INTEGRATION_TOKEN` (≥24 characters). Strict body `{template,eventId,variables}`; UUID event ID, ≤16 KB variables. Only tracked `core/config/task-integrations.json` templates, fixed explicit grants and immutable MCP criteria. Atomic receipt returns `{taskId,duplicate}`. Identical replay reuses the task; changed payload with the same source/event rejects. No arbitrary request/grant/command fields.
+- `GET /api/internal/task-events/:eventId`: same scoped credential; returns receipt-linked status/progress/result/error/latest tool. No secrets or private model window.
+- Local browser gateway: `GET /api/factory/state`, `GET /api/factory/measurements` (bounded ranges/limit), `POST /api/factory/actions` (whitelisted kinds, exact stable key), `GET /api/factory/actions/:id`, WebSocket `/api/factory/ws`. Uses fixed approved upstream, guarded DNS/origin and server-only factory operator token. WS receives complete versioned snapshots; browser writes are rejected.
+- Standalone authenticated Factory REST/MCP/WS endpoints, input/action/result contracts and epoch guards are owned by [FACTORY_ARCHITECTURE.md](FACTORY_ARCHITECTURE.md) and [factory README](../factory-service/README.md). Loopback backend port 8110; UI remains 8080.
+- Persistent task planning now submits one forced strict native `submit_task_decision` function (no external execution by that function); multiple calls/text alternatives are rejected. Validated model context includes its matching validation-only acknowledgment. Incomplete-output retries increase only bounded response allowance, retaining existing task/prompt/lifetime caps and usage accounting. Ordinary chat is unchanged.

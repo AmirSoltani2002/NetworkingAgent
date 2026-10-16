@@ -1,0 +1,28 @@
+name: manufacturing-demo-tests
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: manufacturing_test
+      POSTGRES_USER: manufacturing
+      POSTGRES_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set root .env password}
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U manufacturing -d manufacturing_test"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+  tests:
+    image: manufacturing-ml:test
+    build:
+      context: .
+      target: test
+    environment:
+      MANUFACTURING_DB_HOST: database
+      MANUFACTURING_DB_NAME: manufacturing_test
+      MANUFACTURING_DB_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set root .env password}
+      MANUFACTURING_API_KEY: ${MANUFACTURING_API_KEY:?Set root .env key}
+    depends_on:
+      database:
+        condition: service_healthy

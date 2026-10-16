@@ -1,0 +1,22 @@
+\page{11 / HAND OVER THE RIGHT KEYS}{Tools and agent security}
+Our analyst needs instruments, not unrestricted access to the workshop. A tool is a named capability such as reading sensor history, searching documents or requesting a simulated inspection. MCP is the common interface through which the application discovers those capabilities.
+
+\subsection*{How tool calling works}
+The operator connects a trusted service and explicitly allows its tools. Core gives the LLM their descriptions and required inputs. The LLM selects a tool and supplies its arguments; core checks the inputs and current permission before calling the service. A returned result is saved and given back to the model.
+
+In the game, this means the model asks the factory service to inspect the gearbox. It does not move the character directly. The factory checks the request and runs the synthetic technician job.
+
+\subsection*{How authority is limited}
+\begin{tabularx}{\linewidth}{@{}p{.30\linewidth}X@{}}\toprule
+Boundary & How it is enforced\\\midrule
+Read access & Only discovered, enabled and explicitly allowed tools are offered; permissions are checked again before dispatch.\\
+Changing state & Ordinary chat needs exact confirmation. Persistent tasks may use explicit grants for specified controlled tools; dangerous actions still need exact approval.\\
+Factory actions & The factory also checks its own action policy and the current machine episode. An old experiment cannot authorize a new one.\\
+Connections and secrets & Destinations are restricted to approved origins and checked at connection time. Credentials stay in backend secret configuration, with masked or write-only entry in the UI.\\
+Untrusted text & Manuals and tool descriptions are treated as information, not permission. They cannot create a tool grant or bypass an approval.\\\bottomrule
+\end{tabularx}
+
+Automatic stop, restart and maintenance are disabled by default in the factory service. The explicitly authorized stop demonstration is simulation-only. A prompt alone is not a blanket execution grant.
+
+\takeaway{Security is enforced around the model. Persuasive text is not authority; configured permissions, approvals and service checks determine what can run. These controls limit access, but do not guarantee a correct diagnosis.}
+\evidence{MCP integration contracts, task execution policy and factory action policy. This is a local application, not a multi-user industrial control system.}

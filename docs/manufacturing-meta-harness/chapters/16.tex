@@ -1,0 +1,12 @@
+\chapter{Long-Running Tasks and State Persistence}
+\section{Problem and persistence design}
+A multi-step investigation can outlast a browser request or backend process. Core therefore stores tasks, ordered decisions, external-operation results, approvals, checks, events and schedules in its existing PostgreSQL database. \texttt{agent\_tasks} includes request/goal/plan/criteria, current/completed steps, next decision, status, progress, retry timing, private context, delivery cursor, prompt baselines, lifetime usage and lease ownership.
+
+\texttt{TaskWorker} polls each second. Default concurrency is two active slices, configurable from one to four. \texttt{claim()} selects due PENDING/RETRYING tasks or expired RUNNING leases using \texttt{FOR UPDATE SKIP LOCKED}, obtains a session advisory lock, assigns a fresh owner UUID and commits a 30-second lease. A five-second heartbeat extends it. \texttt{fenced()} locks the task row and checks RUNNING plus the same owner before committing the next planning/checkpoint transaction.
+\fig{states}{Persisted task lifecycle. UNKNOWN is an operation state that forces a task to PAUSED; it is not a ninth task status.}
+\section{Recovery distinguishes reads from writes}
+Before dispatch the worker saves a proposal/operation, then commits DISPATCHING immediately before the external request. On recovery, a dispatched read becomes FAILED and can safely retry; a dispatched write becomes UNKNOWN, and the task pauses. A completed write is reused by canonical action identity or stable plan-step key. Core sends operation UUID in \texttt{Idempotency-Key} and MCP \texttt{\_meta.operationId}; the server may ignore those fields.
+
+Cancellation or pause revokes the owner's ability to advance. Heartbeat detects loss and aborts local execution, but an already sent remote action cannot be rolled back. Result-recording transactions intentionally retain a returned operation outcome; they are not a distributed fence on the remote service. A database partition can still leave ambiguous external effects.
+\verdict{PostgreSQL checkpoints, ownership checks and conservative UNKNOWN handling support restart recovery. They provide replay protection, not exactly-once execution across unrelated services.}
+\source{\path{core/src/tasks/task-worker.ts}: \texttt{claim()}, \texttt{fenced()}, \texttt{run()}, \texttt{advance()}; migrations 001--003; \path{core/src/tasks/tasks.service.ts}: \texttt{control()}.}

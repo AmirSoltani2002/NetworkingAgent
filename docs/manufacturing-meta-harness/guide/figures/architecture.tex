@@ -1,0 +1,25 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[dark,text width=3.2cm](ui) at (1.7,0) {Browser + game\\display and controls};
+\node[dark,text width=3.2cm](core) at (7.2,0) {Core coordinator\\tasks / permissions};
+\node[box,text width=3.2cm](db) at (12.7,0) {Core PostgreSQL\\chat / task records};
+\node[box,text width=3.2cm](factory) at (1.7,-2.5) {Factory service\\simulation authority};
+\node[box,text width=3.2cm](ml) at (7.2,-2.5) {ZSK ML service\\two model outputs};
+\node[box,text width=3.2cm](rag) at (12.7,-2.5) {RAG service\\document retrieval};
+\node[box,text width=3.2cm](mdb) at (4.45,-4.5) {Manufacturing DB\\factory + ZSK records};
+\node[box,text width=3.2cm](rdb) at (12.7,-4.5) {RAG DB + files\\knowledge store};
+\node[box,text width=3.2cm,draw=orange](llm) at (7.2,2.5) {OpenAI API\\selected LLM};
+\draw[arr,<->] (ui.east)--(core.west);
+\draw[arr,<->] (core.east)--(db.west);
+\draw[arr,<->] (core.north)--node[lab,right]{remote inference}(llm.south);
+\draw[arr,<->] (core.south west)--(factory.north east);
+\draw[arr,<->] (core.south)--node[lab,right]{MCP}(ml.north);
+\draw[arr,<->] (core.south east)--(rag.north west);
+\draw[arr,<->] (factory.east)--node[lab,above]{ML REST}(ml.west);
+\draw[arr,<->] (factory.south)--(mdb.north west);
+\draw[arr,<->] (ml.south)--(mdb.north east);
+\draw[arr,<->] (rag.south)--(rdb.north);
+\begin{scope}[on background layer]
+\node[draw=muted,dashed,rounded corners=4pt,inner sep=5mm,fit=(ui)(db)(factory)(ml)(rag)(mdb)(rdb)](local){};
+\end{scope}
+\node[font=\sffamily\scriptsize,text=black,anchor=south west] at (local.north west) {LOCAL MACHINE};
+\end{tikzpicture}

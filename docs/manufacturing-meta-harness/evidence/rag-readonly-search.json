@@ -1,0 +1,359 @@
+{
+  "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+  "device": {
+    "id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+    "name": "ZSK Twin-Screw Extrusion Line 01",
+    "model": "ZSK 58",
+    "manufacturer": "Coperion GmbH",
+    "description": "Co-rotating twin-screw extrusion line for polymer compounding and processing. Includes a drive motor, gearbox, twin screws, barrel heating/cooling zones, feeding system, and downstream equipment.",
+    "metadata": {
+      "machine_id": "ZSK-001",
+      "application": "Polymer Compounding",
+      "data_source": "Synthetic",
+      "machine_type": "Twin-Screw Extruder",
+      "dataset_records": 1000,
+      "production_line": "Line 01",
+      "maintenance_strategy": "Condition-Based Maintenance",
+      "monitored_parameters": [
+        "screw_speed",
+        "screw_torque",
+        "motor_current",
+        "motor_power",
+        "gearbox_vibration",
+        "oil_temperature",
+        "barrel_temperature",
+        "melt_temperature",
+        "melt_pressure",
+        "feed_rate"
+      ]
+    },
+    "created_at": "2026-10-09T13:18:59.185981+00:00",
+    "updated_at": "2026-10-09T13:18:59.185981+00:00"
+  },
+  "matched_issues": [
+    {
+      "id": "30f373bd-be4e-4464-830e-f425769a3383",
+      "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+      "title": "Gearbox Oil Overheating",
+      "category": "Lubrication",
+      "symptoms": "High oil temperature, vibration increase",
+      "possible_cause": "Poor lubrication, cooling failure",
+      "possible_cause_confirmed": false,
+      "description": "Unstable Material Feeding: Irregular feeding causes fluctuations in torque, pressure, and production throughput.",
+      "created_at": "2026-10-09T13:21:18.277574+00:00",
+      "updated_at": "2026-10-09T13:23:30.456429+00:00",
+      "scores": {
+        "rrf_score": 0.01639344262295082,
+        "vector_similarity": 0.5728777647018433,
+        "keyword_rank": null
+      }
+    },
+    {
+      "id": "a70e26d2-755f-4003-8ca3-306cc064fb96",
+      "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+      "title": "Excessive Gearbox Vibration",
+      "category": "Mechanical",
+      "symptoms": "High vibration, unusual noise",
+      "possible_cause": "Bearing wear, misalignment, lubrication problems",
+      "possible_cause_confirmed": false,
+      "description": "Barrel Temperature Instability: Fluctuating barrel temperatures may indicate problems with heaters, cooling systems, or temperature sensors.",
+      "created_at": "2026-10-09T13:19:51.790618+00:00",
+      "updated_at": "2026-10-09T13:23:04.113115+00:00",
+      "scores": {
+        "rrf_score": 0.016129032258064516,
+        "vector_similarity": 0.5156025886535645,
+        "keyword_rank": null
+      }
+    },
+    {
+      "id": "a39b313f-c2fd-4173-b119-0bc2eb12290f",
+      "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+      "title": "Excessive Screw Torque",
+      "category": "Mechanical / Process",
+      "symptoms": "High torque, motor overload",
+      "possible_cause": "Material blockage, excessive material resistance",
+      "possible_cause_confirmed": false,
+      "description": "Gearbox Oil Overheating: Increasing oil temperature may indicate lubrication or cooling problems, especially when accompanied by abnormal vibration.",
+      "created_at": "2026-10-09T13:20:11.463281+00:00",
+      "updated_at": "2026-10-09T13:23:20.106532+00:00",
+      "scores": {
+        "rrf_score": 0.015873015873015872,
+        "vector_similarity": 0.42922505314499526,
+        "keyword_rank": null
+      }
+    },
+    {
+      "id": "1fc706e1-af1f-4171-b75a-e791cc82da0b",
+      "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+      "title": "Bearing Deterioration",
+      "category": "Mechanical",
+      "symptoms": "Increasing vibration, abnormal frequency components",
+      "possible_cause": "Bearing fatigue, contamination, poor lubrication",
+      "possible_cause_confirmed": false,
+      "description": "Excessive Screw Torque: High torque may result from increased material resistance or mechanical loading. Examine feed rate, melt pressure, and screw speed.",
+      "created_at": "2026-10-09T13:22:26.158846+00:00",
+      "updated_at": "2026-10-09T13:22:57.775111+00:00",
+      "scores": {
+        "rrf_score": 0.015625,
+        "vector_similarity": 0.39767783880233765,
+        "keyword_rank": null
+      }
+    },
+    {
+      "id": "266b2cda-b00d-4a20-a650-9dc19caa32f9",
+      "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+      "title": "Barrel Temperature Instability",
+      "category": "Thermal",
+      "symptoms": "Temperature fluctuations, heating alarms",
+      "possible_cause": "Heater failure, thermocouple issues, cooling problems",
+      "possible_cause_confirmed": false,
+      "description": "Excessive Gearbox Vibration: Abnormal gearbox vibration may indicate developing mechanical problems. Analyze vibration trends alongside screw speed, torque, and oil temperature.",
+      "created_at": "2026-10-09T13:20:33.238898+00:00",
+      "updated_at": "2026-10-09T13:22:50.951765+00:00",
+      "scores": {
+        "rrf_score": 0.015384615384615385,
+        "vector_similarity": 0.36831945180892944,
+        "keyword_rank": null
+      }
+    },
+    {
+      "id": "707c1c7d-1240-4b11-a028-d85e1c082467",
+      "device_id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+      "title": "Unstable Material Feeding",
+      "category": "Feeding",
+      "symptoms": "Feed-rate fluctuations, unstable torque",
+      "possible_cause": "Feeder blockage, material bridging",
+      "possible_cause_confirmed": false,
+      "description": "Bearing Deterioration: Changes in bearing-related vibration frequencies may indicate developing bearing damage. Confirm through appropriate vibration analysis and inspection.",
+      "created_at": "2026-10-09T13:21:43.961031+00:00",
+      "updated_at": "2026-10-09T13:23:46.902689+00:00",
+      "scores": {
+        "rrf_score": 0.015151515151515152,
+        "vector_similarity": 0.3029368312042009,
+        "keyword_rank": null
+      }
+    }
+  ],
+  "results": [
+    {
+      "chunk_id": "a6d1ed64-14f7-46fd-b54f-7172a978f476",
+      "document_id": "72254dd8-9394-4516-8f77-3edaaa8f8534",
+      "document_title": "ZSK Condition Monitoring Extruder Brochure",
+      "document_version": "1",
+      "content": "With the aid of sensors on the motor, gearbox and process section, this system continuously\nmonitors vibrations in the extruder and the gearbox's oil condition. The first anomalies in\noperation are detected early. Within a service agreement, Coperion remotely assumes\nmonitoring and evaluation of the captured data and provides recommendations for action,\nallowing service measures to be conducted proactively and minimizing unplanned downtimes.",
+      "section_heading": null,
+      "section_path": null,
+      "page_number": 3,
+      "chunk_index": 8,
+      "metadata": {
+        "embedding": {
+          "model": "sentence-transformers/all-MiniLM-L6-v2",
+          "revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+          "dimension": 384,
+          "normalized": true
+        },
+        "page_numbers": [
+          3
+        ],
+        "chunking_method": "semantic_within_section",
+        "document_version": "1",
+        "forced_token_split": true,
+        "protected_procedure": false
+      },
+      "matched_issue_ids": [],
+      "evidence_types": {},
+      "scores": {
+        "document_vector": 0.575687050819397,
+        "issue_document_vector": 0.575687050819397,
+        "rrf_score": 0.03278688524590164
+      },
+      "methods": [
+        "document_vector",
+        "issue_document_vector"
+      ],
+      "score": 0.03278688524590164,
+      "retrieval_method": "hybrid_rrf",
+      "devices": [
+        {
+          "id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+          "name": "ZSK Twin-Screw Extrusion Line 01",
+          "model": "ZSK 58",
+          "manufacturer": "Coperion GmbH",
+          "description": "Co-rotating twin-screw extrusion line for polymer compounding and processing. Includes a drive motor, gearbox, twin screws, barrel heating/cooling zones, feeding system, and downstream equipment.",
+          "metadata": {
+            "machine_id": "ZSK-001",
+            "application": "Polymer Compounding",
+            "data_source": "Synthetic",
+            "machine_type": "Twin-Screw Extruder",
+            "dataset_records": 1000,
+            "production_line": "Line 01",
+            "maintenance_strategy": "Condition-Based Maintenance",
+            "monitored_parameters": [
+              "screw_speed",
+              "screw_torque",
+              "motor_current",
+              "motor_power",
+              "gearbox_vibration",
+              "oil_temperature",
+              "barrel_temperature",
+              "melt_temperature",
+              "melt_pressure",
+              "feed_rate"
+            ]
+          },
+          "created_at": "2026-10-09T13:18:59.185981+00:00",
+          "updated_at": "2026-10-09T13:18:59.185981+00:00"
+        }
+      ]
+    },
+    {
+      "chunk_id": "fa9aeedf-4317-4bd5-8adb-084ce84a406c",
+      "document_id": "3353099c-8952-4602-918d-e0f45a988cec",
+      "document_title": "ZSK Twin-Screw Extruder Brochure",
+      "document_version": "1",
+      "content": "o i d                    p ote nt i a l\n         O u r a c t ive sta r t- u p a s s i sta n ce a n d r a p i d exp e r t s u p p o r t a re t h e                 damage, and significantly improves planning capability for\n         ideal solution for efficient production with reliable quality control.                                           m a i nte n a n ce ta s ks . Th e ex t re m e ly re l i a b l e a n d yet            af fo rd a b l e\n                                                                                                                          VibeTrack system focuses on vibrations and gear oil  condition.\n                                                                                                                          Coperion provides a condition monitoring service  agreement to\n                                                                                                                          e ns u re t h e q u a l i f i e d a n a lys i s of t h e co l l e c te d d ata .",
+      "section_heading": "US 8,360,627 B2",
+      "section_path": "US 8,360,627 B2",
+      "page_number": 28,
+      "chunk_index": 104,
+      "metadata": {
+        "embedding": {
+          "model": "sentence-transformers/all-MiniLM-L6-v2",
+          "revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+          "dimension": 384,
+          "normalized": true
+        },
+        "page_numbers": [
+          28
+        ],
+        "chunking_method": "semantic_within_section",
+        "document_version": "1",
+        "forced_token_split": true,
+        "protected_procedure": false
+      },
+      "matched_issue_ids": [],
+      "evidence_types": {},
+      "scores": {
+        "document_vector": 0.4981096386909485,
+        "issue_document_vector": 0.4981096386909485,
+        "rrf_score": 0.03225806451612903
+      },
+      "methods": [
+        "document_vector",
+        "issue_document_vector"
+      ],
+      "score": 0.03225806451612903,
+      "retrieval_method": "hybrid_rrf",
+      "devices": [
+        {
+          "id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+          "name": "ZSK Twin-Screw Extrusion Line 01",
+          "model": "ZSK 58",
+          "manufacturer": "Coperion GmbH",
+          "description": "Co-rotating twin-screw extrusion line for polymer compounding and processing. Includes a drive motor, gearbox, twin screws, barrel heating/cooling zones, feeding system, and downstream equipment.",
+          "metadata": {
+            "machine_id": "ZSK-001",
+            "application": "Polymer Compounding",
+            "data_source": "Synthetic",
+            "machine_type": "Twin-Screw Extruder",
+            "dataset_records": 1000,
+            "production_line": "Line 01",
+            "maintenance_strategy": "Condition-Based Maintenance",
+            "monitored_parameters": [
+              "screw_speed",
+              "screw_torque",
+              "motor_current",
+              "motor_power",
+              "gearbox_vibration",
+              "oil_temperature",
+              "barrel_temperature",
+              "melt_temperature",
+              "melt_pressure",
+              "feed_rate"
+            ]
+          },
+          "created_at": "2026-10-09T13:18:59.185981+00:00",
+          "updated_at": "2026-10-09T13:18:59.185981+00:00"
+        }
+      ]
+    },
+    {
+      "chunk_id": "27e1e777-6e6b-4d07-a0a8-d9a90c69707c",
+      "document_id": "72254dd8-9394-4516-8f77-3edaaa8f8534",
+      "document_title": "ZSK Condition Monitoring Extruder Brochure",
+      "document_version": "1",
+      "content": "September 2025\n\nServicing and maintenance work can be easily bundled using the Lifecycle Manager and\nscheduled proactively to minimize the impact on the Coperion extruders\u2019 high productivity.\nFollowing successful execution, any service measure is documented in C-BEYOND and is\nviewable at any time, along with a report. Thus, for every equipment, an extensive maintenance\nhistory is generated over the years of a machine's life.\n\nThe Lifecycle Manager has already proven itself in practice on several pilot machines. Coperion\ncustomers have been able to improve their machines\u2019 OEE significantly with this new tool.\n\nCondition Monitoring: Real-time operating condition of ZSK extruders\n\nCoperion is exhibiting its new extruder condition monitoring system at K on the ZSK 58 Mc18.",
+      "section_heading": null,
+      "section_path": null,
+      "page_number": 3,
+      "chunk_index": 7,
+      "metadata": {
+        "embedding": {
+          "model": "sentence-transformers/all-MiniLM-L6-v2",
+          "revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+          "dimension": 384,
+          "normalized": true
+        },
+        "page_numbers": [
+          3
+        ],
+        "chunking_method": "semantic_within_section",
+        "document_version": "1",
+        "forced_token_split": true,
+        "protected_procedure": false
+      },
+      "matched_issue_ids": [],
+      "evidence_types": {},
+      "scores": {
+        "document_vector": 0.4393846392631531,
+        "issue_document_vector": 0.4393846392631531,
+        "rrf_score": 0.031746031746031744
+      },
+      "methods": [
+        "document_vector",
+        "issue_document_vector"
+      ],
+      "score": 0.031746031746031744,
+      "retrieval_method": "hybrid_rrf",
+      "devices": [
+        {
+          "id": "a8fb74f5-1fd3-422f-ad9a-0a3be41f7f15",
+          "name": "ZSK Twin-Screw Extrusion Line 01",
+          "model": "ZSK 58",
+          "manufacturer": "Coperion GmbH",
+          "description": "Co-rotating twin-screw extrusion line for polymer compounding and processing. Includes a drive motor, gearbox, twin screws, barrel heating/cooling zones, feeding system, and downstream equipment.",
+          "metadata": {
+            "machine_id": "ZSK-001",
+            "application": "Polymer Compounding",
+            "data_source": "Synthetic",
+            "machine_type": "Twin-Screw Extruder",
+            "dataset_records": 1000,
+            "production_line": "Line 01",
+            "maintenance_strategy": "Condition-Based Maintenance",
+            "monitored_parameters": [
+              "screw_speed",
+              "screw_torque",
+              "motor_current",
+              "motor_power",
+              "gearbox_vibration",
+              "oil_temperature",
+              "barrel_temperature",
+              "melt_temperature",
+              "melt_pressure",
+              "feed_rate"
+            ]
+          },
+          "created_at": "2026-10-09T13:18:59.185981+00:00",
+          "updated_at": "2026-10-09T13:18:59.185981+00:00"
+        }
+      ]
+    }
+  ],
+  "score_semantics": "Ranking scores, not confidence probabilities",
+  "embedding": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+    "dimension": 384,
+    "normalized": true
+  }
+}

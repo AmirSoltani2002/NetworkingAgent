@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.65cm and 1cm]
+\node[box](chat){Conversation memory\\messages / attachment bytes};\node[box,right=of chat](state){Execution state\\ledger / approvals / criteria};\node[box,right=of state](know){External knowledge\\RAG docs / chunks};
+\node[dark,below=of state](context){Working model context\\window / deltas / summaries};
+\draw[arr](chat)--(context);\draw[arr](state)--(context);\draw[arr](know)--node[lab,right]{permitted retrieval}(context);\node[font=\sffamily\small,below=.4cm of context]{Exact evidence remains in task-owned storage};\end{tikzpicture}

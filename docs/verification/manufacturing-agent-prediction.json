@@ -1,0 +1,26 @@
+{
+  "scenario": "prediction",
+  "chat_id": "34a7cd08-4606-48b2-9f29-4d29b59c80e3",
+  "prompt": "Classify this product: temperature 82.5, pressure 5.8, vibration 0.65, production speed 130, humidity 48, material quality 0.74.",
+  "reply": "**Classification: Defective**\n\n- Probability defective: **94.94%**\n- Probability good: **5.06%**\n- Model version: `v-e938f054-3991-4d50-b4ae-c3eda355964b`\n\nThis is a prediction from a synthetic manufacturing quality model, not a real-world safety assessment.",
+  "tool_calls": [
+    {
+      "tool": "predict_product_quality",
+      "result": {
+        "model_version": "v-e938f054-3991-4d50-b4ae-c3eda355964b",
+        "classification": "Defective",
+        "predicted_label": 0,
+        "probability_good": 0.050630973559470216,
+        "probability_defective": 0.9493690264405298
+      },
+      "sources": [],
+      "success": true,
+      "serverId": "d2a6fbad-b48c-4584-92a5-276c8890b705",
+      "durationMs": 68
+    }
+  ],
+  "training_jobs_before": 1,
+  "training_jobs_after": 1,
+  "confirmation_restored_after_reload": false,
+  "browser_errors": 0
+}

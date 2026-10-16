@@ -1,0 +1,19 @@
+\chapter{Problem and Motivation}
+\partlabel{PART I --- INTRODUCTION AND ARCHITECTURE}
+\section{The engineering problem}
+An LLM API can propose an action or produce text, but an API response does not itself provide durable progress, access to manufacturing records, safe tool execution, or proof that an operation finished. A network failure can leave a model-training request with an uncertain outcome. A long conversation can exceed its working context. A fluent final message can describe work that no service actually performed.
+
+Meta-Harness addresses these problems around a saved OpenAI model. It provides a familiar chat interface, a generic MCP registry, external RAG management and a PostgreSQL-backed task worker. The operator connects services and chooses permitted tools; the model chooses useful actions within that configured boundary. The backend controls execution and checks stored evidence.
+\section{LLM, agent and harness}
+\begin{description}
+\item[LLM] The selected language model: interpretation, planning, tool selection and response generation through the OpenAI Responses API.
+\item[Agent] The model operating in an iterative action/observation process, with tools and a goal. This application already supports that process; adding a second reasoning model is unnecessary.
+\item[Harness] The surrounding runtime: context construction, tool binding, permissions, persistence, recovery, budgets, observability and completion checks.
+\end{description}
+The consulted harness-engineering study treats the runtime surrounding a model as the object of engineering. Its subsystem view and discussion of loops, context, permissions and observability provide a useful lens for this project~\cite{harness2026}. Meta-Harness applies that lens to configured external services, rather than unrestricted repository coding.
+\section{Heterogeneous manufacturing services}
+A manufacturing question can require structured measurements, an existing classifier, device records and manual passages. These live in different systems. MCP standardizes tool discovery and invocation; it does not make their schemas or business meanings identical. The harness therefore retains server identity, input schemas and result provenance rather than introducing manufacturing-specific routing into core.
+
+The demonstration is deliberately synthetic. Classifying stored products is useful for exercising the pipeline, but it does not diagnose a named CNC machine. Device identity and troubleshooting evidence belong to the separate RAG service. Core must not merge a synthetic machine code with a real device without evidence.
+\note{Scope of this manual}{\status{IMPLEMENTED}: local chat, generic MCP, durable tasks, schedules, RAG and classifier inference. \status{PARTIAL}: model-proposed criteria and summary fidelity. \status{PLANNED}: operator-designed ordered workflows and external answer validators. Event triggers are removed; retraining is unavailable in the current manufacturing code.}
+\source{\path{core/src/llm/llm.service.ts}: \texttt{respond()}, \texttt{taskDecision()}; \path{core/src/tasks/task-worker.ts}: \texttt{run()}; \path{docs/ROADMAP.md}.}

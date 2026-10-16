@@ -1,0 +1,14 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[dark,text width=3.6cm](propose) at (2,0) {1. LLM proposes\\the next step};
+\node[box,text width=3.6cm](gate) at (7.8,0) {2. Core checks\\format + permission};
+\node[box,text width=3.6cm](act) at (13.6,0) {3. Record request\\then call tool};
+\node[box,text width=3.6cm](observe) at (13.6,-2) {4. Save result\\and observe status};
+\node[box,text width=3.6cm](verify) at (7.8,-2) {5. Evaluate required\\completion evidence};
+\node[dark,text width=3.6cm](next) at (2,-2) {Continue, finish\\or pause};
+\draw[arr](propose)--(gate);
+\draw[arr](gate)--(act);
+\draw[arr](act)--(observe);
+\draw[arr](observe)--(verify);
+\draw[arr](verify)--(next);
+\draw[arr](next.west)--++(-.45,0)|-(propose.west);
+\end{tikzpicture}

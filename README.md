@@ -1,45 +1,62 @@
 # Local Meta-Harness
 
-A local operator control plane for composing allowlisted MCP tools, an analyzer profile, optional RAG retrieval, and an optional validator. ML, RAG, and validator capabilities remain external MCP services.
+A local Meta-Harness chat application with a generic MCP registry and an optional standalone manufacturing ML demonstration.
 
-See the [User Guide](docs/USER_GUIDE.md) for configuration and workflow instructions.
+**Current:** saved conversations, OpenAI responses, external RAG management, and configurable MCP connections with discovered, operator-allowed tools. Read-only tools can run directly; other chat tools require per-invocation user confirmation. Persistent tasks add backend continuation, verification, retries, schedules, and TASKS management. The frontend uses React, TypeScript, Vite, Tailwind CSS, and shadcn/ui; the backend uses NestJS and TypeScript.
 
-## Start locally
+## Start the local stack
 
-Requirements: Docker Engine and the Docker Compose plugin.
+Requires Docker Engine and Docker Compose. The root ignored .env must contain DB_PASSWORD. If no .env exists, copy [.env.example](.env.example) and set the password locally before startup; preserve existing entries and the password of an initialized database volume. Native core also loads this same file.
 
-```sh
-docker compose up --build
-```
+From the repository root:
 
-Open [http://localhost:8080](http://localhost:8080). The core API is available at `http://localhost:8000`; local configuration and run history persist in the `meta-harness-data` Docker volume.
+~~~sh
+docker compose up --build -d --wait
+~~~
 
-To call an OpenAI-compatible analyzer, set `ANALYZER_API_KEY` in the shell or a local `.env` file before starting Compose. You can also set `ANALYZER_BASE_URL` for a compatible API endpoint. Analyzer profiles store model/configuration only. For MCP credentials, add their environment variables to `.env`; in the registry, enter the variable name as the secret reference. If an MCP server runs directly on the host, use `host.docker.internal` in its endpoint URL.
+Open [the UI](http://localhost:8080). The API is available on [port 8000](http://localhost:8000/api/health). PostgreSQL stays inside the Compose network; its data uses the persistent message-data volume.
 
-Stop the services with `docker compose down`. To remove locally persisted configuration too, remove the `meta-harness-data` volume explicitly.
+Use **New chat**, type a message or attach files with **+**, then press **Send**. Saved titles appear under **Chats**; click its heading or chevron to collapse/expand the list. Enter sends; Shift+Enter inserts a newline. File cards in saved messages download the attachment.
 
-## Configure and run
+## Documentation
 
-1. In **MCP Registry**, register external MCP endpoint URLs, test connections, discover tools, and explicitly allowlist the tools that may run.
-2. In **Workflow Builder**, create ordered ML steps, select allowlisted tools, name outputs, and map every tool argument to the operator prompt, static input, run metadata, or a prior step output.
-3. In **Knowledge / RAG**, configure a RAG profile and add document location metadata. The app does not transfer, chunk, embed, or index document contents. An ingestion tool is called only when explicitly requested.
-4. In **Analyzer & Validator**, configure an OpenAI-compatible analyzer profile and optional validator profile. The core reads the analyzer key from `ANALYZER_API_KEY` or the selected environment variable name.
-5. In **Operator Console**, select workflow/analyzer/validator, enter a prompt, and run. Inspect evidence, step outputs, errors, timing, and validator output. **Run History** reopens recorded traces.
+| File | Purpose |
+| --- | --- |
+| [AGENTS.md](AGENTS.md) | Engineering instructions and fixed product boundary |
+| [Project map](docs/PROJECT_MAP.md) | Purpose of every maintained file |
+| [Architecture](docs/LOCAL_ARCHITECTURE.md) | Current frameworks, modules, service flow, images, and ports |
+| [Operations](docs/OPERATIONS.md) | Docker/native startup, environment settings, logs, and persistence |
+| [UI specification](docs/UI_SPEC.md) | Current appearance, controls, and responsive behavior |
+| [Data models](docs/DATA_MODELS.md) | PostgreSQL tables and storage rules |
+| [API specification](docs/API_SPEC.md) | Implemented routes, requests, responses, and errors |
+| [Implementation decisions](docs/IMPLEMENTATION_DECISIONS.md) | Current structural choices and their reasons |
+| [Acceptance checks](docs/ACCEPTANCE_TESTS.md) | Recorded validation and current coverage gaps |
+| [Roadmap](docs/ROADMAP.md) | Future work and product boundary |
+| [MCP contracts](docs/MCP_CONTRACTS.md) | MCP registration, permissions, confirmation, and tool-call behavior |
+| [Manufacturing demo](manufacturing-demo/README.md) | Independent synthetic-data ML service, Docker, REST, MCP, and tests |
 
-The included tests use in-process fake MCP and analyzer HTTP endpoints as test doubles; no domain services or mock production servers are shipped.
+Expand **LLM** in the sidebar to configure OpenAI. Expand **MCP** to register servers, discover tools, and choose permissions. Server credentials stay in root `.env`; only environment-variable references are stored in MCP profiles. The optional [manufacturing demo](manufacturing-demo/README.md) exposes a seeded synthetic classifier and MCP service on port 8100. The separately deployed RAG service remains an external retrieval system.
 
-For a manual UI walkthrough when external services are unavailable, start `python3 tests/mock_services.py` in another terminal. Register `http://host.docker.internal:9000/mcp` in MCP Registry (you can use it for ML, RAG, and Validator categories), then discover and explicitly allowlist `enrich_summary`, `search_documents`, `validate_candidate`, and optionally `register_document` as appropriate. Set the analyzer profile's base URL to `http://host.docker.internal:9001/v1` and any model identifier (for example `demo-model`). These fixtures return labeled demo outputs and are not application services.
+## Standalone RAG and MCP configuration
 
-## Development and verification
+[rag-server/README.md](rag-server/README.md) owns the complete independent FastAPI/PostgreSQL+pgvector service, local models, six-table schema, REST/MCP APIs, Docker startup, sample uploads and pytest instructions. It has no frontend or answer generation. REST/OpenAPI runs at [localhost:8090/docs](http://localhost:8090/docs). Secrets are `RAG_DB_PASSWORD` and `RAG_API_KEY` in root `.env`; preserve other entries.
 
-The core uses Python's standard library and needs no package installation. Run the automated suite with:
+To bridge the two local stacks, create the `meta-harness-mcp` Docker network once, start core using `docker compose -f docker-compose.yml -f docker-compose.mcp.yml up -d --build`, and start RAG from its directory with `docker compose --env-file ../.env -f docker-compose.yml -f docker-compose.meta-harness.yml up -d --build`.
 
-```sh
-python3 -m unittest discover -s tests -v
-```
+In **RAG → Connection**, select **Local RAG** (or create a profile), enter **MCP http://rag-api:8090/mcp** and **REST http://rag-api:8090**, and choose authentication. The existing RAG_API_KEY reference is retained; new tokens are entered once and saved server-side in root .env. **Save Connection**, **Test Connection**, select the discovered read-only retrieval tools, enable their use in chat, then **Save tool permissions**. Open Devices/Known Issues/Documents/Knowledge Search to manage external knowledge. **Back to chat** restores your draft. The saved model decides when retrieval is useful. See [operations](docs/OPERATIONS.md) for credential/network details.
 
-Check Python syntax with `python3 -m py_compile core/server.py tests/test_core.py`. The UI is plain HTML/CSS/JavaScript and is served by Nginx in Compose.
+UI/core checks: `npm test`; optional real PostgreSQL checks use CORE_TEST_DATABASE_URL as described in operations. Standalone tests run with its dedicated Docker test Compose file; see its README.
 
-## Local boundaries
+## Persistent tasks
 
-No cloud infrastructure or domain-specific ML, RAG, validator, or BGP implementation is included. The MCP client uses JSON-RPC over streamable HTTP and captures failures in the run trace. Runs stop on an ML or RAG failure. A validator failure is traced separately and does not replace the analyzer answer. The analyzer currently supports the OpenAI-compatible Chat Completions API.
+Select **Run as task** in chat, or open **TASKS → Active Tasks → New task**. Core continues independently of the browser and recovers unfinished tasks after restart. Review pending actions and real verification evidence in Task details. Task requests remain in chat with live outcomes and a link to details. Configure schedules in the sidebar; event triggers are temporarily removed. See [task execution](docs/TASK_EXECUTION.md) for configuration, APIs, safety boundaries, migration and test instructions.
+
+### Active manufacturing service: ZSK
+
+The previous manufacturing example has been replaced at runtime by [ZSK condition monitoring](zsk-service/README.md), using the supplied RandomForest model and timestamped synthetic data. It reuses the manufacturing database, trains on labeled data, then removes those rows and serves unlabeled measurements/predictions. Host port 8100 and existing generic MCP UI are retained. Old manufacturing-demo startup instructions are historical; use the ZSK README.
+
+## Autonomous factory simulation
+
+The optional **FACTORY** section at `http://127.0.0.1:8080` provides an original animated 2D ZSK-style extrusion line, real persisted synthetic sensors, current/future ML monitoring, alarms, automatically triggered persistent investigations, RAG evidence and authorized simulation-only MCP actions. Factory backend is loopback 8110; existing application ports/layout remain unchanged. No physical equipment control exists.
+
+See [factory-service/README.md](factory-service/README.md) for complete startup, MCP registration, speed/fault/permission configuration, automatic demonstration and isolated tests. [FACTORY_ARCHITECTURE.md](docs/FACTORY_ARCHITECTURE.md) explains source mechanisms and limitations. Screenshots/model/recovery/live-run evidence live in `docs/verification/factory/`. All measurements and model performance remain synthetic proofs of concept.

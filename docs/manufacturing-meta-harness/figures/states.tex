@@ -1,0 +1,5 @@
+\begin{tikzpicture}[node distance=.65cm and .8cm]
+\node[box,text width=2.4cm](pending){PENDING};\node[dark,text width=2.4cm,right=of pending](run){RUNNING};\node[box,text width=2.4cm,right=of run](done){COMPLETED};
+\node[box,text width=2.4cm,below=of pending](retry){RETRYING};\node[box,text width=2.4cm,below=of run](approval){WAITING\\APPROVAL};\node[box,text width=2.4cm,below=of done](pause){PAUSED};
+\node[box,text width=2.4cm,below=of retry](fail){FAILED};\node[box,text width=2.4cm,below=of approval](cancel){CANCELLED};
+\draw[arr](pending)--(run);\draw[arr](run)--node[lab,above]{checks pass}(done);\draw[arr](run)--(approval);\draw[arr](run)--(retry);\draw[arr](run)--(pause);\draw[arr](retry)--(pending);\draw[arr](retry)--(fail);\draw[arr](approval.west)--(pending.south east);\draw[arr](pause.north)to[bend right=45](pending.north);\draw[arr](run.south east)--(cancel.north east);\end{tikzpicture}

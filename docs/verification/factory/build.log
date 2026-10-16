@@ -1,0 +1,28 @@
+
+> local-meta-harness@0.1.0 build
+> npm run build --workspaces
+
+
+> @meta-harness/ui@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 155 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                             0.45 kB │ gzip:   0.28 kB
+dist/assets/index-DWXPnXOh.css             36.46 kB │ gzip:   8.35 kB
+dist/assets/index-CBa0fVlu.js             415.02 kB │ gzip: 127.82 kB
+dist/assets/factory-canvas-DpPTh-Q5.js  1,204.85 kB │ gzip: 322.35 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 789ms
+
+> @meta-harness/core@0.1.0 build
+> nest build
+

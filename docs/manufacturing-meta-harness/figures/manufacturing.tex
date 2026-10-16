@@ -1,0 +1,5 @@
+\begin{tikzpicture}[node distance=.65cm]
+\node[box,text width=2cm](motor){Main motor\\current / power};\node[box,text width=2cm,right=of motor](gear){Gearbox\\vibration / oil};\node[box,text width=4.5cm,right=of gear](screws){Twin screws inside barrel\\speed / torque / temperature};\node[box,text width=2cm,right=of screws](melt){Melt outlet\\pressure / temp};
+\node[box,text width=2.5cm,above=.7cm of screws](feed){Material feeder\\mass flow / recipe};\node[box,text width=3cm,below=.7cm of screws](zones){Heating and cooling zones\\one stored barrel signal};
+\draw[arr](motor)--(gear);\draw[arr](gear)--(screws);\draw[arr](screws)--(melt);\draw[arr](feed)--(screws);\draw[arr](zones)--(screws);
+\end{tikzpicture}

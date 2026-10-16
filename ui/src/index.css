@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: #000;
+  --foreground: #ededed;
+  --primary: #2c67c5;
+  --primary-foreground: #eee;
+  --secondary: #242424;
+  --secondary-foreground: #ededed;
+  --muted: #1b1b1b;
+  --muted-foreground: #aaa;
+  --accent: #242424;
+  --accent-foreground: #eee;
+  --destructive: #dc2626;
+  --border: #262626;
+  --input: #3b3b3b;
+  --ring: #7da9ed;
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}

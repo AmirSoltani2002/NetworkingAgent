@@ -1,0 +1,17 @@
+\section{Retrieval, attribution and actual document corpus}
+\texttt{LocalEmbeddings} uses pinned \texttt{all-MiniLM-L6-v2}, 384-dimensional normalized local vectors, CPU by default and a 220-token chunk bound. Model revision/dimension/normalization form a persisted embedding contract. Queries use the model's query-embedding method. No OpenAI embedding key is required; initial model acquisition can require network access.
+
+\texttt{RetrievalService.search()} resolves the device deterministically, rejecting conflicting/ambiguous filters. It searches issues by cosine similarity and PostgreSQL English full-text ranking, and retrieves ready document chunks through four streams: direct vector, direct keyword, explicit issue evidence, and documents associated with matched issues' devices. Reciprocal-rank fusion uses
+\[\operatorname{RRF}(d)=\sum_{r\in\mathcal{R}}\frac{1}{60+\operatorname{rank}_{r}(d)}.\]
+Defaults are 50 candidates, passage similarity threshold 0.2, issue threshold 0.3 and top 10 passages. Optional pinned local cross-encoder reranking exists but is disabled by default. Scores express ranking, not diagnostic confidence.
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}p{.47\linewidth}rX@{}}\toprule
+Live document title & Chunks & Source role\\\midrule
+ZSK Twin-Screw Extruder Brochure & 160 & Official Coperion 2025-08 product publication\\
+ZSK Condition Monitoring Extruder Brochure & 17 & Local title for a September 2025 ZSK/STS press release\\
+Extruder Modernization and Service & 26 & Official service/modernization brochure\\\bottomrule
+\end{tabularx}\par\smallskip
+The catalog's ``Condition Monitoring'' title does not turn a press release into a diagnostic manual. Original URL, filename/hash, document UUID/version, page number, heading/path, chunk UUID/order and exact text must travel with evidence. PDF extraction in the main brochure sometimes yields spaced words and misleading headings; a page reference can remain useful even when the inferred heading is poor.
+\section{Read-only check executed for this report}
+A real REST search scoped to the ZSK 58 catalog entry returned three passages for ``gearbox vibration oil condition monitoring maintenance''. The top passage was the September 2025 publication, page 3, chunk \texttt{a6d1ed64-14f7-46fd-b54f-7172a978f476}; another came from the main brochure, page 28. The full response is in \path{evidence/rag-readonly-search.json}. This verifies retrieval on existing data, not an agent's successful maintenance diagnosis. The source publications discuss condition monitoring and service support; they do not supply validated thresholds for this synthetic dataset~\cite{coperion2025,coperionbrochure,coperionservice}.
+\verdict{Hybrid retrieval and explicit source identities make external knowledge inspectable. Sparse curated links, extraction artifacts and brochure-level evidence limit diagnostic specificity. An ingested document's official provenance does not make every retrieved interpretation correct.}
+\source{\path{rag-server/rag/retrieval.py}: \texttt{resolve\_device()}, \texttt{document\_scope()}, \texttt{search()}, \texttt{rrf()}; \path{rag-server/rag/embeddings.py}; \path{rag-server/rag/config.py}.}

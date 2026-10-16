@@ -1,0 +1,10 @@
+# Optional connection to external local MCP containers. Create the network first.
+services:
+  core:
+    networks:
+      - default
+      - mcp
+networks:
+  mcp:
+    external: true
+    name: meta-harness-mcp

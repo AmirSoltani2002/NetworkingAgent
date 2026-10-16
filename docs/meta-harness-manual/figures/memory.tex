@@ -1,0 +1,12 @@
+\begin{tikzpicture}[scale=.95,transform shape]
+\node[darkbox,text width=4cm] (root) at (0,5.4) {META-HARNESS};
+\node[box] (conv) at (-4,3.7) {Conversation history\\messages + attachments};
+\node[box] (task) at (0,3.7) {Task state\\checkpoints + operations};
+\node[box] (rag) at (4,3.7) {External knowledge\\devices + document chunks};
+\node[box] (working) at (0,1.9) {Private working context\\delta / memo / compaction};
+\node[darkbox,text width=6.8cm] (pg) at (-2,.2) {Core PostgreSQL\\transcript + private windows + task ledgers};
+\node[darkbox] (rpg) at (4,.2) {External RAG\\pgvector + original files};
+\draw[arr] (root)--(conv);\draw[arr] (root)--(task);\draw[arr] (root)--(rag);
+\draw[arr] (conv)--(pg);\draw[arr] (task)--(working);\draw[arr] (working)--(pg);\draw[arr] (rag)--(rpg);
+\draw[arr,dashed] (rag.west) -- node[lab,above]{MCP evidence} (working.east);
+\end{tikzpicture}

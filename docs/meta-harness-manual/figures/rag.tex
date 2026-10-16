@@ -1,0 +1,11 @@
+\begin{tikzpicture}[scale=.92,transform shape]
+\node[box] (upload) at (-4,4.1) {Upload REST\\PDF / TXT / Markdown};
+\node[box] (worker) at (0,4.1) {Ingestion worker\\extract / structure / split};
+\node[box] (embed) at (4,4.1) {Local embeddings\\pinned model + cache};
+\node[darkbox,text width=6.4cm] (db) at (0,2) {RAG PostgreSQL + pgvector\\devices / issues / documents / chunks / links};
+\node[box] (files) at (-4,2) {Original files\\persistent volume};
+\node[box] (search) at (4,2) {SQL + vector + FTS\\RRF / optional reranker};
+\node[darkbox] (mcp) at (4,0) {REST + MCP evidence\\references, no answers};
+\node[box] (agent) at (0,0) {Meta-Harness context\\reason over observations};
+\draw[arr] (upload)--(worker);\draw[arr] (worker)--(embed);\draw[arr] (embed)--(db);\draw[arr] (upload)--(files);\draw[arr] (worker)--(db);\draw[arr] (db)--(search);\draw[arr] (search)--(mcp);\draw[arr] (mcp)--(agent);
+\end{tikzpicture}

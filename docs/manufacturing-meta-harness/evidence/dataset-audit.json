@@ -1,0 +1,52 @@
+{
+  "rows_labeled": 1000,
+  "rows_unlabeled": 1000,
+  "first": {
+    "timestamp": "2026-09-01T00:00:00",
+    "machine_id": "ZSK-SIM-01",
+    "recipe": "A",
+    "screw_speed_rpm": "326.67",
+    "screw_torque_pct": "48.48",
+    "motor_current_a": "117.13",
+    "motor_power_kw": "95.49",
+    "gearbox_vibration_rms_mm_s": "1.885",
+    "gearbox_oil_temp_c": "47.27",
+    "barrel_zone_temp_c": "200.59",
+    "melt_temp_c": "204.68",
+    "melt_pressure_bar": "100.64",
+    "feed_rate_kg_h": "464.54",
+    "alarm_active": "0",
+    "fault_type_simulated": "none",
+    "health_label": "1"
+  },
+  "last": {
+    "timestamp": "2026-09-04T11:15:00",
+    "machine_id": "ZSK-SIM-01",
+    "recipe": "C",
+    "screw_speed_rpm": "278.51",
+    "screw_torque_pct": "41.36",
+    "motor_current_a": "117.11",
+    "motor_power_kw": "85.94",
+    "gearbox_vibration_rms_mm_s": "1.593",
+    "gearbox_oil_temp_c": "43.58",
+    "barrel_zone_temp_c": "192.42",
+    "melt_temp_c": "195.09",
+    "melt_pressure_bar": "91.65",
+    "feed_rate_kg_h": "370.37",
+    "alarm_active": "0",
+    "fault_type_simulated": "none",
+    "health_label": "1"
+  },
+  "labels": {
+    "1": 847,
+    "0": 153
+  },
+  "fault_types": {
+    "none": 847,
+    "gearbox_vibration": 62,
+    "flow_obstruction": 50,
+    "cooling_issue": 41
+  },
+  "same_shared_fields": true,
+  "required_empty_cells": 0
+}

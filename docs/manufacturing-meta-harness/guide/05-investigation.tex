@@ -1,0 +1,13 @@
+\page{4 / FOLLOW THE ALARM}{The machine raises a question}
+Now inject gradual gearbox vibration in \textbf{Simulation Settings}. As simulated time advances, the programmed effect changes vibration and oil temperature. The worker stores readings and periodically sends them to the ML service. A Faulty classification, or a future-onset score at or above the configured threshold, can create an alarm. Fault injection itself is not an ML alarm.
+\diagram{investigation}{The actual automatic path. The simulator owns measurements and alarm delivery; the existing core task engine owns AI execution. The browser watches this path rather than running it.}
+
+The backend assigns the alarm a \textbf{component hypothesis} using fixed signal checks. The AI then retrieves the records and saved predictions, searches documentation for the configured demonstration asset, and chooses permitted tools. RAG means retrieving relevant passages from stored documents; it is the agent's reference shelf, not a separate diagnosis engine.
+
+The task template requires a completed inspection of the alarm's assigned component. The inspection tool starts a backend action and moves the technician automatically. The agent must check the returned action's status, matching episode, component and alarm, before claiming that inspection is complete. If both its grant and backend policy allow a simulated stop, it can stop the line and verify STOPPED.
+
+\subsection*{What completion proves}
+For the stop demonstration, fixed checks require sensor records, saved ML output, nonempty scoped documentation, a completed matching inspection, STOPPED production and the correct episode. These checks establish recorded software facts. They do not judge whether the cited passage proves a mechanical cause.
+
+\takeaway{The agent's report should separate observations, model results, sources, possible causes, completed actions and uncertainty. A plausible explanation is still a hypothesis.}
+\evidence{Monitoring and alarm path: \path{factory-service/factory/worker.py}. Required task evidence and grants: \path{core/config/task-integrations.json}. The configured RAG asset is an explicit demo mapping, not verified physical machine identity.}

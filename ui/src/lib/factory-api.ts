@@ -1,0 +1,4 @@
+import type {FactoryState,Measurement} from '@/types/factory';
+async function request<T>(path:string,body?:unknown):Promise<T>{const r=await fetch('/api/factory/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});if(!r.ok)throw new Error('Factory connection or action unavailable. Inspect saved state before repeating an action.');return r.json() as Promise<T>;}
+export const factoryApi={state:()=>request<FactoryState>('state'),measurements:()=>request<{items:Measurement[]}>('measurements?limit=50'),action:(kind:string,args:Record<string,unknown>,key=crypto.randomUUID())=>request<{action_id:string;status:string}>('actions',{kind,arguments:args,idempotency_key:key})};
+export function newerSnapshot(current:FactoryState|null,next:FactoryState):FactoryState{return !current||next.version>current.version?next:current;}

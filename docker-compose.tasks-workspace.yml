@@ -1,0 +1,11 @@
+# Optional isolated local task workspace; mkdir -p task-workspace first.
+services:
+  core:
+    environment:
+      TASK_WORKSPACE_ROOT: /workspace
+    volumes:
+      - type: bind
+        source: ./task-workspace
+        target: /workspace
+        bind:
+          create_host_path: false

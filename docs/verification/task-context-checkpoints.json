@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-09",
+  "scope": "Actual authorized CNC retrieval task resumed after deploying incremental context and checkpoint migration; no new automated test suite was run",
+  "taskId": "cff6e036-efd5-407c-9f65-695b6219c6aa",
+  "status": "COMPLETED",
+  "progress": 100,
+  "verification": {"device_match": true, "guidance": true, "issues": true, "sources": true},
+  "continuations": [{"reason": "legacy_context", "continuation": 1}],
+  "lifetimeTokens": 406031,
+  "promptTokensStart": 377366,
+  "currentPromptTokens": 28665,
+  "lifetimeModelAttempts": 9,
+  "privateContextCharacters": 60659,
+  "deliveredOperationVersions": 5,
+  "incrementalSnapshots": [
+    {"includesConversation": true, "includesTools": true, "changedOperationCount": 4},
+    {"includesConversation": false, "includesTools": false, "changedOperationCount": 1}
+  ],
+  "operations": [
+    {"tool": "search_knowledge", "status": "FAILED", "attempts": 1, "historicalRejectedRequest": true},
+    {"tool": "find_device", "status": "SUCCEEDED", "attempts": 1},
+    {"tool": "search_knowledge", "status": "SUCCEEDED", "attempts": 1},
+    {"tool": "get_device_issues", "status": "SUCCEEDED", "attempts": 1},
+    {"tool": "get_document_context", "status": "SUCCEEDED", "attempts": 1},
+    {"kind": "response", "status": "SUCCEEDED", "attempts": 1}
+  ],
+  "migrationApplied": "003_task_context_checkpoints.sql",
+  "apiHealthStatus": 200,
+  "privateContextStateExposed": false,
+  "limitations": [
+    "This run exercised legacy-window summarization and incremental delivery; it did not reach another fresh prompt limit.",
+    "Stored-evidence paging was implemented and compiled but was not selected by the model in this run.",
+    "No new restart/concurrency or 90-percent-window-boundary test was executed for this change."
+  ]
+}

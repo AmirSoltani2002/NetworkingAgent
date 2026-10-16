@@ -1,0 +1,99 @@
+ Network factory-recovery-tests_default  Creating
+ Network factory-recovery-tests_default  Created
+ Volume factory-recovery-tests_recovery-models  Creating
+ Volume factory-recovery-tests_recovery-models  Created
+ Volume factory-recovery-tests_recovery-db  Creating
+ Volume factory-recovery-tests_recovery-db  Created
+ Container factory-recovery-tests-database-1  Creating
+ Container factory-recovery-tests-database-1  Created
+ Container factory-recovery-tests-ml-1  Creating
+ Container factory-recovery-tests-ml-1  Created
+ Container factory-recovery-tests-factory-1  Creating
+ Container factory-recovery-tests-factory-1  Created
+ Container factory-recovery-tests-database-1  Starting
+ Container factory-recovery-tests-database-1  Started
+ Container factory-recovery-tests-database-1  Waiting
+ Container factory-recovery-tests-database-1  Healthy
+ Container factory-recovery-tests-ml-1  Starting
+ Container factory-recovery-tests-ml-1  Started
+ Container factory-recovery-tests-ml-1  Waiting
+ Container factory-recovery-tests-ml-1  Healthy
+ Container factory-recovery-tests-factory-1  Starting
+ Container factory-recovery-tests-factory-1  Started
+ Container factory-recovery-tests-ml-1  Stopping
+ Container factory-recovery-tests-ml-1  Stopped
+ Container factory-recovery-tests-factory-1  Restarting
+ Container factory-recovery-tests-database-1  Restarting
+ Container factory-recovery-tests-database-1  Started
+ Container factory-recovery-tests-factory-1  Started
+ Container factory-recovery-tests-database-1  Waiting
+ Container factory-recovery-tests-database-1  Healthy
+ Container factory-recovery-tests-ml-1  Starting
+ Container factory-recovery-tests-ml-1  Started
+TAP version 13
+# Subtest: real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression
+ok 1 - real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression
+  ---
+  duration_ms: 98.111312
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay
+ok 2 - real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay
+  ---
+  duration_ms: 73.524276
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI
+ok 3 - real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI
+  ---
+  duration_ms: 103.329558
+  type: 'test'
+  ...
+# Subtest: PostgreSQL integration receipt atomically creates one template-bound task under concurrent duplicate delivery
+ok 4 - PostgreSQL integration receipt atomically creates one template-bound task under concurrent duplicate delivery
+  ---
+  duration_ms: 49.224503
+  type: 'test'
+  ...
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"9a88100c-d4f0-4126-b33a-0f9437446a6f","durationMs":34}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"9a88100c-d4f0-4126-b33a-0f9437446a6f","durationMs":14}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"9a88100c-d4f0-4126-b33a-0f9437446a6f","durationMs":20}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"9a88100c-d4f0-4126-b33a-0f9437446a6f","durationMs":17}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"c9428c1b-0be0-4054-b796-83f19c87d169","durationMs":11}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"c9428c1b-0be0-4054-b796-83f19c87d169","durationMs":10}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"3d8df37d-692e-4d2a-8e19-1c283e667b22","durationMs":12}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"78ad3483-3a89-435d-81b2-bda787955615","durationMs":19}
+# [Nest] 1983372  - 10/09/2026, 8:34:42 PM     LOG [Tasks] {"event":"task_slice","taskId":"78ad3483-3a89-435d-81b2-bda787955615","durationMs":11}
+# [Nest] 1983372  - 10/09/2026, 8:34:43 PM     LOG [Tasks] {"event":"task_slice","taskId":"78ad3483-3a89-435d-81b2-bda787955615","durationMs":16}
+# [Nest] 1983372  - 10/09/2026, 8:34:43 PM     LOG [Tasks] {"event":"task_slice","taskId":"7f39bb21-5a05-47a1-ba7d-20704a923511","durationMs":14}
+# [Nest] 1983372  - 10/09/2026, 8:34:43 PM    WARN [TaskSchedules] {"event":"task_schedule_poll_failed"}
+# Subtest: real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication
+ok 5 - real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication
+  ---
+  duration_ms: 385.456075
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1600.167822
+ Container factory-recovery-tests-factory-1  Stopping
+ Container factory-recovery-tests-factory-1  Stopped
+ Container factory-recovery-tests-factory-1  Removing
+ Container factory-recovery-tests-factory-1  Removed
+ Container factory-recovery-tests-ml-1  Stopping
+ Container factory-recovery-tests-ml-1  Stopped
+ Container factory-recovery-tests-ml-1  Removing
+ Container factory-recovery-tests-ml-1  Removed
+ Container factory-recovery-tests-database-1  Stopping
+ Container factory-recovery-tests-database-1  Stopped
+ Container factory-recovery-tests-database-1  Removing
+ Container factory-recovery-tests-database-1  Removed
+ Network factory-recovery-tests_default  Removing
+ Network factory-recovery-tests_default  Removed
+{"pass": true, "database": "factory_recovery_tests", "epoch": "cd8827fe-8d22-47d2-bdc4-b18ec01e308a", "inspection_id": "3726ed32-47c5-46bc-a149-da9526072c54", "alarm_id": "e5c6ba56-c98b-4177-867d-272f894ba399", "checks": ["browser-independent measurements", "ML outage retains cursor", "factory and database container restart", "stable epoch and clock", "completed inspection not repeated", "pending alarm retained with core unavailable", "ML recovers unprocessed measurements", "one alarm after replay", "core approvals/leases/restart/receipts regression"]}

@@ -1,0 +1,15 @@
+\chapter{Working with the Agent}
+\section{A complete manufacturing analysis workflow}
+\begin{enumerate}
+\item Connect and allow dataset retrieval, product/dataset prediction and metrics tools. Leave training unselected for this example.
+\item In chat, check \textbf{Run as task}. Submit: ``Retrieve ten synthetic manufacturing products, classify the stored records, and report the deployed model's held-out accuracy. Preserve product IDs and model version. Do not retrain or claim these data diagnose my CNC machine.''
+\item Stay in chat. The live task card shows progress and readable output; expand tool activity to inspect requests/results. The model may choose bounded dataset and metrics calls, with persisted checkpoints between them.
+\item Open \textbf{View task details} voluntarily. Inspect the immutable plan, completion checks, operation status/attempts and verification evidence. A final answer alone is not a passed check.
+\item For PAUSED use Resume after resolving the cause; for FAILED use Retry. For UNKNOWN writes, inspect the external service and reconcile before continuing. Rejected dangerous actions remain blocked.
+\end{enumerate}
+\screenshot{ui-task-details-current.png}{.82}{Live completed CNC retrieval task. Plan, sources and verification remain inspectable after the context checkpoint.}
+\section*{A concrete prediction and interpretation}
+For a new product, the prompt ``Classify: temperature 82.5, pressure 5.8, vibration 0.65, speed 130, humidity 48, material quality 0.74'' maps to \texttt{predict\_product\_quality}. The live service returned label 0 (Defective), probability defective 0.94937 and probability Good 0.05063. These are outputs of the synthetic artifact, not hardcoded expected results or a safety assessment.
+\section*{Schedules and unavailable triggers}
+Open \textbf{TASKS → Scheduled Tasks → Add schedule}. Supply a name, request, recurring cron (for example \texttt{0 9 * * *}) or future one-time date, and IANA timezone. Save, inspect execution history, disable or edit as needed. Writes still require permission. There is currently no Triggers menu or active webhook/event-trigger mechanism. Current retraining also cannot succeed until a separate approved labeled-data capability is restored.
+\source{\path{ui/src/components/chat/task-feedback.tsx}; \path{ui/src/components/tasks/tasks-workspace.tsx}; \path{core/src/tasks/tasks.service.ts}: \texttt{control()}, \texttt{verify()}; \path{core/src/tasks/task-schedules.service.ts}.}

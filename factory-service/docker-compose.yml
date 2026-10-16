@@ -1,0 +1,36 @@
+# Start after the current ZSK stack. Shares its private DB network and volume.
+name: factory-simulation
+services:
+  factory:
+    image: factory-simulation:local
+    build:
+      context: ..
+      dockerfile: factory-service/Dockerfile
+    environment:
+      FACTORY_DB_HOST: zsk-db
+      FACTORY_DB_PASSWORD: ${MANUFACTURING_DB_PASSWORD:?Set existing manufacturing DB password}
+      FACTORY_API_TOKEN: ${FACTORY_API_TOKEN:?Set root .env factory operator credential}
+      FACTORY_MCP_AUTH_TOKEN: ${FACTORY_MCP_AUTH_TOKEN:?Set root .env factory MCP credential}
+      FACTORY_ML_API_TOKEN: ${ZSK_API_KEY:?Set existing ZSK read credential}
+      FACTORY_TASK_SERVICE_TOKEN: ${TASK_INTEGRATION_TOKEN:?Set scoped root .env task integration token}
+      FACTORY_ML_URL: http://manufacturing-ml:8000
+      FACTORY_META_HARNESS_URL: http://core:8000/api
+      FACTORY_RAG_DEVICE_ID: ${FACTORY_RAG_DEVICE_ID:-}
+      FACTORY_MONITOR_INTERVAL_MINUTES: ${ML_MONITOR_INTERVAL_MINUTES:-10}
+      FACTORY_AUTO_STOP_ALLOWED: ${SIMULATION_AUTO_STOP_ALLOWED:-false}
+      FACTORY_AUTO_RESTART_ALLOWED: ${SIMULATION_AUTO_RESTART_ALLOWED:-false}
+      FACTORY_AUTO_MAINTENANCE_ALLOWED: ${SIMULATION_AUTO_MAINTENANCE_ALLOWED:-false}
+      FACTORY_TASK_TEMPLATE: ${FACTORY_TASK_TEMPLATE:-manufacturing-alert}
+      FACTORY_AUTOMATIC_FAULTS: ${FACTORY_AUTOMATIC_FAULTS:-true}
+    ports: ["127.0.0.1:8110:8110"]
+    networks:
+      - manufacturing
+      - mcp
+    restart: unless-stopped
+networks:
+  manufacturing:
+    external: true
+    name: zsk-demo_default
+  mcp:
+    external: true
+    name: meta-harness-mcp

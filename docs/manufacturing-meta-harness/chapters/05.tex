@@ -1,0 +1,21 @@
+\chapter{Data Modeling and System Requirements}
+\section{Measured inputs and preserved semantics}
+The supplied labeled and unlabeled CSVs each contain \textbf{exactly 1,000 readings}. They span 1 September 2026 00:00 through 4 September 2026 11:15, with a uniform five-minute interval (83 hours 15 minutes between endpoints). Both contain one machine, \texttt{ZSK-SIM-01}, and recipes A/B/C with 350/350/300 rows. The ten signal columns match row for row between the two files; the unlabeled file removes the target and simulated-fault field. These are two representations of the same supplied synthetic history, not independent production datasets.
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}l l X@{}}\toprule
+Column & Unit & SQL representation / meaning\\\midrule
+\texttt{screw\_speed\_rpm} & rpm & Double precision; rotation speed\\
+\texttt{screw\_torque\_pct} & \% & Double precision; supplied torque percentage\\
+\texttt{motor\_current\_a} & A & Double precision; motor current\\
+\texttt{motor\_power\_kw} & kW & Double precision; motor power\\
+\texttt{gearbox\_vibration\_rms\_mm\_s} & mm/s & Double precision; RMS vibration velocity\\
+\texttt{gearbox\_oil\_temp\_c} & degC & Double precision; oil temperature\\
+\texttt{barrel\_zone\_temp\_c} & degC & Double precision; one barrel signal\\
+\texttt{melt\_temp\_c} & degC & Double precision; melt temperature\\
+\texttt{melt\_pressure\_bar} & bar & Double precision; melt pressure\\
+\texttt{feed\_rate\_kg\_h} & kg/h & Double precision; mass flow\\\bottomrule
+\end{tabularx}\par\smallskip
+\section{Identity, labels and missingness}
+The baseline uses a bigint row ID, SQL \texttt{TIMESTAMP}, text machine ID, constrained recipe and a unique machine/timestamp pair in each source table. Naive supplied timestamps are explicitly interpreted as UTC by \texttt{Measurement.utc()}; API additions are converted to UTC before storage. No missing values occur in required CSV columns. \texttt{feature\_matrix()} rejects non-finite numeric features; no learned imputation pipeline is implemented.
+
+The labeled source has \texttt{health\_label}: \textbf{0=Faulty, 1=Healthy}, and \texttt{fault\_type\_simulated}. There are 847 healthy and 153 faulty rows: 62 gearbox-vibration, 50 flow-obstruction and 41 cooling-issue examples. \texttt{alarm\_active} is a 0/1 smallint. Fault tags, alarms, timestamps and labels are excluded from model inputs. The fault-generation program is not supplied in this directory; provenance cannot be reconstructed beyond the supplied CSV and its explicit synthetic designation.
+\source{\path{zsk-service/migrations/001_baseline.sql}; \path{zsk-service/zsk/schemas.py}; \path{zsk-service/zsk/db.py}: \texttt{seed()}; CSV audit recorded in \path{evidence/dataset-audit.json}.}

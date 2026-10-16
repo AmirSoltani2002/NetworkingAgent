@@ -1,0 +1,29 @@
+\page{8 / TRY ANOTHER PROBLEM}{Why the story can keep returning to the gearbox}
+You select unstable feeding, but the report still talks about a gearbox. First check whether you changed the experiment or only the dropdown. Selecting a name does nothing until you click \textbf{Inject simulated fault}. Injection adds a scenario; it does not replace an earlier one.
+
+Automatic scenarios are on by default. The first automatic fault is gearbox vibration after about 60 simulated minutes of a fresh running episode. If that incident remains unresolved, the worker suppresses new alarms for the episode and retains its original component hypothesis. You may therefore be reading the same completed report after adding another fault.
+
+\subsection*{The component selector is deliberately simple}
+It first checks vibration above 1.9 mm/s or gearbox oil above 54°C, then pressure above 120 bar, current above 110 A, and barrel-temperature deviation above 15°C. Otherwise it chooses the barrel. These are fixed synthetic routing checks, not manufacturer limits. There is no feeder branch.
+
+\begin{tabularx}{\linewidth}{@{}Xll@{}}\toprule
+Single injected scenario & Scenario component & Rule chose\\\midrule
+Gearbox vibration & Gearbox & Gearbox\\
+Bearing deterioration & Gearbox & Gearbox\\
+Oil overheating & Gearbox & Gearbox\\
+Excessive screw torque & Barrel & Motor\\
+Barrel instability & Cooling & Barrel\\
+High melt pressure & Die & Die\\
+Unstable feeding & Feeder & Barrel\\
+Excessive motor current & Motor & Motor\\\bottomrule
+\end{tabularx}
+\par{\raggedright\small This isolated source check uses one gradual fault at minute 60, started at minute 0 with a 60-minute duration and seed 13. It checks the fixed routing rule, not ML detection or an end-to-end diagnosis. Earlier readings and combined faults can select differently.\par}
+
+\subsection*{Run a clean comparison}
+\begin{enumerate}
+\item Wait for pending actions to finish, then confirm \textbf{Reset simulation}. It preserves history and starts a new, paused episode.
+\item Turn \textbf{Automatic scenarios} off. Select one fault and press \textbf{Inject simulated fault} while still paused.
+\item Set the speed and \textbf{Resume simulation}. Allow time for sampling, monitoring and AI investigation.
+\item Open the new episode's alarm and task. Compare its timestamp, component, readings and inspection result; repeat with a reset for the next fault.
+\end{enumerate}
+\takeaway{The task must inspect the component attached to its alarm. The current routing and incident-retention rules limit scenario-specific advice; this manual does not claim those limitations have been fixed.}

@@ -1,0 +1,33 @@
+import {useState} from 'react';
+import {ragApi} from '@/lib/rag-api';
+import type {ConnectionInput,ConnectionTest,RagConnection} from '@/types/rag';
+import {Action,Field,message} from './common';
+export function Connection({connection,onSaved}:{connection:RagConnection|null;onSaved:(row:RagConnection)=>void}) {
+ const [name,setName]=useState(connection?.name??'');const [url,setUrl]=useState(connection?.url??'');const [restUrl,setRestUrl]=useState(connection?.restUrl??'');const [auth,setAuth]=useState<'none'|'bearer'>(connection?.authEnvVar?'bearer':'none');const [token,setToken]=useState('');
+ const [credentialChanged,setCredentialChanged]=useState(false);
+ const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [test,setTest]=useState<ConnectionTest|null>(null);const [allowed,setAllowed]=useState(connection?.allowedTools??[]);const [enabled,setEnabled]=useState(connection?.agentEnabled??false);
+ const input=():ConnectionInput=>({name,url,restUrl,authentication:auth,...(token?{token}:{})});
+ async function run(action:'test'|'save'|'disconnect'|'permissions') {
+  setBusy(true);setError('');setNotice('');
+  const value=input();setToken('');
+  try{
+   if(action==='test'){const result=await ragApi.test(value,connection?.id);setTest(result);setNotice(value.token?'Connection tested. The token input was cleared; enter it again when saving.':'Connection test completed.');if(connection){const rows=await ragApi.list();const row=rows.find(item=>item.id===connection.id);if(row){onSaved(row);setAllowed(row.allowedTools);}}}
+   if(action==='save'){const row=await ragApi.save(value,connection?.id);onSaved(row);setTest(null);setAllowed(row.allowedTools);setEnabled(false);setCredentialChanged(false);setNotice('Connection saved. Test the saved endpoints before enabling chat retrieval.');}
+   if(action==='disconnect'&&connection){const row=await ragApi.disconnect(connection.id);onSaved(row);setTest(null);setEnabled(false);setNotice('Disconnected. Saved settings are retained.');}
+   if(action==='permissions'&&connection){const row=await ragApi.permissions(connection.id,allowed,enabled);onSaved(row);setNotice('Chat retrieval permissions saved.');}
+  }catch(error){setError(message(error));}finally{setBusy(false);}
+ }
+ const normalize=(value:string)=>{try{return new URL(value).href;}catch{return value;}};
+ const dirty=!connection || normalize(url)!==connection.url || normalize(restUrl)!==connection.restUrl || auth!==(connection.authEnvVar?'bearer':'none') || credentialChanged;
+ const tools=test?.tools??connection?.tools??[];
+ return <><p className="rag-lead">Connect an existing RAG server. MCP provides retrieval tools for chat; REST manages knowledge.</p><form className="rag-form" onSubmit={event=>{event.preventDefault();void run('save');}}>
+ <Field label="Connection name *"><input required maxLength={100} value={name} onChange={event=>setName(event.target.value)} placeholder="Local RAG Server"/></Field>
+ <Field label="MCP server URL *"><input type="url" required value={url} onChange={event=>{setUrl(event.target.value);setTest(null);}} placeholder="http://server:8090/mcp"/></Field>
+ <Field label="REST API URL *"><input type="url" required value={restUrl} onChange={event=>{setRestUrl(event.target.value);setTest(null);}} placeholder="http://server:8090"/></Field>
+ <Field label="Authentication"><select value={auth} onChange={event=>{setAuth(event.target.value as 'none'|'bearer');setTest(null);}}><option value="none">None</option><option value="bearer">Bearer Token</option></select></Field>
+ {auth==='bearer'&&<Field label={connection?.hasCredential?'Replace saved token (optional)':'API key or bearer token *'}><input type="password" autoComplete="new-password" required={!connection?.hasCredential} value={token} onChange={event=>{setToken(event.target.value);setCredentialChanged(true);setTest(null);}} placeholder={connection?.hasCredential?'Token saved securely':'Enter token'} maxLength={2048}/></Field>}
+ <div className="rag-actions"><Action disabled={busy} onClick={()=>void run('test')}>Test Connection</Action><Action type="submit" disabled={busy}>Save Connection</Action><Action disabled={busy||!connection} onClick={()=>void run('disconnect')}>Disconnect</Action></div></form>
+ {busy&&<p role="status">Connecting…</p>}{error&&<p className="rag-error" role="alert">{error}</p>}{notice&&<p role="status" className="rag-muted">{notice}</p>}
+ <section className="rag-card"><h2>Connection status</h2><dl><dt>MCP</dt><dd>{connection?.disconnected?'Disconnected':test?.mcpStatus??connection?.status??'Not configured'}</dd><dt>REST API</dt><dd>{connection?.disconnected?'Disconnected':test?.restStatus??connection?.restStatus??'Not configured'}</dd><dt>Server</dt><dd>{test?.serverName??connection?.serverName??'Not discovered'}</dd></dl><p className="rag-muted">Statuses reflect the last test or operation. Test again to verify availability.</p>{(test?.mcpError??connection?.lastError)&&<p className="rag-error">{test?.mcpError??connection?.lastError}</p>}{(test?.restError??connection?.restError)&&<p className="rag-error">{test?.restError??connection?.restError}</p>}{test&&!test.retrievalAvailable&&<p>No read-only retrieval capability was discovered. Chat retrieval is unavailable.</p>}</section>
+ <section className="rag-card"><h2>Available MCP tools</h2>{!tools.length&&<p className="rag-muted">Test the connection to discover its tools.</p>}{tools.map(tool=><label className="rag-tool" key={tool.name}><input type="checkbox" disabled={busy||!tool.readOnly||!connection||dirty} checked={allowed.includes(tool.name)} onChange={()=>setAllowed(current=>current.includes(tool.name)?current.filter(name=>name!==tool.name):[...current,tool.name])}/><span><strong>{tool.name}</strong><small>{tool.description}</small><small>{tool.readOnly?'Read-only':'Not eligible for chat retrieval'}</small></span></label>)}<label className="rag-check"><input type="checkbox" checked={enabled} disabled={busy||!connection||dirty} onChange={event=>setEnabled(event.target.checked)}/>Make allowed retrieval tools available to chat</label><p className="rag-muted">The existing saved model decides when to use these tools. Retrieved passages are sent to that model for its response. Only allow trusted, read-only retrieval tools.</p>{dirty&&<p className="rag-muted">Save the entered connection settings and test the saved profile before changing chat permissions.</p>}<Action disabled={busy||!connection||dirty||(enabled&&(connection.status!=='connected'||connection.disconnected))} onClick={()=>void run('permissions')}>Save tool permissions</Action></section></>;
+}

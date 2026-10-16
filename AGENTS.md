@@ -1,209 +1,85 @@
-# Local Meta-Harness — Codex Engineering Contract
+# Local Meta-Harness — Engineering Contract
 
-## Role
+## Working agreement
 
-You are the implementation engineer for this repository.
+Implement the user's requested step only. The user owns the research goal and product boundary; the implementation engineer owns routine design choices. Record non-trivial choices in [implementation decisions](docs/IMPLEMENTATION_DECISIONS.md). Ask only when a change affects the product boundary, operator-visible workflow, research scope, or connected-data safety.
 
-The user owns the research goal and the high-level product boundary. You own normal software-design and implementation decisions inside that boundary.
+## Current implementation
 
-Do not ask the user to choose routine implementation details. Choose sound defaults, keep the design maintainable, and record non-trivial choices in `docs/IMPLEMENTATION_DECISIONS.md`.
+This is a local chat application with OpenAI configuration, external RAG management, generic MCP tools and a separate synthetic manufacturing ML demonstration. Persistent agent tasks and schedules are implemented in core. Event triggers are temporarily removed; historical tables remain inert.
+
+| Service | Stack | Responsibility | Default host port |
+| --- | --- | --- | --- |
+| ui | React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui | Saved conversations, message/file composer, response progress/retry, OpenAI settings and collapsible RAG management | 8080 |
+| core | NestJS 12, TypeScript, Node.js 24 in Docker | Chat persistence, masked LLM settings, online model discovery, OpenAI text inference with permitted MCP retrieval, external REST proxy | 8000 |
+| database | PostgreSQL 17 | Chats, messages, attachment bytes | Private; 5432 in native-development override |
+
+Use these user-selected frameworks. The repository uses npm workspaces for ui and core, one root lockfile, and three local Docker images. Full-stack host ports bind to 127.0.0.1.
+
+Generic MCP registration, descriptions, discovery, explicit permissions, enable/disable and reconnection are implemented. The saved-model Responses loop can select permitted tools from any connected enabled server. State-changing calls require explicit confirmation of the exact invocation; persisted continuation/results prevent automatic replay after a provider failure. Compact tool/source/result summaries live on messages. Persistent task checkpoints, operation ledgers, deterministic completion checks, approvals and restart recovery are implemented; see [TASK_EXECUTION.md](docs/TASK_EXECUTION.md). Separate operator-designed research workflows/validators remain in [ROADMAP.md](docs/ROADMAP.md).
+
+Chat model context is counted before inference and compacted at 90% using the selected model. Private context windows persist separately from the visible transcript. Durable task context uses incremental evidence delivery, task-owned stored-result paging and selected-model summary checkpoints; prompt budgets automatically continue while lifetime accounting and hard caps persist. Budget checkpoints automatically request the next prompt through the existing UI; confirmation/replay gates still apply. API_SPEC.md owns limits; OPERATIONS.md owns context-capacity defaults and the root .env override.
 
 ## Fixed product boundary
 
-This phase is LOCAL ONLY.
+- Local only: no AWS, Terraform, Kubernetes, cloud queues, serverless functions, managed vector databases, or production deployment infrastructure.
+- ui owns the browser interface. core owns the local API and, when authorized, generic MCP orchestration and persisted configuration/run history.
+- database is the local PostgreSQL persistence service. Keep the schema snapshot in database/schema.sql and immutable upgrades in database/migrations/.
+- ML services, RAG engines, deterministic validators, and domain-data providers are external MCP services. Keep their business logic outside core. The user-authorized `rag-server/` is a standalone external retrieval service with its own Python stack, database and image; it must operate without the Meta-Harness. Mock services belong only in test/development fixtures.
+- Keep orchestration generic: configured server/tool metadata must determine calls; no vendor-name or BGP-specific branching.
+- Connected tools must be discovered and explicitly allowlisted by the operator. Read-only calls may be selected by the saved model. Ordinary chat writes require exact, expiring, single-use confirmation. Durable tasks may use explicit per-task controlled-tool grants; dangerous actions always require exact approval. A prompt alone is not a broad execution grant. RAG permissions remain read-only. No arbitrary SQL, shell or Python execution tools.
+- Keep every password, token, API key, and future confidential connection setting in the root ignored .env. Examples contain names and empty values only; no hardcoded or fallback credentials.
+- Native core loads the root .env before startup. Compose injects DB_PASSWORD and bind-mounts only the root .env into core for the user-authorized settings writes. Never copy .env into images, mount it into ui/database, or pass secrets into frontend assets.
+- The LLM key-entry route may accept a new API key once and save it in .env. Reads return only its first four characters followed by stars, as requested; no reveal endpoint/control exists. Clear the key input on submission. RAG token entry is write-only and saves generated MCP_TOKEN_<UUID> entries in root .env; reads expose only a saved-credential flag. MCP database profiles reference environment-variable names instead of raw credentials. Never return full secrets, log them, include them in traces, commit them, or store them in browser local storage.
+- Update the owning specifications and file map whenever configuration, structure, ports, or secret handling changes.
 
-Do not implement AWS, Terraform, Kubernetes, cloud queues, serverless functions, managed vector databases, or production deployment infrastructure.
+RAG and MCP have independent collapsible sidebar navigation. MCP → Connections/Add MCP Server opens generic management in the main area. Preserve chat/draft/composer state while navigating. Training confirmation appears in the existing conversation.
 
-The complete future system is microservice-oriented, but this phase implements only the local MAIN META-HARNESS application:
+Future workflow behavior and completion criteria have one source: [ROADMAP.md](docs/ROADMAP.md). MCP mapping, evidence, and error contracts are in [MCP_CONTRACTS.md](docs/MCP_CONTRACTS.md).
 
-1. a web UI/control plane;
-2. the minimal local backend/orchestration service required for that UI to work;
-3. MCP client integration used to connect to external microservices.
+## Required reading
 
-The following are EXTERNAL microservices and MUST NOT be implemented in this repository:
+Before implementation, read the relevant current specifications:
 
-- ML model services;
-- RAG/vector-search server;
-- deterministic validator implementation;
-- BGP/domain-data providers;
-- any other domain-specific MCP server.
+1. [LOCAL_ARCHITECTURE.md](docs/LOCAL_ARCHITECTURE.md): service boundaries, runtime flow, frameworks, Docker and ports.
+2. [UI_SPEC.md](docs/UI_SPEC.md): approved appearance and implemented interactions.
+3. [DATA_MODELS.md](docs/DATA_MODELS.md): current persisted entities.
+4. [API_SPEC.md](docs/API_SPEC.md): implemented HTTP routes.
+5. [MCP_CONTRACTS.md](docs/MCP_CONTRACTS.md): implemented generic MCP registry, network policy, agent invocation/confirmation, plus future workflow boundaries.
+6. [ACCEPTANCE_TESTS.md](docs/ACCEPTANCE_TESTS.md): current checks, recorded validation, and remaining coverage.
 
-They are represented only by MCP connections and tool contracts entered/configured through the UI.
+Use [OPERATIONS.md](docs/OPERATIONS.md) for startup/environment details and [PROJECT_MAP.md](docs/PROJECT_MAP.md) for file ownership. Use [.agent/PLANS.md](.agent/PLANS.md) for significant implementation plans.
 
-## Purpose of the main application
+## UI reference workflow
 
-The application lets an operator configure and use a meta-harness around an LLM analyzer without hard-coding individual ML, RAG, or validator implementations.
+Capture screenshots of the rendered application, compare them visually with the user's reference images, and iterate within the requested scope. Inspect the final screenshots before reporting completion.
 
-The UI must let the user:
+Preserve the approved black chat layout, automatically titled, independently collapsible Chats section in the sidebar, functional file picker, and Send control. Unused controls were removed at the user's request; do not add decorative or disabled controls.
 
-1. register MCP servers for one or more ML models;
-2. select the MCP tools exposed by those ML services;
-3. define the order in which the ML tools are called;
-4. register documents and associate them with a configured RAG service/collection;
-5. register a RAG MCP server and select its search/retrieval tool;
-6. register a validator MCP server and select its validation tool;
-7. configure the analyzer/LLM used by the main harness;
-8. enter an operator prompt/question;
-9. run the configured workflow;
-10. inspect the execution trace, retrieved evidence, analyzer answer, and validator result.
+## Documentation and verification
 
-## Runtime model
+Update the document that owns a changed behavior; avoid duplicating specifications across files. Separate implemented behavior from planned behavior. Remove superseded documents after preserving relevant decisions in the canonical files.
 
-The main application is a generic orchestrator.
+Report the checks actually performed. The repository has build/typecheck/lint, Vitest UI tests, Node core/SDK tests and optional isolated PostgreSQL tests, plus independent RAG pytest/Docker checks. Do not claim future workflow acceptance has passed.
 
-The configured runtime flow is:
+## Standalone RAG service
 
-Operator prompt
-→ ordered ML MCP calls
-→ analyzer receives prompt + ML outputs + available RAG context/tool access
-→ RAG MCP retrieval as configured
-→ analyzer produces a candidate answer
-→ validator MCP checks the candidate answer/evidence
-→ final result and trace shown to the operator
+For `rag-server/` changes, read its [README](rag-server/README.md), environment example and migrations. Use Python 3.12+, FastAPI, Pydantic, SQLAlchemy, Alembic, LlamaIndex semantic splitting, local HuggingFace embeddings and Python MCP SDK. Exactly six domain tables live in its Alembic migrations; do not modify the chat database for retrieval data. RAG PostgreSQL/pgvector, API/MCP (loopback 8090) and same-image ingestion worker form an independent three-container stack. No RAG frontend, chatbot, generative LLM, external AI API key or automatic evidence linking. Secrets in this checkout remain in root `.env`; standalone copies use their own ignored `.env`. Models/files/database persist in separate volumes. Test only isolated databases whose names end in `_test`/`_tests`.
 
-The application must not contain BGP-specific branching in its orchestration core.
+The optional `docker-compose.mcp.yml` and `rag-server/docker-compose.meta-harness.yml` connect core to the external service through `meta-harness-mcp`. Registry/tool execution remains generic; core guards approved origins and actual DNS/socket resolution. Only the operator-approved retrieval tools may be selected by chat. RAG business logic and knowledge stay external.
 
-## Microservice boundary
+## Synthetic manufacturing demonstration
 
-Implement these local services:
+`manufacturing-demo/` is the user-authorized independent example, not core business logic. Read its [README](manufacturing-demo/README.md) before changes. Python 3.12/FastAPI, SQLAlchemy, pandas, scikit-learn Pipeline/LogisticRegression and joblib share one ML/MCP image; a private PostgreSQL 17 container owns synthetic products, a frozen evaluation snapshot and durable training jobs. Host ML port is 127.0.0.1:8100; bridge MCP URL is http://manufacturing-ml:8000/mcp. Keep 0=Defective and 1=Good, never overwrite ground truth, never train on frozen test identifiers, and atomically replace only successfully validated trusted local artifacts. Training runs in the existing service's background worker. Secrets use MANUFACTURING_DB_PASSWORD/MANUFACTURING_API_KEY in root .env. No new reasoning LLM/agent, frontend, cloud service, or change to RAG internals. Test databases must end in _test/_tests.
 
-### `ui`
+## Durable task execution
 
-Browser-facing control-plane UI.
+Read [TASK_EXECUTION.md](docs/TASK_EXECUTION.md) before task changes. Reuse the existing LlmService and MCP registry; no second agent/model/database/queue service. Enforce policies in core, persist before dispatch, never replay completed writes, and pause ambiguous writes for reconciliation. Dangerous actions always require exact approval. Structured local tools are confined to TASK_WORKSPACE_ROOT; no arbitrary shell/code/SQL or host Docker socket. Task grants are explicit, per-task, and bound to current tool configuration. Scheduled tasks retain their configured scope. Event-trigger configuration and execution are temporarily removed. Test restart recovery and concurrency only in an isolated `_test`/`_tests` database. Secrets remain in root .env.
 
-### `core`
+## Current ZSK replacement
 
-Local API/orchestrator used by the UI. It owns:
+The active manufacturing example is now `zsk-service/` (FastAPI/Python MCP SDK/RandomForest), reusing the dedicated manufacturing PostgreSQL volume. Read its README before changes. The supplied labeled ZSK data are used once for training, then removed and replaced with 1,000 unlabeled readings as explicitly requested. Never seed labels again on restart or train from predictions/unlabeled rows. The previous `manufacturing-demo/` is historical and must not be restarted against the replaced DB. Core/chat/RAG are unchanged. Port 8100 and bridge alias manufacturing-ml remain; secrets ZSK_API_KEY/ZSK_ADMIN_API_KEY and existing MANUFACTURING_DB_PASSWORD belong only in root .env.
 
-- MCP server registry;
-- workflow configuration;
-- document-to-RAG mapping metadata;
-- analyzer configuration;
-- workflow execution;
-- execution tracing;
-- local persistence of configuration and run history.
+## User-authorized autonomous factory simulation
 
-Do not implement ML, RAG, or validator server logic inside `core`.
-
-The external services are independently deployable MCP servers configured by URL/connection details.
-
-## Codex autonomy
-
-You SHOULD decide implementation-level details yourself, including:
-
-- frontend framework;
-- backend framework;
-- module/package structure;
-- component decomposition;
-- local persistence technology;
-- dependency injection pattern;
-- HTTP/MCP client library;
-- state-management library;
-- form library;
-- schema-validation library;
-- test framework details;
-- retry/error-handling implementation;
-- internal API organization;
-- visual component library;
-- logging implementation;
-- Dockerfile layout;
-- local development tooling.
-
-Prefer simple, common, maintainable choices.
-
-## When to ask the user
-
-Ask only when a decision would change one of these high-level requirements:
-
-- local-only scope;
-- microservice boundary;
-- which categories of external services exist;
-- operator-visible workflow behavior;
-- read-only safety boundary for connected operational data;
-- research/evaluation scope;
-- whether this repository should start implementing an external ML/RAG/validator service.
-
-Do not ask about ordinary library, class, file, database, UI-component, or design-pattern choices.
-
-## MCP principles
-
-Treat MCP servers as capabilities, not as hard-coded vendors.
-
-The core must not contain branches such as `if server_name == ...`.
-
-A configured MCP tool is identified through registry/configuration metadata and invoked through a generic MCP client abstraction.
-
-MCP failures must be visible in the run trace and must not crash the entire application process.
-
-Secrets/tokens must never be stored in browser local storage or committed to source control.
-
-## Workflow principles
-
-The user controls the order of ML MCP steps through the UI.
-
-Each step has explicit input mapping and output naming so later steps can consume earlier results.
-
-Do not infer hidden dependencies between steps.
-
-The analyzer step is the central reasoning step. The validator step checks the candidate answer; it does not silently rewrite the answer.
-
-Every run must be inspectable after completion.
-
-## Evidence and traceability
-
-For every workflow run, preserve:
-
-- operator prompt;
-- selected workflow/version;
-- each MCP server/tool called;
-- sanitized tool arguments;
-- normalized tool result or error;
-- call order;
-- start/end time and duration;
-- analyzer input context summary;
-- analyzer answer;
-- RAG evidence returned;
-- validator input and result;
-- final displayed result.
-
-Do not treat an LLM-generated statement as retrieved evidence.
-
-## Safety
-
-Connected domain/data tools are read-only in this phase.
-
-The UI must clearly distinguish configuration from execution.
-
-Do not provide any generic arbitrary-shell or arbitrary-code-execution feature.
-
-Do not auto-discover and execute tools without operator-configured allowlisting.
-
-## Required specification files
-
-Read before implementation:
-
-1. `docs/LOCAL_ARCHITECTURE.md`
-2. `docs/UI_SPEC.md`
-3. `docs/DATA_MODELS.md`
-4. `docs/API_SPEC.md`
-5. `docs/MCP_CONTRACTS.md`
-6. `docs/ACCEPTANCE_TESTS.md`
-
-Where those files leave a low-level implementation choice open, decide it yourself.
-
-## Definition of done
-
-The phase is complete when:
-
-- the local UI and core services start locally;
-- the user can register MCP servers;
-- MCP tools can be inspected/selected;
-- ML steps can be ordered and configured;
-- documents can be mapped to a RAG MCP/collection;
-- validator MCP/tool can be configured;
-- the operator can enter a prompt and run a workflow;
-- a full execution trace is shown;
-- mock MCP servers can demonstrate the end-to-end UI flow;
-- automated tests pass;
-- no AWS/cloud implementation exists;
-- no ML model, RAG engine, or validator business logic is implemented in this repository.
+The active user request explicitly extends the local boundary with independent `factory-service/` FastAPI/MCP, authoritative continuous synthetic ZSK state, Phaser inside the existing React UI, ML future-onset baseline, periodic monitoring/outbox and authenticated template-bound existing tasks. Read `factory-service/README.md` and `docs/FACTORY_ARCHITECTURE.md` before changes. Domain behavior stays outside core; do not restore general event triggers or real-machine control. Reuse current ZSK unlabeled data/RandomForest and private DB; never reconstruct purged labels or train from predictions. Simulator truth is separate, unavailable to inference. Root secrets only; browser receives no token. Stop/restart/maintenance defaults false; explicitly authorized stop demo never authorizes physical control. Epoch/operation identity, immutable checks, task grants and UNKNOWN reconciliation remain enforced. Runtime adds loopback 8110; isolated tests require `_test`/`_tests` databases and separate volumes.

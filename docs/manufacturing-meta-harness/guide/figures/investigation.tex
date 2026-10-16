@@ -1,0 +1,8 @@
+\begin{tikzpicture}[node distance=9mm]
+\node[box,text width=12.9cm](sensors) {\textbf{Factory worker}\\Advances the clock and stores five-minute readings};
+\node[box,text width=12.9cm,below=of sensors](ml) {\textbf{Monitoring}\\Calls current-health ML; eligible healthy readings also get future-onset ML};
+\node[box,text width=12.9cm,below=of ml](alarm) {\textbf{Alarm + saved delivery event}\\Record model evidence and a component hypothesis};
+\node[dark,text width=12.9cm,below=of alarm](task) {\textbf{Existing core task + saved LLM}\\Read evidence, retrieve documents and call granted tools};
+\node[box,text width=12.9cm,below=of task](report) {\textbf{Verified investigation + report}\\Show completed inspection and any authorized simulated stop};
+\foreach \a/\b in {sensors/ml,ml/alarm,alarm/task,task/report}{\draw[arr] (\a.south)--(\b.north);}
+\end{tikzpicture}

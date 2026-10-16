@@ -1,0 +1,56 @@
+✔ context budget uses verified capacities, a conservative fallback, and an explicit override (0.905149ms)
+✔ at exactly 90%, the same selected model compacts; its entire window is saved before inference and reused (14.359872ms)
+✔ below 90% no summary is requested; switching models rebuilds input from saved transcript (0.498127ms)
+✔ failed or ineffective compaction preserves the original state and never sends a truncated generation request (1.327302ms)
+✔ eight model turns checkpoint before queued tools; the next prompt completes without replaying completed calls (2.370633ms)
+✔ twelve tool calls checkpoint a partially consumed batch with every completed result retained (0.974361ms)
+✔ a two-minute deadline checkpoints completed work; a fresh prompt uses a fresh deadline and never replays a tool (0.883396ms)
+✔ token-count authentication errors and invalid counts are visible and never trigger generation (0.660249ms)
+✔ real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression (55.143917ms)
+✔ real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay (62.243379ms)
+✔ real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI (63.456811ms)
+✔ shared credential store serializes LLM/RAG writes, retains unrelated data and remains private (13.692292ms)
+✔ MCP URLs and credential references are validated (1.108419ms)
+[32m[Nest] 51  - [39m10/09/2026, 8:39:30 AM [32m    LOG[39m [38;5;3m[McpService] [39m[32m{"event":"mcp_call","serverId":"a","tool":"retrieve","durationMs":16,"success":true}[39m
+✔ official MCP discovery, explicit allowlisting, secret-safe failures and no execution (89.888043ms)
+✔ approved origins, unsafe addresses and REST operation restrictions (5.048617ms)
+✔ REST client forwards auth, multipart, deletion; blocks redirects and masks upstream errors (20.064836ms)
+✔ connection tests keep independent MCP/REST failure states and tokens out of results (29.81467ms)
+✔ existing Responses path selects permitted MCP tools, preserves reasoning, records sources, and does not force calls (2.719189ms)
+✔ unregistered functions never reach MCP and provider/auth failures preserve safe errors (1.025817ms)
+✔ draft authentication changes cannot overwrite saved connection health; MCP and REST remain independent (2.507286ms)
+✔ global error handling never logs stacks containing submitted secrets (0.974143ms)
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"c78a2cdd-3553-429a-a151-be2acf4a633d","durationMs":23}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"c78a2cdd-3553-429a-a151-be2acf4a633d","durationMs":40}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"c78a2cdd-3553-429a-a151-be2acf4a633d","durationMs":61}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"c78a2cdd-3553-429a-a151-be2acf4a633d","durationMs":46}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"6f473a10-7b89-4451-aa14-a25c956f098a","durationMs":24}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"6f473a10-7b89-4451-aa14-a25c956f098a","durationMs":39}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"8cbaa55c-cef9-4a16-bd1b-1fe35629da22","durationMs":32}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"ebf05bd7-a5ea-47e9-a440-6b11c9544913","durationMs":13}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"ebf05bd7-a5ea-47e9-a440-6b11c9544913","durationMs":11}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"ebf05bd7-a5ea-47e9-a440-6b11c9544913","durationMs":11}[39m
+[32m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [32m    LOG[39m [38;5;3m[Tasks] [39m[32m{"event":"task_slice","taskId":"41eeba2e-67b2-4b43-b3c0-5052f27c0b1d","durationMs":8}[39m
+[33m[Nest] 71  - [39m10/09/2026, 8:39:31 AM [33m   WARN[39m [38;5;3m[TaskTriggers] [39m[33m{"event":"task_trigger_poll_failed"}[39m
+✔ real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication (598.282557ms)
+✔ persistent decisions use existing saved model, structured schema, canonical arguments and private model context (13.247215ms)
+✔ event webhook requires backend-held bearer token and never exposes it (0.617632ms)
+✔ completion requires real successful scoped execution evidence, not a generated final response or operator attestation (1.166999ms)
+✔ retry backoff has bounded jitter and respects Retry-After (0.156968ms)
+✔ cron uses time zones and one next occurrence after restart (4.98735ms)
+✔ safe structured commands auto-approve, writes are controlled, deletes dangerous, and shell/path bypasses are rejected (9.490249ms)
+✔ unclassified MCP writes need exact approval; only operator-classified controlled tools can receive task grants (0.667096ms)
+✔ state-changing tools pause, expose exact invocation and run once only after explicit confirmation (17.220989ms)
+✔ declined operations never execute and return denial to the same saved-model loop (1.16128ms)
+✔ schema/connection/permission changes invalidate the proposed authorization (1.106499ms)
+✔ mismatched, expired and interrupted confirmations cannot execute (0.99388ms)
+✔ provider failures after confirmed execution resume from persisted output without retraining (1.228782ms)
+✔ generic tool identities do not collide and include operator description plus actual schema (0.549702ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2980.004393

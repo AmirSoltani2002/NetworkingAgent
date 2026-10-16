@@ -1,0 +1,56 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=19mm,top=19mm,bottom=20mm,headheight=14pt,headsep=5mm]{geometry}
+\usepackage{fontspec}
+\input{guide/font-setup.tex}
+\usepackage{microtype,graphicx,xcolor,tikz,pgfplots,fancyhdr,enumitem,booktabs,tabularx,hyperref,xurl,caption,titlesec}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{173042}
+\definecolor{teal}{HTML}{007E87}
+\definecolor{pale}{HTML}{EEF5F6}
+\definecolor{muted}{HTML}{596A77}
+\definecolor{orange}{HTML}{B96812}
+\definecolor{red}{HTML}{AA3B4A}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,pdftitle={A Factory Alarm, Explained: An Engineer's Guide to Meta-Harness},pdfauthor={Local Meta-Harness Project}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\raggedbottom
+\setlist{leftmargin=*,topsep=4pt,itemsep=3pt,parsep=0pt}
+\titleformat{\section}{\sffamily\bfseries\LARGE\color{black}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{7pt}
+\titleformat{\subsection}{\sffamily\bfseries\large\color{black}}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{9pt}{4pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{}
+\fancyhead[R]{}
+\fancyfoot[L]{}
+\fancyfoot[R]{\color{black}\sffamily\small\thepage}
+\captionsetup{font=small,labelfont={sf,bf},skip=5pt,hypcap=false,justification=raggedright,singlelinecheck=false}
+\urlstyle{same}
+\newcommand{\page}[2]{\clearpage\thispagestyle{fancy}\noindent{\sffamily\small\bfseries\color{black}#1}\par\vspace{3mm}\section*{#2}}
+\newcommand{\takeaway}[1]{\par\smallskip\begingroup\setlength{\fboxsep}{8pt}\colorbox{pale}{\parbox{\dimexpr\linewidth-16pt\relax}{\raggedright\sffamily\small\textbf{Remember.} #1\par}}\endgroup\par\smallskip}
+\newcommand{\evidence}[1]{\par\smallskip{\raggedright\footnotesize\color{black}\textbf{Basis:} #1\par}}
+\newcommand{\diagram}[2]{\begin{center}\input{guide/figures/#1.tex}\captionof{figure}{#2}\end{center}}
+\tikzset{box/.style={draw=teal!65,rounded corners=2pt,fill=pale,align=center,font=\sffamily\small,inner sep=6pt,minimum height=10mm,text=black,execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},dark/.style={box,fill=gray!12,text=black,draw=ink},arr/.style={-{Stealth[length=2mm]},draw=muted,thick},lab/.style={font=\sffamily\scriptsize,fill=white,inner sep=2pt,align=center,text=black}}
+\begin{document}
+\input{guide/01-start.tex}
+\input{guide/02-line.tex}
+\input{guide/03-signals.tex}
+\input{guide/04-models.tex}
+\input{guide/05-investigation.tex}
+\input{guide/06-animation.tex}
+\input{guide/07-example.tex}
+\input{guide/08-repair.tex}
+\input{guide/09-scenarios.tex}
+\input{guide/10-backstage.tex}
+\input{guide/11-loop.tex}
+\input{guide/12-tools-security.tex}
+\input{guide/13-rag.tex}
+\input{guide/14-memory.tex}
+\input{guide/15-validation.tex}
+\input{guide/11-reference.tex}
+\end{document}

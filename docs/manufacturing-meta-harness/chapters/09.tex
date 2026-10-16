@@ -1,0 +1,17 @@
+\chapter{RAG-Based Maintenance Knowledge}
+\section{Problem and external knowledge model}
+``Faulty'' is a classification, not a causal explanation. The external RAG service supplies passages and illustrative known-issue descriptions for interpretation. It is an independent FastAPI/Python MCP SDK application with an ingestion worker and PostgreSQL/pgvector, and contains \textbf{no generative LLM or answer engine}. Retrieval-augmented generation combines retrieved external information with model reasoning; this application performs that composition in core rather than jointly training a retriever/generator~\cite{lewis}.
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Domain table & Relationship and purpose\\\midrule
+\texttt{devices} & Exact name/model/manufacturer identity plus metadata\\
+\texttt{issues} & Device FK, symptoms, category, possible cause and embedding\\
+\texttt{documents} & Stored file, version, ingestion status and provenance metadata\\
+\texttt{device\_documents} & Many-to-many assignment of documents to devices\\
+\texttt{document\_chunks} & Passage, embedding, section/page/order and document FK\\
+\texttt{issue\_evidence} & Explicit issue/chunk link with evidence type\\\bottomrule
+\end{tabularx}\par\smallskip
+Device--issue--evidence connects a curated concern to a particular passage. Device--document--chunk also enables direct retrieval when no known issue has been curated. Evidence types are possible cause, diagnostic procedure, resolution and supporting observation. Similarity never creates these links automatically. The live catalog currently has \textbf{zero explicit issue-evidence links}; direct document retrieval is therefore particularly important.
+\fig{rag}{Independent ingestion and hybrid retrieval. Explicit evidence links are supported in code; none existed in the audited live ZSK catalog.}
+\section{Ingestion implementation}
+\texttt{DocumentService.upload()} validates identity/associations, stores source size/hash and safe local filename, and handles duplicate/concurrent uploads. The worker claims a document through a database advisory lock. PDF text comes from pypdf; UTF-8 TXT/Markdown is supported. Scanned documents require external OCR. Structural headings/pages are preserved before semantic splitting; warning/procedure blocks receive protected handling. Semantic splitting uses LlamaIndex inside sections, with bounded token fragments when required.
+\source{\path{rag-server/rag/models.py}; migration \path{0001_knowledge.py}; \path{rag-server/rag/documents.py}: \texttt{DocumentService}; \path{rag-server/rag/worker.py}: \texttt{IngestionWorker.process()}; \path{rag-server/rag/chunking.py}: \texttt{extract()}, \texttt{structures()}, \texttt{Chunker.split()}.}

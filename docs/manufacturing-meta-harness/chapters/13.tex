@@ -1,0 +1,24 @@
+\section{Decision generation, execution and stopping}
+The conceptual sequence is propose--validate--act--observe--verify--continue. It does not expose or validate a model's hidden ``thinking''. In chat, a text-only completed response ends the loop without deterministic industrial verification. In tasks, a \texttt{complete} proposal must pass stored evidence predicates before the task becomes COMPLETED.
+\fig{loop}{Durable decision loop. Approval and uncertainty are persisted pauses; completion is a backend decision based on evidence predicates.}
+\begin{lstlisting}[caption={Source-aligned worker pseudocode (abbreviated).}]
+claim due task; acquire session lock and lease owner
+load checkpoint, next_action and operation ledger
+if prompt budget reached: summarize, checkpoint, requeue
+if no saved decision:
+  build context delta; ask saved LLM; parse strict decision
+  atomically save decision, context and delivery cursor
+if complete: verify stored criteria; finish only if passed
+if wait/respond/blocked: handle explicit branch
+if execute:
+  validate policy; reuse any completed identical write
+  persist operation; obtain exact approval or bound grant
+  persist DISPATCHING immediately before external call
+  persist observation; verify; advance and requeue
+on interruption: retry reads; pause uncertain writes
+\end{lstlisting}
+\section{Malformed decisions and finite execution}
+\texttt{parseTaskDecision()} extracts one unambiguous JSON decision without evaluating code or repairing syntax. Ajv checks the schema; \texttt{validateDecision()} checks action semantics and measurable criteria. Responses are bounded to 262,144 characters; extraction examines at most 512 objects. Conflicting decisions, invalid argument JSON or absent actions cause a transient planner error before execution. The first usable plan's criteria persist rather than being silently weakened by later proposals.
+
+Chat limits are eight model rounds, twelve tool calls and 120 seconds per prompt. Checkpoints renew the prompt; UI stops automatic continuation after 20. Three deadline prompts without progress expose retry. Durable defaults are eight decisions, 200,000 accounted tokens and 120,000 active ms per prompt, with 20 continuations; slice deadline is also 120 seconds. Lifetime token/time/cost accounting persists. These are finite safeguards, not a semantic proof of progress or absence of repetitive reasoning.
+\source{\path{core/src/tasks/task-decision-parser.ts}; \path{core/src/tasks/task-contract.ts}: \texttt{validateDecision()}; \path{core/src/tasks/task-prompt.ts}; \path{ui/src/App.tsx}: \texttt{generateResponse()}; \path{core/src/tasks/task-worker.ts}: \texttt{continuePrompt()}.}

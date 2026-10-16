@@ -1,0 +1,7 @@
+\begin{tikzpicture}[node distance=8mm]
+\node[dark,text width=12.9cm](first) {\textbf{Investigation complete}\\Production STOPPED; injected fault still present};
+\node[box,text width=12.9cm,below=of first](inspect) {\textbf{Before repair}\\Stopped line, completed inspection and technician available};
+\node[box,text width=12.9cm,below=of inspect](repair) {\textbf{Confirm repair and wait}\\Gearbox fault removed; production stays STOPPED};
+\node[box,text width=12.9cm,below=of repair](restart) {\textbf{Confirm restart separately}\\No severe faults or unfinished jobs permitted};
+\foreach \a/\b in {first/inspect,inspect/repair,repair/restart}{\draw[arr] (\a.south)--(\b.north);}
+\end{tikzpicture}

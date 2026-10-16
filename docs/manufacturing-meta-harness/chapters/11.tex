@@ -1,0 +1,17 @@
+\chapter{Agent-Assisted Maintenance Decisions}
+\section{Actual mechanisms and intended composition}
+An operator can ask the saved model to inspect measurements, invoke prediction, find a device, retrieve issues and search documentation. Tools are generic; there is no hardcoded ZSK diagnostic pipeline. The following workflow is \textbf{intended composition of implemented capabilities}, not a recorded complete ZSK maintenance run.
+\fig{maintenance}{Illustrative end-to-end sequence using implemented tools. Asset mapping and industrial validation remain human responsibilities; the complete sequence was not executed as one agent run.}
+\begin{enumerate}
+\item Receive the question; identify exact dataset machine and RAG device. Request an explicit mapping when names disagree.
+\item Read bounded current/history pages with timestamps, recipe, units and provenance; check freshness before describing a present state.
+\item Invoke \texttt{predict\_zsk\_health} for a stored row; inspect history count, warmup flag and active version. Read actual versioned metrics when relevant.
+\item Resolve the equipment through \texttt{find\_device}, read \texttt{get\_device\_issues}, retrieve \texttt{search\_knowledge} and obtain exact passages with \texttt{get\_document\_context} if needed.
+\item Compare signal trends, model result and technical passages. Run available execution checks and expose missing industrial checks.
+\item Produce an evidence-qualified recommendation for the operator and technician, keeping hypotheses separate from measurements.
+\end{enumerate}
+\section{Worked example: recorded result plus limited interpretation}
+\path{docs/verification/zsk-agent.json} records successful calls to \texttt{predict\_zsk\_health} (177 ms) and \texttt{get\_zsk\_model\_metrics} (38 ms). Measurement 1000, time 4 September 2026 11:15, was \textbf{Healthy (1)}, fault probability \textbf{0.0}, with two preceding readings and no warmup. Its model UUID begins \texttt{5d27c404}. The underlying CSV has torque 41.36\%, vibration 1.593 mm/s and oil temperature 43.58 degC. A zero model probability is not zero physical risk.
+
+A defensible illustrative answer separates \textbf{observation} (those historical synthetic values), \textbf{model result} (label/probability/version), \textbf{evidence} (the independently retrieved publication and page), \textbf{interpretation} (no confirmed mechanical cause), \textbf{recommendation} (verify current readings and asset identity before choosing an inspection), and \textbf{uncertainty} (no current telemetry, real labels or approved procedure). This format is not enforced by core. The recorded agent reply did not include the later RAG check or authorize maintenance.
+\verdict{The integration demonstrably delivers real ML results to the saved LLM. Combining them into a correct industrial recommendation remains partial and unvalidated, especially across the two asset identifiers.}

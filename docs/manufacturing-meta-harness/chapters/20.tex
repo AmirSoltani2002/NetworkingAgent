@@ -1,0 +1,14 @@
+\chapter{Security and Authorization}
+\section{Problem and backend-enforced authority}
+Model proposals cannot authorize themselves. \texttt{ExecutionPolicy.prepare()} classifies a validated action using backend configuration and operation grammar. Safe approved reads may execute directly. Controlled writes need a configuration-bound per-task grant or exact approval. Dangerous or unclassified writes always need exact approval. These classes are code policy, not the LLM's assessment of a command.
+\fig{security}{Trust boundaries and authority. Operator allowlists, backend gates and service credentials jointly constrain tool use; retrieved text cannot grant authority.}
+\section{Exact chat approval and durable grants}
+Chat state-changing calls persist server/tool/arguments, argument/configuration hashes, ID and 15-minute expiry. \texttt{LlmService.respond()} saves phase \texttt{executing} before sending, consuming authorization. A reload/provider failure cannot automatically reuse that confirmation. Configuration/schema/permission changes invalidate its digest; decline becomes an observation and does not execute.
+
+Durable \texttt{grant()} checks current allowlisting and operator classification in \texttt{TASK\_CONTROLLED\_MCP\_TOOLS}; \texttt{TASK\_DANGEROUS\_MCP\_TOOLS} takes precedence. Grants bind URL, credential-variable name, allowlist and tool descriptor. Exact task approvals bind the operation/action/policy digest and persist the decision. Unlike ordinary chat confirmations, the task-approval table has no equivalent 15-minute expiry. Do not generalize the chat expiry to every authorization mechanism.
+\section{Local exposure and secret handling}
+Full-stack host ports bind 127.0.0.1. \texttt{requireLocalOrigin()} allows configured local HTTP browser origins, but missing Origin is accepted; it is not user authentication. Core has no accounts/RBAC or multi-user isolation. ZSK applies separate read/admin bearer credentials; RAG authenticates its REST/MCP surface with a shared bearer key.
+
+Root ignored \texttt{.env} holds passwords/keys. Core alone bind-mounts it for authorized settings writes; images exclude it. UI receives only four-character OpenAI prefix plus stars and saved-credential flags. Tokens entered once are saved as generated \texttt{MCP\_TOKEN\_<UUID>} entries, with profile references in SQL. \texttt{EnvironmentStore} serializes writes, preserves unrelated entries, fsyncs and chmods 0600. This is not a cross-process transactional secret manager.
+\verdict{Backend checks prevent a model from expanding its own permissions. Security is appropriate to an operator-managed local prototype, not a proven hardened multi-user industrial deployment.}
+\source{\path{core/src/tasks/execution-policy.ts}; \path{core/src/config/local-origin.ts}; \path{core/src/config/environment-store.service.ts}; \path{zsk-service/zsk/auth.py}; Docker/Compose files.}

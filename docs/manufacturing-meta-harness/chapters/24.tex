@@ -1,0 +1,20 @@
+\partlabel{PART IV --- IMPLEMENTATION EVALUATION AND VERDICTS}
+\chapter{End-to-End System Evaluation}
+\section{Evidence method and reproducible limits}
+This report recursively inventories first-party source, configuration, migrations, tests, plans and verification records, excluding dependency trees, secrets and generated caches. The included manifest hashes 258 readable files from the pre-authoring inventory. Primary flow analysis follows chat/task entry points through LLM, policy, MCP and external services; frontend controls were checked against source and genuine repository screenshots. External RAG and ZSK directories were accessible, including the running databases. The misspelled \texttt{CODEX\_IMPLEMENTAION.md} was not found; no local copy of the requested harness paper was found, so its public text was consulted. The original supplied joblib was unavailable; initial training built the artifact from supplied code/CSV.
+
+Read-only live checks confirmed healthy core/UI/ZSK/RAG containers, ZSK table counts and the RAG catalog/passages. A real device-scoped RAG search was executed and saved. No new paid LLM diagnosis, physical-equipment call, restart of production stacks or destructive database test was performed. Report-time npm results: core 30 passed, four optional database tests skipped; UI 22 passed, one failed. The UI regression expects exact text ``Connection failed, whereas the rendered status includes a prefixed explanation. The full run therefore failed; no application fix was made in this report-only scope. Results remain distinct from historical isolated-database and service tests.
+\section{ML evaluation actually measured}
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}l r X@{}}\toprule
+Measure & Recorded result & Interpretation\\\midrule
+Training / gap / holdout & 780 / 20 / 200 & Earlier training, per-machine embargo, later holdout\\
+Holdout classes (0 / 1) & 46 / 154 & Synthetic faults / healthy observations\\
+Accuracy & 0.9700 & 194 correct of 200\\
+Balanced accuracy & 0.9653 & Mean recall over both classes\\
+Macro precision / F1 & 0.9518 / 0.9583 & Unweighted class means\\
+Final training rows & 1,000 & Deployed model uses all labeled source rows\\\bottomrule
+\end{tabularx}\par\smallskip
+The confusion matrix, actual rows by predicted columns in order [0,1], is \(\left[\begin{smallmatrix}44&2\\4&150\end{smallmatrix}\right]\). Thus two faults were predicted healthy and four healthy readings faulty. These are \textbf{evaluation-candidate} results from \path{docs/verification/zsk-final-state.json}, not an independent test of the final all-labeled forest. No industrial sensitivity, false-alarm rate per operating hour or calibrated risk is measured.
+
+Chronological splitting and causal features avoid direct future-value leakage; the 20-reading embargo reduces neighboring labeled-window dependence. Test features can use prior measured context, consistent with inference. Same-machine recipes/fault signatures and temporal dependence remain; an embargo does not prove independence. Time-series validation assumptions require care~\cite{bergmeir}. Synthetic separability, no real maintenance labels, distribution shift and no cross-machine holdout limit generalization.
+\source{\path{zsk-service/zsk/zsk_model.py}: \texttt{train()}; \path{docs/verification/zsk-tests.log}; \path{docs/verification/zsk-restart.log}; included report evidence and test log.}

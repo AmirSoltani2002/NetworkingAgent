@@ -1,0 +1,14 @@
+@misc{harness2026,
+ author={Paul Barbaste and Tristan Darrigol and Germain Vu and Tom Wiltberger},
+ title={Harness Engineering: Anatomy, Architecture, and Evolution of Coding Agents -- A Source-Code Study of Eleven Systems},
+ year={2026},
+ howpublished={arXiv:2609.00006v1},
+ note={Consulted directly: sections 2, 6, 9 and 10. Accessed 9 October 2026},
+ url={https://arxiv.org/html/2609.00006v1}
+}
+@misc{repository,author={{Meta-Harness Project}},title={Local repository implementation snapshot},year={2026},note={Audited 9 October: AGENTS.md; README.md; core/src; ui/src; database/schema.sql; database/migrations; Dockerfiles and Compose configurations. Source maps in each chapter identify functions.}}
+@misc{taskspec,author={{Meta-Harness Project}},title={Persistent task execution specification},year={2026},note={docs/TASK_EXECUTION.md; docs/MCP_CONTRACTS.md; docs/DATA_MODELS.md; docs/OPERATIONS.md. Current source resolves differences in older architectural prose.}}
+@misc{recoveryrecord,author={{Meta-Harness Project}},title={Recorded task restart and concurrency verification},year={2026},note={docs/verification/task-restart.json; task-results.md; task-backend-tests.log. Historical fixture-based checks; not rerun for manual authoring.}}
+@misc{contextrecord,author={{Meta-Harness Project}},title={Live CNC task context checkpoint verification},year={2026},note={docs/verification/task-context-checkpoints.json. Four predicates passed; one legacy summary checkpoint; previous successful MCP operations retained one attempt.}}
+@misc{mlrecord,author={{Meta-Harness Project}},title={Manufacturing inference and evaluation evidence},year={2026},note={docs/verification/manufacturing-agent-prediction.json and manufacturing-agent-metrics.json (historical). Read-only live /ready, /api/model/metrics and /api/dataset/statistics checked 9 October 2026.}}
+@misc{ragreadme,author={{Meta-Harness Project}},title={Standalone RAG implementation and deployment},year={2026},note={rag-server/README.md; rag-server/rag; rag-server/migrations/versions/0001_knowledge.py. Retrieval is independent of the Meta-Harness and has no generative LLM.}}

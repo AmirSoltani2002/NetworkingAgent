@@ -1,0 +1,89 @@
+{
+  "build": "passed",
+  "typecheck": "passed",
+  "lint": "passed",
+  "ui_tests": {
+    "passed": 25
+  },
+  "core_tests": {
+    "passed": 37,
+    "skipped": 5,
+    "failed": 0
+  },
+  "isolated_core_postgresql_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "factory_tests": {
+    "passed": 12,
+    "failed": 0,
+    "warning": "Starlette TestClient upstream deprecation"
+  },
+  "browser": {
+    "pass": true,
+    "websocket_live": true,
+    "component_click": true,
+    "chat_draft_preserved": true,
+    "console_exceptions": [],
+    "screenshots": 6
+  },
+  "factory_container_recovery": {
+    "pass": true,
+    "database": "factory_recovery_tests",
+    "epoch": "cd8827fe-8d22-47d2-bdc4-b18ec01e308a",
+    "inspection_id": "3726ed32-47c5-46bc-a149-da9526072c54",
+    "alarm_id": "e5c6ba56-c98b-4177-867d-272f894ba399",
+    "checks": [
+      "browser-independent measurements",
+      "ML outage retains cursor",
+      "factory and database container restart",
+      "stable epoch and clock",
+      "completed inspection not repeated",
+      "pending alarm retained with core unavailable",
+      "ML recovers unprocessed measurements",
+      "one alarm after replay",
+      "core approvals/leases/restart/receipts regression"
+    ]
+  },
+  "task_sigkill_recovery": {
+    "scenario": "real container SIGKILL during read, after completed MCP write",
+    "before_status": "RUNNING",
+    "after_status": "COMPLETED",
+    "write_count": 1,
+    "write_attempts": 1,
+    "read_attempts": 2,
+    "verified": true
+  },
+  "first_unattended_demo": {
+    "passed": true,
+    "task_id": "9be6ccdb-b5e1-48cb-8966-ea32f757935c",
+    "immutable_checks_passed": 6
+  },
+  "limitations": [
+    "Synthetic operating assumptions and data only",
+    "Uncalibrated synthetic onset probabilities; not industrial prognosis",
+    "No real machine/PLC connection",
+    "Provider availability affects investigation latency; failures persist safely"
+  ],
+  "zsk_lifecycle": {
+    "passed_checks": 18,
+    "database": "zsk_tests",
+    "labels_remaining": 0,
+    "single_matches_batch": true
+  },
+  "final_unattended_demo": {
+    "passed": true,
+    "task_id": "306f5c12-5c55-486c-9d5b-5670fb5cf506",
+    "immutable_checks_passed": 6,
+    "action_checks": {
+      "inspect_component": true,
+      "stop_manufacturing_line": true,
+      "acknowledge_alarm": true
+    },
+    "operator_intervention": false,
+    "turns": 14,
+    "active_seconds": 112.7
+  },
+  "screenshots_visually_inspected": true,
+  "ui_build": "passed after final chart/refresh fixes"
+}

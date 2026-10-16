@@ -1,8 +1,26 @@
-__pycache__/
-*.py[cod]
-.venv/
+# Local secrets
 .env
+.env.*
+!.env.example
+
+# Installed dependencies and generated build output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Standalone RAG generated files and local model/document caches
+__pycache__/
 .pytest_cache/
-*.sqlite3
-*.sqlite3-shm
-*.sqlite3-wal
+.ruff_cache/
+.venv/
+rag-server/storage/
+rag-server/model-cache/
+*.egg-info/
+manufacturing-demo/storage/
+*.joblib
+
+task-workspace/
+
+# Manual compilation and rendered review intermediates
+docs/manufacturing-meta-harness/.build/
+docs/manufacturing-meta-harness/.qa/

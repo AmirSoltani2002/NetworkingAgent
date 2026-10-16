@@ -1,0 +1,518 @@
+
+> local-meta-harness@0.1.0 test
+> npm test --workspaces
+
+
+> @meta-harness/ui@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.3 /home/amirabbas/Documents/personal/University/Master/Work Shop/NetworkAgent/ui
+
+ ❯ tests/chat.test.tsx (5 tests | 1 failed) 1638ms
+   × a consumed confirmation is cleared after checkpoint so later connection failure permits response retry 1089ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/chat.test.tsx > a consumed confirmation is cleared after checkpoint so later connection failure permits response retry
+TestingLibraryElementError: Unable to find an element with the text: Connection failed. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33maria-label[39m=[32m"Sidebar"[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"sidebar-header"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"brand"[39m
+          [36m>[39m
+            [0mMeta-Harness[0m
+          [36m</span>[39m
+          [36m<button[39m
+            [33maria-expanded[39m=[32m"true"[39m
+            [33maria-label[39m=[32m"Close sidebar"[39m
+            [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 size-9 icon-button"[39m
+            [33mdata-size[39m=[32m"icon"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mdata-toggle-sidebar[39m=[32m"true"[39m
+            [33mdata-variant[39m=[32m"ghost"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"15"[39m
+                [33mrx[39m=[32m"3"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"4.5"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M14 5v14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"sidebar-content"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3 new-chat"[39m
+            [33mdata-size[39m=[32m"default"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mdata-variant[39m=[32m"ghost"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 5v14M5 12h14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0mNew chat[0m
+          [36m</button>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Chats"[39m
+            [33mclass[39m=[32m"chat-navigation"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"chat-section-title"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"chat-titles"[39m
+                [33maria-expanded[39m=[32m"true"[39m
+                [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3 chat-section-toggle"[39m
+                [33mdata-size[39m=[32m"default"[39m
+                [33mdata-slot[39m=[32m"button"[39m
+                [33mdata-variant[39m=[32m"ghost"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mChats[0m
+                [36m</span>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m6 9 6 6 6-6"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</h2>[39m
+            [36m<div[39m
+              [33mid[39m=[32m"chat-titles"[39m
+            [36m>[39m
+              [36m<ul[39m
+                [33mclass[39m=[32m"chat-list"[39m
+              [36m>[39m
+                [36m<li>[39m
+                  [36m<button[39m
+                    [33maria-current[39m=[32m"page"[39m
+                    [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3 chat-link"[39m
+                    [33mdata-size[39m=[32m"default"[39m
+                    [33mdata-slot[39m=[32m"button"[39m
+                    [33mdata-variant[39m=[32m"ghost"[39m
+                    [33mtitle[39m=[32m"Train"[39m
+                  [36m>[39m
+                    [36m<span>[39m
+                      [0mTrain[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                [36m</li>[39m
+              [36m</ul>[39m
+            [36m</div>[39m
+          [36m</nav>[39m
+          [36m<div>[39m
+            [0mLLM[0m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"RAG"[39m
+            [33mclass[39m=[32m"chat-navigation rag-navigation"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"chat-section-title"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"rag-navigation"[39m
+                [33maria-expande...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"app-shell"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33maria-label[39m=[32m"Sidebar"[39m
+        [33mclass[39m=[32m"sidebar"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"sidebar-header"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"brand"[39m
+          [36m>[39m
+            [0mMeta-Harness[0m
+          [36m</span>[39m
+          [36m<button[39m
+            [33maria-expanded[39m=[32m"true"[39m
+            [33maria-label[39m=[32m"Close sidebar"[39m
+            [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 size-9 icon-button"[39m
+            [33mdata-size[39m=[32m"icon"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mdata-toggle-sidebar[39m=[32m"true"[39m
+            [33mdata-variant[39m=[32m"ghost"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"15"[39m
+                [33mrx[39m=[32m"3"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"4.5"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M14 5v14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"sidebar-content"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3 new-chat"[39m
+            [33mdata-size[39m=[32m"default"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mdata-variant[39m=[32m"ghost"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 5v14M5 12h14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0mNew chat[0m
+          [36m</button>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Chats"[39m
+            [33mclass[39m=[32m"chat-navigation"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"chat-section-title"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"chat-titles"[39m
+                [33maria-expanded[39m=[32m"true"[39m
+                [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3 chat-section-toggle"[39m
+                [33mdata-size[39m=[32m"default"[39m
+                [33mdata-slot[39m=[32m"button"[39m
+                [33mdata-variant[39m=[32m"ghost"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mChats[0m
+                [36m</span>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m6 9 6 6 6-6"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</h2>[39m
+            [36m<div[39m
+              [33mid[39m=[32m"chat-titles"[39m
+            [36m>[39m
+              [36m<ul[39m
+                [33mclass[39m=[32m"chat-list"[39m
+              [36m>[39m
+                [36m<li>[39m
+                  [36m<button[39m
+                    [33maria-current[39m=[32m"page"[39m
+                    [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3 chat-link"[39m
+                    [33mdata-size[39m=[32m"default"[39m
+                    [33mdata-slot[39m=[32m"button"[39m
+                    [33mdata-variant[39m=[32m"ghost"[39m
+                    [33mtitle[39m=[32m"Train"[39m
+                  [36m>[39m
+                    [36m<span>[39m
+                      [0mTrain[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                [36m</li>[39m
+              [36m</ul>[39m
+            [36m</div>[39m
+          [36m</nav>[39m
+          [36m<div>[39m
+            [0mLLM[0m
+          [36m</div>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"RAG"[39m
+            [33mclass[39m=[32m"chat-navigation rag-navigation"[39m
+          [36m>[39m
+            [36m<h2[39m
+              [33mclass[39m=[32m"chat-section-title"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-controls[39m=[32m"rag-navigation"[39m
+                [33maria-expande...
+ ❯ waitForWrapper ../node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/chat.test.tsx:37:15
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 22 passed (23)
+   Start at  16:45:12
+   Duration  4.58s (tests 63%, environment 23%, transform 5%, import 5%, setup 4%)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /home/amirabbas/Documents/personal/University/Master/Work Shop/NetworkAgent/ui
+npm error workspace @meta-harness/ui@0.1.0
+npm error location /home/amirabbas/Documents/personal/University/Master/Work Shop/NetworkAgent/ui
+npm error command failed
+npm error command sh -c vitest run
+
+
+> @meta-harness/core@0.1.0 test
+> npm run build && node --test tests/*.test.cjs
+
+
+> @meta-harness/core@0.1.0 build
+> nest build
+
+TAP version 13
+# Subtest: context budget uses verified capacities, a conservative fallback, and an explicit override
+ok 1 - context budget uses verified capacities, a conservative fallback, and an explicit override
+  ---
+  duration_ms: 1.26882
+  type: 'test'
+  ...
+# Subtest: at exactly 90%, the same selected model compacts; its entire window is saved before inference and reused
+ok 2 - at exactly 90%, the same selected model compacts; its entire window is saved before inference and reused
+  ---
+  duration_ms: 20.40889
+  type: 'test'
+  ...
+# Subtest: below 90% no summary is requested; switching models rebuilds input from saved transcript
+ok 3 - below 90% no summary is requested; switching models rebuilds input from saved transcript
+  ---
+  duration_ms: 1.067312
+  type: 'test'
+  ...
+# Subtest: failed or ineffective compaction preserves the original state and never sends a truncated generation request
+ok 4 - failed or ineffective compaction preserves the original state and never sends a truncated generation request
+  ---
+  duration_ms: 2.977998
+  type: 'test'
+  ...
+# Subtest: eight model turns checkpoint before queued tools; the next prompt completes without replaying completed calls
+ok 5 - eight model turns checkpoint before queued tools; the next prompt completes without replaying completed calls
+  ---
+  duration_ms: 5.00485
+  type: 'test'
+  ...
+# Subtest: twelve tool calls checkpoint a partially consumed batch with every completed result retained
+ok 6 - twelve tool calls checkpoint a partially consumed batch with every completed result retained
+  ---
+  duration_ms: 2.013358
+  type: 'test'
+  ...
+# Subtest: a two-minute deadline checkpoints completed work; a fresh prompt uses a fresh deadline and never replays a tool
+ok 7 - a two-minute deadline checkpoints completed work; a fresh prompt uses a fresh deadline and never replays a tool
+  ---
+  duration_ms: 1.359616
+  type: 'test'
+  ...
+# Subtest: token-count authentication errors and invalid counts are visible and never trigger generation
+ok 8 - token-count authentication errors and invalid counts are visible and never trigger generation
+  ---
+  duration_ms: 0.937745
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression
+ok 9 - real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression # SKIP
+  ---
+  duration_ms: 0.637602
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay
+ok 10 - real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay # SKIP
+  ---
+  duration_ms: 0.097471
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI
+ok 11 - real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI # SKIP
+  ---
+  duration_ms: 0.065315
+  type: 'test'
+  ...
+# Subtest: shared credential store serializes LLM/RAG writes, retains unrelated data and remains private
+ok 12 - shared credential store serializes LLM/RAG writes, retains unrelated data and remains private
+  ---
+  duration_ms: 21.321098
+  type: 'test'
+  ...
+# Subtest: MCP URLs and credential references are validated
+ok 13 - MCP URLs and credential references are validated
+  ---
+  duration_ms: 1.082123
+  type: 'test'
+  ...
+# [Nest] 1807869  - 10/09/2026, 4:45:20 PM     LOG [McpService] {"event":"mcp_call","serverId":"a","tool":"retrieve","durationMs":21,"success":true}
+# Subtest: official MCP discovery, explicit allowlisting, secret-safe failures and no execution
+ok 14 - official MCP discovery, explicit allowlisting, secret-safe failures and no execution
+  ---
+  duration_ms: 102.049398
+  type: 'test'
+  ...
+# Subtest: approved origins, unsafe addresses and REST operation restrictions
+ok 15 - approved origins, unsafe addresses and REST operation restrictions
+  ---
+  duration_ms: 5.431607
+  type: 'test'
+  ...
+# Subtest: REST client forwards auth, multipart, deletion; blocks redirects and masks upstream errors
+ok 16 - REST client forwards auth, multipart, deletion; blocks redirects and masks upstream errors
+  ---
+  duration_ms: 25.071789
+  type: 'test'
+  ...
+# Subtest: connection tests keep independent MCP/REST failure states and tokens out of results
+ok 17 - connection tests keep independent MCP/REST failure states and tokens out of results
+  ---
+  duration_ms: 16.009547
+  type: 'test'
+  ...
+# Subtest: existing Responses path selects permitted MCP tools, preserves reasoning, records sources, and does not force calls
+ok 18 - existing Responses path selects permitted MCP tools, preserves reasoning, records sources, and does not force calls
+  ---
+  duration_ms: 3.402069
+  type: 'test'
+  ...
+# Subtest: unregistered functions never reach MCP and provider/auth failures preserve safe errors
+ok 19 - unregistered functions never reach MCP and provider/auth failures preserve safe errors
+  ---
+  duration_ms: 1.221589
+  type: 'test'
+  ...
+# Subtest: draft authentication changes cannot overwrite saved connection health; MCP and REST remain independent
+ok 20 - draft authentication changes cannot overwrite saved connection health; MCP and REST remain independent
+  ---
+  duration_ms: 2.875581
+  type: 'test'
+  ...
+# Subtest: global error handling never logs stacks containing submitted secrets
+ok 21 - global error handling never logs stacks containing submitted secrets
+  ---
+  duration_ms: 0.98332
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication
+ok 22 - real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication # SKIP
+  ---
+  duration_ms: 0.55824
+  type: 'test'
+  ...
+# Subtest: persistent decisions use existing saved model, structured schema, canonical arguments and private model context
+ok 23 - persistent decisions use existing saved model, structured schema, canonical arguments and private model context
+  ---
+  duration_ms: 15.721749
+  type: 'test'
+  ...
+# Subtest: completion requires real successful scoped execution evidence, not a generated final response or operator attestation
+ok 24 - completion requires real successful scoped execution evidence, not a generated final response or operator attestation
+  ---
+  duration_ms: 1.443424
+  type: 'test'
+  ...
+# Subtest: retry backoff has bounded jitter and respects Retry-After
+ok 25 - retry backoff has bounded jitter and respects Retry-After
+  ---
+  duration_ms: 0.208186
+  type: 'test'
+  ...
+# Subtest: cron uses time zones and one next occurrence after restart
+ok 26 - cron uses time zones and one next occurrence after restart
+  ---
+  duration_ms: 6.932835
+  type: 'test'
+  ...
+# Subtest: safe structured commands auto-approve, writes are controlled, deletes dangerous, and shell/path bypasses are rejected
+ok 27 - safe structured commands auto-approve, writes are controlled, deletes dangerous, and shell/path bypasses are rejected
+  ---
+  duration_ms: 11.434518
+  type: 'test'
+  ...
+# Subtest: unclassified MCP writes need exact approval; only operator-classified controlled tools can receive task grants
+ok 28 - unclassified MCP writes need exact approval; only operator-classified controlled tools can receive task grants
+  ---
+  duration_ms: 1.169171
+  type: 'test'
+  ...
+# Subtest: state-changing tools pause, expose exact invocation and run once only after explicit confirmation
+ok 29 - state-changing tools pause, expose exact invocation and run once only after explicit confirmation
+  ---
+  duration_ms: 16.555102
+  type: 'test'
+  ...
+# Subtest: declined operations never execute and return denial to the same saved-model loop
+ok 30 - declined operations never execute and return denial to the same saved-model loop
+  ---
+  duration_ms: 1.466191
+  type: 'test'
+  ...
+# Subtest: schema/connection/permission changes invalidate the proposed authorization
+ok 31 - schema/connection/permission changes invalidate the proposed authorization
+  ---
+  duration_ms: 1.83295
+  type: 'test'
+  ...
+# Subtest: mismatched, expired and interrupted confirmations cannot execute
+ok 32 - mismatched, expired and interrupted confirmations cannot execute
+  ---
+  duration_ms: 1.140328
+  type: 'test'
+  ...
+# Subtest: provider failures after confirmed execution resume from persisted output without retraining
+ok 33 - provider failures after confirmed execution resume from persisted output without retraining
+  ---
+  duration_ms: 1.536904
+  type: 'test'
+  ...
+# Subtest: generic tool identities do not collide and include operator description plus actual schema
+ok 34 - generic tool identities do not collide and include operator description plus actual schema
+  ---
+  duration_ms: 0.557864
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 655.931452

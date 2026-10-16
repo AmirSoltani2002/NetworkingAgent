@@ -1,0 +1,96 @@
+name: local-rag
+services:
+  database:
+    image: pgvector/pgvector:pg17
+    command: ["postgres", "-c", "log_error_verbosity=terse", "-c", "log_min_error_statement=panic", "-c", "log_parameter_max_length_on_error=0"]
+    environment:
+      POSTGRES_DB: ${RAG_DB_NAME:-rag}
+      POSTGRES_USER: ${RAG_DB_USER:-rag}
+      POSTGRES_PASSWORD: ${RAG_DB_PASSWORD:?Set RAG_DB_PASSWORD in your .env}
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+    networks: [private]
+  rag:
+    image: rag-server:latest
+    build: .
+    environment: &app-environment
+      RAG_DB_HOST: ${RAG_DB_HOST_DOCKER:-database}
+      RAG_DB_PORT: ${RAG_DB_PORT:-5432}
+      RAG_DB_NAME: ${RAG_DB_NAME:-rag}
+      RAG_DB_USER: ${RAG_DB_USER:-rag}
+      RAG_DB_PASSWORD: ${RAG_DB_PASSWORD:?Set RAG_DB_PASSWORD in your .env}
+      RAG_API_KEY: ${RAG_API_KEY:?Set a strong RAG_API_KEY in your .env}
+      RAG_AUTH_REQUIRED: ${RAG_AUTH_REQUIRED:-true}
+      RAG_PORT: ${RAG_PORT:-8090}
+      RAG_STORAGE_DIR: /data/documents
+      RAG_MODEL_CACHE_DIR: /data/models
+      RAG_EMBEDDING_MODEL: ${RAG_EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      RAG_EMBEDDING_REVISION: ${RAG_EMBEDDING_REVISION:-c9745ed1d9f207416be6d2e6f8de32d1f16199bf}
+      RAG_EMBEDDING_DIMENSION: ${RAG_EMBEDDING_DIMENSION:-384}
+      RAG_EMBEDDING_DEVICE: ${RAG_EMBEDDING_DEVICE:-cpu}
+      RAG_MODEL_OFFLINE: ${RAG_MODEL_OFFLINE:-false}
+      RAG_EMBEDDING_BATCH_SIZE: ${RAG_EMBEDDING_BATCH_SIZE:-16}
+      RAG_TORCH_THREADS: ${RAG_TORCH_THREADS:-2}
+      RAG_SEMANTIC_MIN_CHARS: ${RAG_SEMANTIC_MIN_CHARS:-700}
+      RAG_SEMANTIC_BUFFER_SIZE: ${RAG_SEMANTIC_BUFFER_SIZE:-1}
+      RAG_SEMANTIC_BREAKPOINT_PERCENTILE: ${RAG_SEMANTIC_BREAKPOINT_PERCENTILE:-90}
+      RAG_MAX_CHUNK_TOKENS: ${RAG_MAX_CHUNK_TOKENS:-220}
+      RAG_MAX_UPLOAD_MB: ${RAG_MAX_UPLOAD_MB:-25}
+      RAG_MAX_EXTRACT_CHARS: ${RAG_MAX_EXTRACT_CHARS:-5000000}
+      RAG_MAX_PDF_PAGES: ${RAG_MAX_PDF_PAGES:-1000}
+      RAG_MAX_CHUNKS: ${RAG_MAX_CHUNKS:-20000}
+      RAG_RETRIEVAL_TOP_K: ${RAG_RETRIEVAL_TOP_K:-10}
+      RAG_CANDIDATE_COUNT: ${RAG_CANDIDATE_COUNT:-50}
+      RAG_SIMILARITY_THRESHOLD: ${RAG_SIMILARITY_THRESHOLD:-0.2}
+      RAG_ISSUE_SIMILARITY_THRESHOLD: ${RAG_ISSUE_SIMILARITY_THRESHOLD:-0.3}
+      RAG_RRF_K: ${RAG_RRF_K:-60}
+      RAG_RERANKER_ENABLED: ${RAG_RERANKER_ENABLED:-false}
+      RAG_RERANKER_MODEL: ${RAG_RERANKER_MODEL:-cross-encoder/ms-marco-MiniLM-L-6-v2}
+      RAG_RERANKER_REVISION: ${RAG_RERANKER_REVISION:-233902d25c440f23af6f7d6e94d2946bac0bee0a}
+      RAG_LOGGING_LEVEL: ${RAG_LOGGING_LEVEL:-INFO}
+      RAG_WORKER_POLL_SECONDS: ${RAG_WORKER_POLL_SECONDS:-2}
+      RAG_WORKER_MAX_ATTEMPTS: ${RAG_WORKER_MAX_ATTEMPTS:-3}
+      RAG_WORKER_RETRY_SECONDS: ${RAG_WORKER_RETRY_SECONDS:-10}
+      RAG_MCP_ALLOWED_HOSTS: ${RAG_MCP_ALLOWED_HOSTS:-localhost:*,127.0.0.1:*,rag:*,rag-api:*}
+    ports:
+      - "127.0.0.1:${RAG_PORT:-8090}:${RAG_PORT:-8090}"
+    volumes: &app-volumes
+      - document-data:/data/documents
+      - model-cache:/data/models
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+    init: true
+    networks: [private]
+  worker:
+    image: rag-server:latest
+    build: .
+    command: ["worker"]
+    environment: *app-environment
+    volumes: *app-volumes
+    depends_on:
+      rag:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-m", "rag.cli", "worker-health"]
+      interval: 15s
+      timeout: 5s
+      start_period: 180s
+      retries: 5
+    restart: unless-stopped
+    init: true
+    networks: [private]
+networks:
+  private:
+volumes:
+  database-data:
+  document-data:
+  model-cache:
+

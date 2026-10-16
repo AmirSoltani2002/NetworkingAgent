@@ -1,0 +1,19 @@
+\chapter{LLM Connection and Model Integration}
+\section{Problem, design and actual provider path}
+The application owns a single-provider integration with OpenAI, not a broad interchangeable provider framework. \texttt{LlmService.configuration()} reads masked saved settings; \texttt{discover()} fetches \texttt{/v1/models} online using the saved key. \texttt{save()} validates model membership and thinking choice. UI offers OpenAI, API key, Model/Refresh and Thinking Instant/Medium/High. A replacement key clears the old model selection. Model listing includes specialized IDs and does not guarantee Responses, reasoning, compaction or schema compatibility.
+
+\texttt{openAiRequest()} serializes POST requests to \texttt{/v1/responses}; chat uses \texttt{store:false}, \texttt{stream:false}, selected reasoning effort and bounded output. Instant maps to \texttt{none}. When tools exist, \texttt{tool\_choice:auto} and \texttt{parallel\_tool\_calls:false} are supplied. Responses reasoning encrypted content is retained privately. A final completed response must contain valid output-text/refusal content; empty/incomplete results are visible failures.
+\section{How a model output becomes execution}
+Ordinary chat receives function calls whose provider names map back to the allowed registry tools. Core parses bounded JSON arguments, validates current schema/policy, gates writes, calls MCP and persists observations before the next inference. Durable tasks use \texttt{text.format} with a strict JSON-schema decision. That schema carries serialized JSON argument/filter/value fields; the parser then validates their contents and action semantics. Strict provider output does not replace backend validation.
+
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}p{.29\linewidth}X@{}}\toprule
+Concept & Relationship to this implementation\\\midrule
+LLM API call & Implemented HTTP communication, settings, usage and errors\\
+Coding-specialized model & Possible selected catalog item; no automatic coding capability guarantee\\
+External agent runtime & No Codex/Claude Code/other runtime integration in core\\
+Owned agent loop & Implemented chat Responses loop and durable decision worker\\\bottomrule
+\end{tabularx}\par\smallskip
+\section{Failures, usage and retries}
+401 produces a sanitized key error; 429/5xx produce availability errors and Retry-After metadata. Unsupported model/thinking/context combinations stop visibly rather than silently switch models. Durable decision usage uses returned total tokens or counted-input fallback, and supports an operator-configured conservative cost rate. Failed paid requests may lack usable usage; accounting is not an exact provider billing ledger. Chat provider failures preserve saved input/completed tool results and expose Retry response. There is no token streaming; SSE reports task progress.
+\verdict{The owned provider path keeps model choice and executable decisions explicit. Tight coupling simplifies local implementation but makes Responses/counting/compaction/schema compatibility a practical deployment constraint.}
+\source{\path{core/src/llm/llm.service.ts}: \texttt{discover()}, \texttt{save()}, \texttt{respond()}, \texttt{taskDecision()}; \path{core/src/llm/context-window.ts}: \texttt{openAiRequest()}; \path{ui/src/components/llm/llm-settings.tsx}.}

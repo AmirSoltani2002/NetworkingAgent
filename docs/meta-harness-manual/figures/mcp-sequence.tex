@@ -1,0 +1,11 @@
+\begin{tikzpicture}[scale=.84,transform shape]
+\foreach \name/\x/\label in {agent/0/Agent,core/4/Core policy,db/8/PostgreSQL,server/12/MCP server}{\node[darkbox,text width=2.3cm] (\name) at (\x,0) {\label};\draw[muted,dashed] (\x,-.55)--(\x,-5.7);}
+\draw[arr] (0,-1)--node[lab,above]{tool + arguments} (4,-1);
+\draw[arr] (4,-1.7)--node[lab,above]{persist operation / approval} (8,-1.7);
+\draw[arr] (4,-2.4)--node[lab,above]{connect + initialize} (12,-2.4);
+\draw[arr] (4,-3.1)--node[lab,above]{DISPATCHING} (8,-3.1);
+\draw[arr] (4,-3.8)--node[lab,above]{callTool + operationId} (12,-3.8);
+\draw[arr] (12,-4.5)--node[lab,above]{structured result / error} (4,-4.5);
+\draw[arr] (4,-5.1)--node[lab,above]{result + verification} (8,-5.1);
+\draw[arr] (4,-5.7)--node[lab,above]{observation / next slice} (0,-5.7);
+\end{tikzpicture}

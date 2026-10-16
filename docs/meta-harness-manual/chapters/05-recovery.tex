@@ -1,0 +1,34 @@
+\chapter{Long-Running Tasks and Recovery}
+\section{The worker is a durable database consumer}
+The worker polls once per second. Default concurrency is two slices, configurable up to four. \texttt{claim()} selects due PENDING/RETRYING tasks or RUNNING tasks with expired leases using \texttt{FOR UPDATE SKIP LOCKED}. A session advisory lock prevents another live process from executing the same task; the committed owner UUID fences subsequent state changes. A heartbeat runs every five seconds and extends a thirty-second lease.
+
+After a container restart, unfinished tasks are not reconstructed from a generated answer. They are reconstructed from persisted fields, the private window and operation states. An interrupted read is marked failed and may safely retry. An interrupted dispatched write becomes UNKNOWN and pauses for reconciliation. The worker never assumes the external service rolled back with the core process.
+\begin{center}\input{figures/task-states.tex}\captionof{figure}{Task lifecycle. UNKNOWN is an operation state; it causes a PAUSED task. Completion requires evidence verification.}\end{center}
+\section{Retries are classified, bounded and recorded}
+Transient provider/network/service errors use exponential backoff with jitter. \texttt{retryDelay()} starts from a one-second base, doubles by attempt, caps its base at five minutes and respects a returned Retry-After interval. The jitter multiplier is 0.75--1.25. The configured retry count defaults to five retries after the initial failing attempt.
+
+A read-only MCP tool-level rejection saves the original error result, clears the failed pending action and asks the model for a corrected decision. The model can resolve a real device UUID instead of repeating a rejected name filter. Authentication, invalid policy/configuration and other permanent failures stop. Connection rediscovery is limited to enabled, permitted profiles that were not manually disconnected.
+\source{\path{core/src/tasks/task-worker.ts}: \texttt{claim()}, \texttt{tick()}, \texttt{run()}; \path{core/src/tasks/task-contract.ts}: \texttt{retryDelay()}; \path{core/src/tasks/tasks.service.ts}: \texttt{control()}, \texttt{reconcile()}.}
+\nextpage{Idempotency, schedules and operator recovery}
+\section*{Stable identities protect completed writes}
+A task operation has a stable UUID and unique task/operation key. Read actions use step plus canonical action identity. Writes are bound to a stable plan step or canonical arguments; an already successful canonical write is reused rather than executed again. The backend rechecks current configuration and permissions immediately before dispatch.
+
+For durable MCP calls, core sends the UUID in \texttt{Idempotency-Key} and MCP \texttt{\_meta.operationId}. Remote services may ignore these fields. The implementation therefore provides ledger-based replay prevention and conservative uncertainty handling; it does not claim exactly-once external execution.
+\begin{tabularx}{\linewidth}{@{}lX@{}}\toprule
+Operation state & Recovery interpretation\\\midrule
+PREPARED & A persisted proposal; no dispatch recorded\\
+DISPATCHING & Send may have occurred; a restarted write becomes UNKNOWN\\
+SUCCEEDED & Actual result recorded; successful writes are reused\\
+FAILED & A recorded failure; retry policy depends on operation safety\\
+UNKNOWN & External write outcome unresolved; operator checks the service\\
+REJECTED & Operator declined the action; no automatic repetition\\\bottomrule
+\end{tabularx}
+\section*{Reconciliation is not invented evidence}
+Task details can record ``Succeeded externally'' or ``Definitely not executed'' after the operator inspects the remote system. A reason is persisted. This resolves replay safety, but reconciliation-marked results are excluded from completion evidence; fresh reads must establish the outcome. Cancellation does not reverse a remote training/upload already sent.
+\section*{Persistent schedules}
+\texttt{TaskSchedulesService} supports future one-time dates and cron expressions with IANA timezones. It transactionally creates the occurrence task and advances the schedule. A unique key formed from schedule ID and scheduled time prevents duplicate creation. Missed recurring occurrences coalesce into one catch-up task; the next recurrence is calculated from current time. Invalid templates are disabled with an explanation, preventing a bad schedule from repeatedly starving other work.
+
+Scheduled tasks keep their configured scope and permission grants. The UI schedule form does not provide broad automatic write grants; state-changing actions therefore ask for approval. A user initiating a request alone is not unlimited authorization.
+\note{Event-driven status}{\status{REMOVED FOR NOW}: trigger navigation, configuration endpoints, webhook intake, task-completion publication and event dispatch. Historical tables remain inert. Earlier event-authentication tests document an older capability, not the current product. Do not configure a trigger through an undocumented route.}
+\note{Recorded restart evidence}{The isolated SIGKILL fixture interrupted a read after a committed MCP write. Its recorded outcome was COMPLETED, with one write and two read attempts. The fixture used the real worker/PostgreSQL/MCP SDK and a deterministic planner. It was not rerun for this manual~\cite{recoveryrecord}.}
+\source{\path{core/src/tasks/task-schedules.service.ts}: \texttt{save()}, \texttt{tick()}, \texttt{nextCron()}; \path{core/src/tasks/tasks.service.ts}: \texttt{reconcile()}; \path{core/tests/task-restart-review.py}; \path{docs/verification/task-restart.json}.}

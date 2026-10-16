@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=.7cm and .85cm]
+\node[box](tool){Tool outcome\\protocol / isError};\node[box,right=of tool](persist){Persist actual result\\operation UUID};\node[box,right=of persist](pred){Deterministic predicates\\pointer + expected value};
+\node[dark,below=of pred](task){Task completion\\all stored criteria pass};\node[box,left=of task](industrial){Industrial evidence review\\identity / freshness / relevance};\node[box,left=of industrial](human){Qualified human decision\\inspection / maintenance};
+\draw[arr](tool)--(persist);\draw[arr](persist)--(pred);\draw[arr](pred)--(task);\draw[arr](task)--(industrial);\draw[arr](industrial)--(human);\end{tikzpicture}

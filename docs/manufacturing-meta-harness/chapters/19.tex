@@ -1,0 +1,25 @@
+\section{Manufacturing and RAG tools in practice}
+\par\smallskip\noindent\begin{tabularx}{\linewidth}{@{}p{.48\linewidth}lX@{}}\toprule
+Tool & Access & Implemented response/action\\\midrule
+\texttt{get\_zsk\_measurements} & Read & Paginated signals and units\\
+\texttt{predict\_zsk\_health} & Read & Label, probability, history and version\\
+\texttt{get\_zsk\_model\_metrics} & Read & Versioned evaluation metrics\\
+\texttt{get\_zsk\_training\_status} & Read & Durable training/batch status\\
+\texttt{get\_zsk\_predictions} & Read & Stored output pages\\
+\texttt{add\_zsk\_measurements} & Admin write & Validated append with stable key\\
+\texttt{train\_zsk\_health\_model} & Admin write & Queue full retraining\\
+\texttt{batch\_predict\_zsk\_health} & Write hint & Queue/store inference; status branch\\\midrule
+\texttt{find\_device} & Read & Exact matches/ambiguity\\
+\texttt{get\_device\_issues} & Read & Device-scoped illustrative concerns\\
+\texttt{search\_knowledge} & Read & Hybrid ranked passages/issues\\
+\texttt{get\_document\_context} & Read & Exact source passages by chunk ID\\\bottomrule
+\end{tabularx}\par\smallskip
+The audited ZSK connection allowed five read-only tools and left the three write tools unapproved. The RAG connection allowed all four retrieval tools. A batch tool's status-inspection branch can read an existing job, but the tool as a whole carries a write annotation; generic chat policy conservatively asks for approval rather than interpreting vendor-specific branches.
+\section{REST and MCP have separate roles}
+ZSK REST and MCP delegate to the same \texttt{Service}. RAG REST provides operator CRUD, upload/status/chunk views and search. Its MCP exposes read-only retrieval. Core's \texttt{RagController}\allowbreak.\texttt{validateOperation()} permits specific methods/paths/filters, not a general external HTTP proxy. Frontend never computes embeddings, queries PostgreSQL or runs the ML model. No vendor-name or machine-specific branch is required in core.
+\section{Compatibility failures are useful evidence}
+Recorded ZSK integration initially failed because published machine-ID regex constraints were refused by core. The external schema was adjusted to publish bounded strings while retaining server-side character checks. Date/UUID JSON serialization was corrected in the service. The later trace contains two successful read calls; earlier failure is not rewritten as success. This illustrates why transport interoperability and model-schema compatibility require actual tests.
+
+Remote timeouts mark the profile failed with a sanitized error. A dispatched write whose result is uncertain must be reconciled; reconnecting does not authorize replay. Tool output is included as an observation, not as an instruction or raw executable script. Output-schema enforcement is limited: the SDK validates protocol envelopes, but core has no industrial schema/semantic validator for every returned field.
+\verdict{Independent service adapters and explicit schemas localize integration work. Schema compatibility, declared read-only behavior and result semantics must still be verified at each trust boundary.}
+\source{\path{core/src/rag/rag.controller.ts}: \texttt{validateOperation()}; \path{core/src/rag/rag-client.ts}; \path{docs/verification/zsk-results.md}; \path{ui/src/components/mcp/mcp-workspace.tsx}.}

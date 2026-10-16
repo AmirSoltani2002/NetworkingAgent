@@ -1,0 +1,288 @@
+
+> local-meta-harness@0.1.0 test
+> npm test --workspaces
+
+
+> @meta-harness/ui@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.3 /home/amirabbas/Documents/personal/University/Master/Work Shop/NetworkAgent/ui
+
+
+ Test Files  6 passed (6)
+      Tests  25 passed (25)
+   Start at  20:54:08
+   Duration  4.57s (tests 57%, environment 27%, import 6%, setup 4%, transform 4%)
+
+
+> @meta-harness/core@0.1.0 test
+> npm run build && node --test tests/*.test.cjs
+
+
+> @meta-harness/core@0.1.0 build
+> nest build
+
+TAP version 13
+# Subtest: context budget uses verified capacities, a conservative fallback, and an explicit override
+ok 1 - context budget uses verified capacities, a conservative fallback, and an explicit override
+  ---
+  duration_ms: 1.598573
+  type: 'test'
+  ...
+# Subtest: at exactly 90%, the same selected model compacts; its entire window is saved before inference and reused
+ok 2 - at exactly 90%, the same selected model compacts; its entire window is saved before inference and reused
+  ---
+  duration_ms: 19.05121
+  type: 'test'
+  ...
+# Subtest: below 90% no summary is requested; switching models rebuilds input from saved transcript
+ok 3 - below 90% no summary is requested; switching models rebuilds input from saved transcript
+  ---
+  duration_ms: 0.723352
+  type: 'test'
+  ...
+# Subtest: failed or ineffective compaction preserves the original state and never sends a truncated generation request
+ok 4 - failed or ineffective compaction preserves the original state and never sends a truncated generation request
+  ---
+  duration_ms: 2.474954
+  type: 'test'
+  ...
+# Subtest: eight model turns checkpoint before queued tools; the next prompt completes without replaying completed calls
+ok 5 - eight model turns checkpoint before queued tools; the next prompt completes without replaying completed calls
+  ---
+  duration_ms: 6.312795
+  type: 'test'
+  ...
+# Subtest: twelve tool calls checkpoint a partially consumed batch with every completed result retained
+ok 6 - twelve tool calls checkpoint a partially consumed batch with every completed result retained
+  ---
+  duration_ms: 1.538115
+  type: 'test'
+  ...
+# Subtest: a two-minute deadline checkpoints completed work; a fresh prompt uses a fresh deadline and never replays a tool
+ok 7 - a two-minute deadline checkpoints completed work; a fresh prompt uses a fresh deadline and never replays a tool
+  ---
+  duration_ms: 1.177283
+  type: 'test'
+  ...
+# Subtest: token-count authentication errors and invalid counts are visible and never trigger generation
+ok 8 - token-count authentication errors and invalid counts are visible and never trigger generation
+  ---
+  duration_ms: 0.838057
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression
+ok 9 - real PostgreSQL registry upgrades/updates and chat persistence/retry/trace regression # SKIP
+  ---
+  duration_ms: 0.670974
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay
+ok 10 - real PostgreSQL confirms an exact invocation, hides continuation, and retries provider without tool replay # SKIP
+  ---
+  duration_ms: 0.106659
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI
+ok 11 - real PostgreSQL persists a compacted window and watermark across service recreation without leaking it to the UI # SKIP
+  ---
+  duration_ms: 0.076816
+  type: 'test'
+  ...
+# Subtest: shared credential store serializes LLM/RAG writes, retains unrelated data and remains private
+ok 12 - shared credential store serializes LLM/RAG writes, retains unrelated data and remains private
+  ---
+  duration_ms: 23.048253
+  type: 'test'
+  ...
+# Subtest: PostgreSQL integration receipt atomically creates one template-bound task under concurrent duplicate delivery
+ok 13 - PostgreSQL integration receipt atomically creates one template-bound task under concurrent duplicate delivery # SKIP
+  ---
+  duration_ms: 0.873793
+  type: 'test'
+  ...
+# Subtest: service auth rejects missing/incorrect token and never accepts a short configuration
+ok 14 - service auth rejects missing/incorrect token and never accepts a short configuration
+  ---
+  duration_ms: 1.637421
+  type: 'test'
+  ...
+# Subtest: integration receipt accepts only template ID, stable UUID and bounded variables
+ok 15 - integration receipt accepts only template ID, stable UUID and bounded variables
+  ---
+  duration_ms: 1.55856
+  type: 'test'
+  ...
+# Subtest: event variables cannot change operator-configured grants or environment references
+ok 16 - event variables cannot change operator-configured grants or environment references
+  ---
+  duration_ms: 0.602742
+  type: 'test'
+  ...
+# Subtest: MCP URLs and credential references are validated
+ok 17 - MCP URLs and credential references are validated
+  ---
+  duration_ms: 1.23978
+  type: 'test'
+  ...
+# [Nest] 2042751  - 10/09/2026, 8:54:16 PM     LOG [McpService] {"event":"mcp_call","serverId":"a","tool":"retrieve","durationMs":21,"success":true}
+# Subtest: official MCP discovery, explicit allowlisting, secret-safe failures and no execution
+ok 18 - official MCP discovery, explicit allowlisting, secret-safe failures and no execution
+  ---
+  duration_ms: 114.019003
+  type: 'test'
+  ...
+# Subtest: approved origins, unsafe addresses and REST operation restrictions
+ok 19 - approved origins, unsafe addresses and REST operation restrictions
+  ---
+  duration_ms: 5.471737
+  type: 'test'
+  ...
+# Subtest: REST client forwards auth, multipart, deletion; blocks redirects and masks upstream errors
+ok 20 - REST client forwards auth, multipart, deletion; blocks redirects and masks upstream errors
+  ---
+  duration_ms: 23.62251
+  type: 'test'
+  ...
+# Subtest: connection tests keep independent MCP/REST failure states and tokens out of results
+ok 21 - connection tests keep independent MCP/REST failure states and tokens out of results
+  ---
+  duration_ms: 15.938872
+  type: 'test'
+  ...
+# Subtest: existing Responses path selects permitted MCP tools, preserves reasoning, records sources, and does not force calls
+ok 22 - existing Responses path selects permitted MCP tools, preserves reasoning, records sources, and does not force calls
+  ---
+  duration_ms: 3.337137
+  type: 'test'
+  ...
+# Subtest: unregistered functions never reach MCP and provider/auth failures preserve safe errors
+ok 23 - unregistered functions never reach MCP and provider/auth failures preserve safe errors
+  ---
+  duration_ms: 1.250206
+  type: 'test'
+  ...
+# Subtest: draft authentication changes cannot overwrite saved connection health; MCP and REST remain independent
+ok 24 - draft authentication changes cannot overwrite saved connection health; MCP and REST remain independent
+  ---
+  duration_ms: 2.928099
+  type: 'test'
+  ...
+# Subtest: global error handling never logs stacks containing submitted secrets
+ok 25 - global error handling never logs stacks containing submitted secrets
+  ---
+  duration_ms: 0.966974
+  type: 'test'
+  ...
+# Subtest: real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication
+ok 26 - real PostgreSQL durable engine: checkpoints, concurrency, exact approvals, completion, recovery, retries, cancellation, schedules and event deduplication # SKIP
+  ---
+  duration_ms: 0.783853
+  type: 'test'
+  ...
+# Subtest: persistent decisions use existing saved model, structured schema, canonical arguments and private model context
+ok 27 - persistent decisions use existing saved model, structured schema, canonical arguments and private model context
+  ---
+  duration_ms: 17.281372
+  type: 'test'
+  ...
+# Subtest: incomplete planning records usage, dispatches nothing and increases the next bounded decision allowance
+ok 28 - incomplete planning records usage, dispatches nothing and increases the next bounded decision allowance
+  ---
+  duration_ms: 2.063929
+  type: 'test'
+  ...
+# Subtest: multiple native decision submissions are rejected before an action can be returned
+ok 29 - multiple native decision submissions are rejected before an action can be returned
+  ---
+  duration_ms: 0.899654
+  type: 'test'
+  ...
+# Subtest: completion requires real successful scoped execution evidence, not a generated final response or operator attestation
+ok 30 - completion requires real successful scoped execution evidence, not a generated final response or operator attestation
+  ---
+  duration_ms: 2.626816
+  type: 'test'
+  ...
+# Subtest: retry backoff has bounded jitter and respects Retry-After
+ok 31 - retry backoff has bounded jitter and respects Retry-After
+  ---
+  duration_ms: 0.386652
+  type: 'test'
+  ...
+# Subtest: cron uses time zones and one next occurrence after restart
+ok 32 - cron uses time zones and one next occurrence after restart
+  ---
+  duration_ms: 12.384758
+  type: 'test'
+  ...
+# Subtest: safe structured commands auto-approve, writes are controlled, deletes dangerous, and shell/path bypasses are rejected
+ok 33 - safe structured commands auto-approve, writes are controlled, deletes dangerous, and shell/path bypasses are rejected
+  ---
+  duration_ms: 24.243831
+  type: 'test'
+  ...
+# Subtest: unclassified MCP writes need exact approval; only operator-classified controlled tools can receive task grants
+ok 34 - unclassified MCP writes need exact approval; only operator-classified controlled tools can receive task grants
+  ---
+  duration_ms: 1.619829
+  type: 'test'
+  ...
+# Subtest: model context carries explicit task grants without exposing policy digests or inventing new authority
+ok 35 - model context carries explicit task grants without exposing policy digests or inventing new authority
+  ---
+  duration_ms: 2.053585
+  type: 'test'
+  ...
+# Subtest: exact duplicate MCP text cannot crowd structured evidence out of context; distinct evidence and stored originals stay intact
+ok 36 - exact duplicate MCP text cannot crowd structured evidence out of context; distinct evidence and stored originals stay intact
+  ---
+  duration_ms: 0.707429
+  type: 'test'
+  ...
+# Subtest: state-changing tools pause, expose exact invocation and run once only after explicit confirmation
+ok 37 - state-changing tools pause, expose exact invocation and run once only after explicit confirmation
+  ---
+  duration_ms: 32.344603
+  type: 'test'
+  ...
+# Subtest: declined operations never execute and return denial to the same saved-model loop
+ok 38 - declined operations never execute and return denial to the same saved-model loop
+  ---
+  duration_ms: 2.834221
+  type: 'test'
+  ...
+# Subtest: schema/connection/permission changes invalidate the proposed authorization
+ok 39 - schema/connection/permission changes invalidate the proposed authorization
+  ---
+  duration_ms: 3.570882
+  type: 'test'
+  ...
+# Subtest: mismatched, expired and interrupted confirmations cannot execute
+ok 40 - mismatched, expired and interrupted confirmations cannot execute
+  ---
+  duration_ms: 2.594384
+  type: 'test'
+  ...
+# Subtest: provider failures after confirmed execution resume from persisted output without retraining
+ok 41 - provider failures after confirmed execution resume from persisted output without retraining
+  ---
+  duration_ms: 3.074769
+  type: 'test'
+  ...
+# Subtest: generic tool identities do not collide and include operator description plus actual schema
+ok 42 - generic tool identities do not collide and include operator description plus actual schema
+  ---
+  duration_ms: 1.074768
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 792.518585
